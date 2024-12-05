@@ -17,7 +17,7 @@ export default function SignIn() {
                 .then(async (userCredential) => {
                     const user = userCredential.user;
                     setLoading(false);
-                    router.push("/(drawer)/(tabs)/"); // Redirect to app dashboard
+                    router.push("/(tabs)"); // Redirect to app dashboard
                     alert("Login Successful!");
                     await AsyncStorage.setItem("info", JSON.stringify(user.uid));
                     setEmail("");

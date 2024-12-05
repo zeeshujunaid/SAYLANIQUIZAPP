@@ -10,10 +10,10 @@ export default function TabLayout() {
         tabBarShowLabel: false,
         tabBarStyle: {
           position: 'absolute',
-          bottom: 20,
+          bottom: 10,
           left: 20,
           right: 20,
-          height: 70,
+          height: 50,
           borderRadius: 35,
           backgroundColor: '#fff',
           shadowColor: '#000',

@@ -3,10 +3,13 @@ import { router } from 'expo-router';
 import { View, Text, TextInput, TouchableOpacity, ImageBackground, StyleSheet, ActivityIndicator } from 'react-native';
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../../utils/firebase";
+import { useRouter } from "expo-router";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { collection, doc, setDoc } from "firebase/firestore"; 
 
 export default function Signup({ navigation }) {
+
+    const router = useRouter();
 
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -35,7 +38,7 @@ export default function Signup({ navigation }) {
                     name: name,
                     city: city,
                 });
-                // router.push('/(drawer)/(tabs)/');
+                router.push("/loading");
                 setEmail('');
                 setPassword('');
                 setName('');
