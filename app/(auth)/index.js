@@ -6,7 +6,7 @@ const WelcomeScreen = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      router.push('/sign-in'); // Auto-redirect after 1 second
+      router.push('/loading'); // Auto-redirect after 1 second
     }, 1000);
   }, []);
 
@@ -21,7 +21,7 @@ const WelcomeScreen = () => {
       
       <TouchableOpacity 
         style={styles.button}
-        onPress={() => router.push('/(drawer)/(tabs)/')} // Navigate to drawer/tabs screen
+        onPress={() => router.push('/(tabs)/')} // Navigate to drawer/tabs screen
       >
         <Text style={styles.buttonText}>Get Started</Text>
       </TouchableOpacity>

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { router } from 'expo-router';
 import { View, Text, TextInput, TouchableOpacity, ImageBackground, StyleSheet, ActivityIndicator } from 'react-native';
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../../utils/firebase";
@@ -13,42 +12,40 @@ export default function Signup({ navigation }) {
 
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
-    const [city, setCity] = useState('');
+    const [center, setCenter] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
     const handleSignup = () => {
-        setError('');  // Reset previous error
-        if (email === "" || password === "") {
-            setError("Please fill all fields!");
-            return;
-        }
-        setLoading(true);
-        createUserWithEmailAndPassword(auth, email, password)
-            .then(async (userCredential) => {
-                const user = userCredential.user;
-                console.log("🚀 ~ .then ~ user:", user);
-                setLoading(false);
-                alert("User Created Successfully");
-                await AsyncStorage.setItem("info", JSON.stringify(user.uid));
-                await setDoc(doc(collection(db, "users"), user.uid), {
-                    email: email,
-                    uid: user.uid,
-                    name: name,
-                    city: city,
+        if (email != "" && password != "") {
+            setLoading(true);
+            createUserWithEmailAndPassword(auth, email, password,center)
+                .then(async(userCredential) => {
+                    const user = userCredential.user;
+                    console.log("🚀 ~ .then ~ user:", user)
+                    setLoading(false);
+                    alert("User Created Successfully");
+                    await AsyncStorage.setItem("info", JSON.stringify(user.uid))
+                    await setDoc(doc(collection(db, "users"), user.uid), {
+                        email: email,
+                        uid: user.uid,
+                        center:center
+                    });
+                    router.push('/(tabs)/');
+                    setName("");
+                    setEmail("");
+                    setCenter("");
+                    setPassword("");
+                })
+                .catch((error) => {
+                    setLoading(false);
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    alert(errorMessage , errorCode)
                 });
-                router.push("/loading");
-                setEmail('');
-                setPassword('');
-                setName('');
-                setCity('');
-            })
-            .catch((error) => {
-                console.log("🚀 ~ handleSignup ~ error:", error);
-                setLoading(false);
-                setError(error.message);
-            });
+
+        }
     };
 
     return (
@@ -82,10 +79,10 @@ export default function Signup({ navigation }) {
                 {/* City Input */}
                 <TextInput
                     style={styles.input}
-                    placeholder="City"
+                    placeholder="center"
                     placeholderTextColor="#4CAF50"
-                    value={city}
-                    onChangeText={setCity}
+                    value={center}
+                    onChangeText={setCenter}
                 />
                 
                 {/* Password Input */}

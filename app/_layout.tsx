@@ -17,8 +17,9 @@ export default function RootLayout() {
           <Stack.Screen name="(auth)/index" options={{ headerShown: false }} />
           <Stack.Screen name="(auth)/sign-up" options={{ headerShown: false }} />
           <Stack.Screen name="(auth)/sign-in" options={{ headerShown: false }} />
-          <Stack.Screen name='(tabs)/LiveQuiz' options={{ headerShown: false }}/>
+          <Stack.Screen name='LiveQuiz' options={{ headerShown: false }}/>
           <Stack.Screen name='(auth)/marketingquiz' options={{ headerShown: false }}/>
+          <Stack.Screen name='(auth)/webdevquiz' options={{ headerShown: false }}/>
         </Stack>
       </GestureHandlerRootView>
     </Provider>

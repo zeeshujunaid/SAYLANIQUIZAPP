@@ -18,7 +18,7 @@ export default function QuizHomeScreen() {
                 {/* Digital Marketing */}
                 <TouchableOpacity
                     style={styles.categoryCard}
-                    // onPress={() => router.push('(auth)/marketingquiz')}
+                    onPress={() => router.push('/(auth)/marketingquiz')}
                 >
                     <Image
                         source={{ uri: 'https://static.vecteezy.com/system/resources/thumbnails/027/853/733/small_2x/people-standing-behind-desk-with-computer-the-screen-displays-various-charts-and-graphs-ai-generated-png.png' }}
@@ -30,7 +30,7 @@ export default function QuizHomeScreen() {
                 {/* Software Engineering */}
                 <TouchableOpacity
                     style={styles.categoryCard}
-                    // onPress={() => router.push('(auth)/softwarequiz')}
+                    onPress={() => router.push('/(auth)/softwarequiz')}
                 >
                     <Image
                         source={{ uri: 'https://media.istockphoto.com/id/1046046242/photo/binary-code-background.jpg?s=612x612&w=0&k=20&c=xrVN5UxMp_-j96Diq9xBeAXW-NuDh0Q5PpH1gyr5Xxc=' }}
@@ -42,7 +42,7 @@ export default function QuizHomeScreen() {
                 {/* Web Development */}
                 <TouchableOpacity
                     style={styles.categoryCard}
-                    // onPress={() => router.push('Quiz')}
+                    onPress={() => router.push('/(auth)/webdevquiz')}
                 >
                     <Image
                         source={{ uri: 'https://thumbs.dreamstime.com/b/responsive-web-design-studio-page-displayed-across-laptop-phone-tablet-computer-office-desk-showcasing-cross-device-339247349.jpg' }}
@@ -54,7 +54,7 @@ export default function QuizHomeScreen() {
                 {/* App Development */}
                 <TouchableOpacity
                     style={styles.categoryCard}
-                    // onPress={() => router.push('Quiz')}
+                    onPress={() => router.push('/(auth)/appdevquiz')}
                 >
                     <Image
                         source={{ uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrKN8Czb174E312H9zZ5TeQSsN27z3P0XcHg&s' }}
@@ -66,7 +66,7 @@ export default function QuizHomeScreen() {
                 {/* UI/UX Design */}
                 <TouchableOpacity
                     style={styles.categoryCard}
-                    // onPress={() => router.push('Quiz')}
+                    onPress={() => router.push('/(auth)/designquiz')}
                 >
                     <Image
                         source={{ uri: 'https://blog-frontend.envato.com/cdn-cgi/image/width=4800,quality=75,format=auto/uploads/sites/2/2022/05/graphic-design-tools.png' }}

@@ -19,7 +19,7 @@ const Loading = () => {
       router.push('(tabs)');
     } else {
       console.log('No user found, redirecting to Auth...');
-      router.push('(auth)');
+      router.push('(auth)/sign-in');
     }
   };
 

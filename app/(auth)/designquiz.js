@@ -4,46 +4,47 @@ import Modal from 'react-native-modal';
 import Header from "../../components/Header"; // Import the Header component
 import { router } from 'expo-router';
 
-const marketingQuestions = [
+// Web development-related questions
+const webDevQuestions = [
     {
-        question: "What is the primary goal of marketing?",
+        question: "What does CSS stand for?",
         options: [
-            "Increase brand awareness",
-            "Drive sales",
-            "Engage customers",
-            "All of the above",
+            "Cascading Style Sheets",
+            "Creative Style Sheets",
+            "Computer Style Sheets",
+            "Colorful Style Sheets",
         ],
-        correctAnswer: "All of the above",
+        correctAnswer: "Cascading Style Sheets",
     },
     {
-        question: "Which is a digital marketing strategy?",
+        question: "Which HTML tag is used to define an unordered list?",
         options: [
-            "SEO",
-            "Content Marketing",
-            "Email Campaigns",
-            "All of the above",
+            "<ul>",
+            "<ol>",
+            "<li>",
+            "<list>",
         ],
-        correctAnswer: "All of the above",
+        correctAnswer: "<ul>",
     },
     {
-        question: "What does PPC stand for?",
+        question: "What is the purpose of the <head> tag in HTML?",
         options: [
-            "Pay Per Click",
-            "Purchase Per Client",
-            "Paid Promotions Campaign",
-            "Public Promotion Costs",
+            "To contain metadata about the document",
+            "To define the main content",
+            "To create a header for the page",
+            "To define the navigation bar",
         ],
-        correctAnswer: "Pay Per Click",
+        correctAnswer: "To contain metadata about the document",
     },
 ];
 
-export default function MarketingQuiz() {
+export default function WebDevQuiz() {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [selectedAnswer, setSelectedAnswer] = useState(null);
     const [score, setScore] = useState(0);
     const [isModalVisible, setModalVisible] = useState(false);
 
-    const currentQuestion = marketingQuestions[currentQuestionIndex];
+    const currentQuestion = webDevQuestions[currentQuestionIndex];
 
     const handleAnswerSelect = (answer) => {
         setSelectedAnswer(answer);
@@ -54,7 +55,7 @@ export default function MarketingQuiz() {
             setScore(score + 1);
         }
         setSelectedAnswer(null);
-        if (currentQuestionIndex < marketingQuestions.length - 1) {
+        if (currentQuestionIndex < webDevQuestions.length - 1) {
             setCurrentQuestionIndex(currentQuestionIndex + 1);
         } else {
             setModalVisible(true); // Show the modal when quiz finishes
@@ -64,7 +65,7 @@ export default function MarketingQuiz() {
     const handleCloseModal = () => {
         setModalVisible(false);
         // Reset the quiz or navigate to another screen
-        router.push('/(tabs)')
+        router.push('/(drawer)');
     };
 
     return (
@@ -92,7 +93,7 @@ export default function MarketingQuiz() {
                 {selectedAnswer && (
                     <TouchableOpacity style={styles.nextButton} onPress={handleNext}>
                         <Text style={styles.nextButtonText}>
-                            {currentQuestionIndex === marketingQuestions.length - 1
+                            {currentQuestionIndex === webDevQuestions.length - 1
                                 ? "Finish"
                                 : "Next"}
                         </Text>
@@ -106,7 +107,7 @@ export default function MarketingQuiz() {
                     <Text style={styles.modalTitle}>Quiz Complete!</Text>
                     <Text style={styles.modalText}>
                         Your score is <Text style={styles.modalScore}>{score}</Text> out of{" "}
-                        {marketingQuestions.length}.
+                        {webDevQuestions.length}.
                     </Text>
                     <TouchableOpacity
                         style={styles.modalButton}
@@ -123,7 +124,7 @@ export default function MarketingQuiz() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#E8F5E9",
+        backgroundColor: "#E3F2FD", // Light blue theme for web dev quiz
     },
     content: {
         flex: 1,
@@ -133,7 +134,7 @@ const styles = StyleSheet.create({
     questionText: {
         fontSize: 24,
         fontWeight: "bold",
-        color: "#388E3C",
+        color: "#1E88E5", // Blue color to match web theme
         marginBottom: 20,
     },
     optionsContainer: {
@@ -147,14 +148,14 @@ const styles = StyleSheet.create({
         elevation: 2,
     },
     selectedOption: {
-        backgroundColor: "#81C784",
+        backgroundColor: "#90CAF9",
     },
     optionText: {
         fontSize: 18,
-        color: "#388E3C",
+        color: "#1E88E5",
     },
     nextButton: {
-        backgroundColor: "#388E3C",
+        backgroundColor: "#1E88E5",
         padding: 15,
         borderRadius: 8,
         alignItems: "center",
@@ -174,21 +175,21 @@ const styles = StyleSheet.create({
     modalTitle: {
         fontSize: 22,
         fontWeight: "bold",
-        color: "#388E3C",
+        color: "#1E88E5",
         marginBottom: 10,
     },
     modalText: {
         fontSize: 18,
-        color: "#4CAF50",
+        color: "#42A5F5",
         textAlign: "center",
         marginBottom: 20,
     },
     modalScore: {
         fontWeight: "bold",
-        color: "#2E7D32",
+        color: "#1565C0",
     },
     modalButton: {
-        backgroundColor: "#388E3C",
+        backgroundColor: "#1E88E5",
         padding: 10,
         borderRadius: 8,
         width: "60%",
