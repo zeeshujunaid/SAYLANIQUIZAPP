@@ -65,7 +65,7 @@ export default function WebDevQuiz() {
     const handleCloseModal = () => {
         setModalVisible(false);
         // Reset the quiz or navigate to another screen
-        router.push('/(drawer)');
+        router.push('/(tabs)');
     };
 
     return (
@@ -124,7 +124,7 @@ export default function WebDevQuiz() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#E3F2FD", // Light blue theme for web dev quiz
+        backgroundColor: "#E8F5E9", // Light green background
     },
     content: {
         flex: 1,
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
     questionText: {
         fontSize: 24,
         fontWeight: "bold",
-        color: "#1E88E5", // Blue color to match web theme
+        color: "#388E3C", // Dark green for the question text
         marginBottom: 20,
     },
     optionsContainer: {
@@ -148,14 +148,14 @@ const styles = StyleSheet.create({
         elevation: 2,
     },
     selectedOption: {
-        backgroundColor: "#90CAF9",
+        backgroundColor: "#81C784", // Medium green for selected option
     },
     optionText: {
         fontSize: 18,
-        color: "#1E88E5",
+        color: "#388E3C", // Dark green for option text
     },
     nextButton: {
-        backgroundColor: "#1E88E5",
+        backgroundColor: "#388E3C", // Dark green for next button
         padding: 15,
         borderRadius: 8,
         alignItems: "center",
@@ -175,21 +175,21 @@ const styles = StyleSheet.create({
     modalTitle: {
         fontSize: 22,
         fontWeight: "bold",
-        color: "#1E88E5",
+        color: "#388E3C", // Dark green for modal title
         marginBottom: 10,
     },
     modalText: {
         fontSize: 18,
-        color: "#42A5F5",
+        color: "#4CAF50", // Slightly lighter green for modal text
         textAlign: "center",
         marginBottom: 20,
     },
     modalScore: {
         fontWeight: "bold",
-        color: "#1565C0",
+        color: "#2E7D32", // Darker green for score in modal
     },
     modalButton: {
-        backgroundColor: "#1E88E5",
+        backgroundColor: "#388E3C", // Dark green for modal button
         padding: 10,
         borderRadius: 8,
         width: "60%",

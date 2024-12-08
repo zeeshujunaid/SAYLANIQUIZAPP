@@ -12,7 +12,7 @@ const Loading = () => {
   }, []);
 
   const checkUser = async () => {
-    const user = await AsyncStorage.getItem('user');
+    const user = await AsyncStorage.getItem('info');
     if (user !== null) {
       console.log('User found, redirecting to Drawer...');
       setUser(JSON.parse(user));

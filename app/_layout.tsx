@@ -11,7 +11,7 @@ export default function RootLayout() {
   return (
     <Provider>
       <GestureHandlerRootView style={{ flex: 1 }}>
-        <Stack screenOptions={{headerShown: false}} initialRouteName='(tabs)'>
+        <Stack screenOptions={{headerShown: false}} initialRouteName='(auth)/loading'>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="(auth)/loading" options={{ headerShown: false }} />
           <Stack.Screen name="(auth)/index" options={{ headerShown: false }} />

@@ -4,47 +4,47 @@ import Modal from 'react-native-modal';
 import Header from "../../components/Header"; // Import the Header component
 import { router } from 'expo-router';
 
-// Web development-related questions
-const webDevQuestions = [
+// UI/UX-related questions
+const uiuxQuestions = [
     {
-        question: "What does CSS stand for?",
+        question: "What does UX stand for?",
         options: [
-            "Cascading Style Sheets",
-            "Creative Style Sheets",
-            "Computer Style Sheets",
-            "Colorful Style Sheets",
+            "User Experience",
+            "User Expertise",
+            "User Extension",
+            "User Exploration",
         ],
-        correctAnswer: "Cascading Style Sheets",
+        correctAnswer: "User Experience",
     },
     {
-        question: "Which HTML tag is used to define an unordered list?",
+        question: "Which principle is NOT a part of UI design?",
         options: [
-            "<ul>",
-            "<ol>",
-            "<li>",
-            "<list>",
+            "Consistency",
+            "Clarity",
+            "Color",
+            "Complexity",
         ],
-        correctAnswer: "<ul>",
+        correctAnswer: "Complexity",
     },
     {
-        question: "What is the purpose of the <head> tag in HTML?",
+        question: "What is the purpose of wireframing?",
         options: [
-            "To contain metadata about the document",
-            "To define the main content",
-            "To create a header for the page",
-            "To define the navigation bar",
+            "To create detailed visual designs",
+            "To outline the structure of a page",
+            "To measure user satisfaction",
+            "To select a color scheme",
         ],
-        correctAnswer: "To contain metadata about the document",
+        correctAnswer: "To outline the structure of a page",
     },
 ];
 
-export default function WebDevQuiz() {
+export default function UIUXQuiz() {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [selectedAnswer, setSelectedAnswer] = useState(null);
     const [score, setScore] = useState(0);
     const [isModalVisible, setModalVisible] = useState(false);
 
-    const currentQuestion = webDevQuestions[currentQuestionIndex];
+    const currentQuestion = uiuxQuestions[currentQuestionIndex];
 
     const handleAnswerSelect = (answer) => {
         setSelectedAnswer(answer);
@@ -55,7 +55,7 @@ export default function WebDevQuiz() {
             setScore(score + 1);
         }
         setSelectedAnswer(null);
-        if (currentQuestionIndex < webDevQuestions.length - 1) {
+        if (currentQuestionIndex < uiuxQuestions.length - 1) {
             setCurrentQuestionIndex(currentQuestionIndex + 1);
         } else {
             setModalVisible(true); // Show the modal when quiz finishes
@@ -65,7 +65,7 @@ export default function WebDevQuiz() {
     const handleCloseModal = () => {
         setModalVisible(false);
         // Reset the quiz or navigate to another screen
-        router.push('/(drawer)');
+        router.push('/(tabs)');
     };
 
     return (
@@ -93,7 +93,7 @@ export default function WebDevQuiz() {
                 {selectedAnswer && (
                     <TouchableOpacity style={styles.nextButton} onPress={handleNext}>
                         <Text style={styles.nextButtonText}>
-                            {currentQuestionIndex === webDevQuestions.length - 1
+                            {currentQuestionIndex === uiuxQuestions.length - 1
                                 ? "Finish"
                                 : "Next"}
                         </Text>
@@ -107,7 +107,7 @@ export default function WebDevQuiz() {
                     <Text style={styles.modalTitle}>Quiz Complete!</Text>
                     <Text style={styles.modalText}>
                         Your score is <Text style={styles.modalScore}>{score}</Text> out of{" "}
-                        {webDevQuestions.length}.
+                        {uiuxQuestions.length}.
                     </Text>
                     <TouchableOpacity
                         style={styles.modalButton}
@@ -124,7 +124,7 @@ export default function WebDevQuiz() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#E3F2FD", // Light blue theme for web dev quiz
+        backgroundColor: "#E8F5E9", // Light green background
     },
     content: {
         flex: 1,
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
     questionText: {
         fontSize: 24,
         fontWeight: "bold",
-        color: "#1E88E5", // Blue color to match web theme
+        color: "#388E3C", // Dark green for the question text
         marginBottom: 20,
     },
     optionsContainer: {
@@ -148,14 +148,14 @@ const styles = StyleSheet.create({
         elevation: 2,
     },
     selectedOption: {
-        backgroundColor: "#90CAF9",
+        backgroundColor: "#81C784", // Medium green for selected option
     },
     optionText: {
         fontSize: 18,
-        color: "#1E88E5",
+        color: "#388E3C", // Dark green for option text
     },
     nextButton: {
-        backgroundColor: "#1E88E5",
+        backgroundColor: "#388E3C", // Dark green for next button
         padding: 15,
         borderRadius: 8,
         alignItems: "center",
@@ -175,21 +175,21 @@ const styles = StyleSheet.create({
     modalTitle: {
         fontSize: 22,
         fontWeight: "bold",
-        color: "#1E88E5",
+        color: "#388E3C", // Dark green for modal title
         marginBottom: 10,
     },
     modalText: {
         fontSize: 18,
-        color: "#42A5F5",
+        color: "#4CAF50", // Slightly lighter green for modal text
         textAlign: "center",
         marginBottom: 20,
     },
     modalScore: {
         fontWeight: "bold",
-        color: "#1565C0",
+        color: "#2E7D32", // Darker green for score in modal
     },
     modalButton: {
-        backgroundColor: "#1E88E5",
+        backgroundColor: "#388E3C", // Dark green for modal button
         padding: 10,
         borderRadius: 8,
         width: "60%",

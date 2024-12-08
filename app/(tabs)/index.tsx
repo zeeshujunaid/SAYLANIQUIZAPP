@@ -1,20 +1,19 @@
 import { router } from 'expo-router';
 import React from 'react';
 import Header from '../../components/Header';
-import {Text, TouchableOpacity, StyleSheet, SafeAreaView, Image, ScrollView } from 'react-native';
+import { Text, TouchableOpacity, StyleSheet, SafeAreaView, Image, ScrollView } from 'react-native';
 
 export default function QuizHomeScreen() {
     return (
         <SafeAreaView style={styles.container}>
             {/* Header */}
-          <Header/>
+            <Header />
 
             {/* Subheader */}
             <Text style={styles.subHeaderText}>Select Quiz Category</Text>
 
             {/* Scrollable Category List */}
-            <ScrollView contentContainerStyle={styles.categoriesContainer}>
-
+            <ScrollView contentContainerStyle={styles.categoriesContainer} showsVerticalScrollIndicator={false}>
                 {/* Digital Marketing */}
                 <TouchableOpacity
                     style={styles.categoryCard}
@@ -75,7 +74,7 @@ export default function QuizHomeScreen() {
                     <Text style={styles.categoryText}>UI/UX Design Quiz</Text>
                 </TouchableOpacity>
 
-                {/* live quiz */}
+                {/* Live Quiz */}
                 <TouchableOpacity
                     style={styles.categoryCard}
                     onPress={() => router.push('/LiveQuiz')}
@@ -86,7 +85,6 @@ export default function QuizHomeScreen() {
                     />
                     <Text style={styles.categoryText}>Enter Live Quiz</Text>
                 </TouchableOpacity>
-
             </ScrollView>
         </SafeAreaView>
     );
@@ -97,6 +95,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#E8F5E9',
         padding: 16,
+        paddingBottom: 100,  // Ensure enough space for the tabs
     },
     headerContainer: {
         backgroundColor: '#81C784',
@@ -122,16 +121,17 @@ const styles = StyleSheet.create({
     categoriesContainer: {
         flexDirection: 'row',
         flexWrap: 'wrap',
-        justifyContent: 'space-evenly',
+        justifyContent: 'space-evenly',  // Adjusted from 'space-around' to 'space-evenly' for better spacing
         marginBottom: 20,
     },
     categoryCard: {
         backgroundColor: '#ffffff',
         borderRadius: 10,
-        width: '45%',
+        width: '45%',  // Reduced width to fit better on smaller screens
         marginBottom: 16,
         alignItems: 'center',
         paddingVertical: 15,
+        marginHorizontal: 8,  // Reduced side padding between cards
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 3 },
         shadowOpacity: 0.1,
