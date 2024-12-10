@@ -4,46 +4,47 @@ import Modal from 'react-native-modal';
 import Header from "../../components/Header"; // Import the Header component
 import { router } from 'expo-router';
 
-const marketingQuestions = [
+// UI/UX-related questions
+const uiuxQuestions = [
     {
-        question: "What is the primary goal of marketing?",
+        question: "What does UX stand for?",
         options: [
-            "Increase brand awareness",
-            "Drive sales",
-            "Engage customers",
-            "All of the above",
+            "User Experience",
+            "User Expertise",
+            "User Extension",
+            "User Exploration",
         ],
-        correctAnswer: "All of the above",
+        correctAnswer: "User Experience",
     },
     {
-        question: "Which is a digital marketing strategy?",
+        question: "Which principle is NOT a part of UI design?",
         options: [
-            "SEO",
-            "Content Marketing",
-            "Email Campaigns",
-            "All of the above",
+            "Consistency",
+            "Clarity",
+            "Color",
+            "Complexity",
         ],
-        correctAnswer: "All of the above",
+        correctAnswer: "Complexity",
     },
     {
-        question: "What does PPC stand for?",
+        question: "What is the purpose of wireframing?",
         options: [
-            "Pay Per Click",
-            "Purchase Per Client",
-            "Paid Promotions Campaign",
-            "Public Promotion Costs",
+            "To create detailed visual designs",
+            "To outline the structure of a page",
+            "To measure user satisfaction",
+            "To select a color scheme",
         ],
-        correctAnswer: "Pay Per Click",
+        correctAnswer: "To outline the structure of a page",
     },
 ];
 
-export default function MarketingQuiz() {
+export default function UIUXQuiz() {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [selectedAnswer, setSelectedAnswer] = useState(null);
     const [score, setScore] = useState(0);
     const [isModalVisible, setModalVisible] = useState(false);
 
-    const currentQuestion = marketingQuestions[currentQuestionIndex];
+    const currentQuestion = uiuxQuestions[currentQuestionIndex];
 
     const handleAnswerSelect = (answer) => {
         setSelectedAnswer(answer);
@@ -54,7 +55,7 @@ export default function MarketingQuiz() {
             setScore(score + 1);
         }
         setSelectedAnswer(null);
-        if (currentQuestionIndex < marketingQuestions.length - 1) {
+        if (currentQuestionIndex < uiuxQuestions.length - 1) {
             setCurrentQuestionIndex(currentQuestionIndex + 1);
         } else {
             setModalVisible(true); // Show the modal when quiz finishes
@@ -64,7 +65,7 @@ export default function MarketingQuiz() {
     const handleCloseModal = () => {
         setModalVisible(false);
         // Reset the quiz or navigate to another screen
-        router.push('/(tabs)')
+        router.push('/(tabs)');
     };
 
     return (
@@ -92,7 +93,7 @@ export default function MarketingQuiz() {
                 {selectedAnswer && (
                     <TouchableOpacity style={styles.nextButton} onPress={handleNext}>
                         <Text style={styles.nextButtonText}>
-                            {currentQuestionIndex === marketingQuestions.length - 1
+                            {currentQuestionIndex === uiuxQuestions.length - 1
                                 ? "Finish"
                                 : "Next"}
                         </Text>
@@ -106,7 +107,7 @@ export default function MarketingQuiz() {
                     <Text style={styles.modalTitle}>Quiz Complete!</Text>
                     <Text style={styles.modalText}>
                         Your score is <Text style={styles.modalScore}>{score}</Text> out of{" "}
-                        {marketingQuestions.length}.
+                        {uiuxQuestions.length}.
                     </Text>
                     <TouchableOpacity
                         style={styles.modalButton}
@@ -123,7 +124,7 @@ export default function MarketingQuiz() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#E8F5E9",
+        backgroundColor: "#E8F5E9", // Light green background
     },
     content: {
         flex: 1,
@@ -133,7 +134,7 @@ const styles = StyleSheet.create({
     questionText: {
         fontSize: 24,
         fontWeight: "bold",
-        color: "#388E3C",
+        color: "#388E3C", // Dark green for the question text
         marginBottom: 20,
     },
     optionsContainer: {
@@ -147,14 +148,14 @@ const styles = StyleSheet.create({
         elevation: 2,
     },
     selectedOption: {
-        backgroundColor: "#81C784",
+        backgroundColor: "#81C784", // Medium green for selected option
     },
     optionText: {
         fontSize: 18,
-        color: "#388E3C",
+        color: "#388E3C", // Dark green for option text
     },
     nextButton: {
-        backgroundColor: "#388E3C",
+        backgroundColor: "#388E3C", // Dark green for next button
         padding: 15,
         borderRadius: 8,
         alignItems: "center",
@@ -174,21 +175,21 @@ const styles = StyleSheet.create({
     modalTitle: {
         fontSize: 22,
         fontWeight: "bold",
-        color: "#388E3C",
+        color: "#388E3C", // Dark green for modal title
         marginBottom: 10,
     },
     modalText: {
         fontSize: 18,
-        color: "#4CAF50",
+        color: "#4CAF50", // Slightly lighter green for modal text
         textAlign: "center",
         marginBottom: 20,
     },
     modalScore: {
         fontWeight: "bold",
-        color: "#2E7D32",
+        color: "#2E7D32", // Darker green for score in modal
     },
     modalButton: {
-        backgroundColor: "#388E3C",
+        backgroundColor: "#388E3C", // Dark green for modal button
         padding: 10,
         borderRadius: 8,
         width: "60%",
