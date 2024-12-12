@@ -4,6 +4,7 @@ import Modal from 'react-native-modal';
 import Header from "../../components/Header"; // Import the Header component
 import Toast from 'react-native-toast-message';
 import { router } from 'expo-router';
+import AsyncStorage from '@react-native-async-storage/async-storage'; // Import AsyncStorage
 
 // Software-related questions
 const softwareQuestions = [
@@ -39,6 +40,8 @@ const softwareQuestions = [
     },
 ];
 
+const quizname = "Software Development"
+
 export default function SoftwareQuiz() {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [selectedAnswer, setSelectedAnswer] = useState(null);
@@ -53,10 +56,10 @@ export default function SoftwareQuiz() {
 
     const handleNext = () => {
         Toast.show({
-                    type: 'info',
-                    text1: 'DONT GO BACK!',
-                    text2: 'if you go back you will lose all your progees!',
-                });
+            type: 'info',
+            text1: 'DONT GO BACK!',
+            text2: 'If you go back, you will lose all your progress!',
+        });
         if (selectedAnswer === currentQuestion.correctAnswer) {
             setScore(score + 1);
         }
@@ -68,10 +71,37 @@ export default function SoftwareQuiz() {
         }
     };
 
+    const handleSaveResult = async () => {
+        try {
+            // Save quiz name and score in AsyncStorage
+            await AsyncStorage.setItem('quizResult', JSON.stringify({
+                quizName: quizname,
+                score: score,
+            }));
+            Toast.show({
+                type: 'success',
+                text1: 'Result Saved!',
+                text2: `Your score for ${quizname} has been saved.`,
+            });
+            setModalVisible(false);
+            router.push('/(tabs)'); // Navigate to tabs screen
+        } catch (error) {
+            Toast.show({
+                type: 'error',
+                text1: 'Error saving result!',
+                text2: 'Please try again.',
+            });
+        }
+    };
+
+    const handleDontSave = () => {
+        setModalVisible(false);
+        router.push('/(tabs)'); // Navigate to tabs screen without saving
+    };
+
     const handleCloseModal = () => {
         setModalVisible(false);
-        // Reset the quiz or navigate to another screen
-        router.push('/(tabs)')
+        router.push('/(tabs)'); // Close modal and navigate to tabs screen
     };
 
     return (
@@ -115,12 +145,20 @@ export default function SoftwareQuiz() {
                         Your score is <Text style={styles.modalScore}>{score}</Text> out of{" "}
                         {softwareQuestions.length}.
                     </Text>
-                    <TouchableOpacity
-                        style={styles.modalButton}
-                        onPress={handleCloseModal}
-                    >
-                        <Text style={styles.modalButtonText}>Close</Text>
-                    </TouchableOpacity>
+                    <View style={styles.modalButtonContainer}>
+                        <TouchableOpacity
+                            style={styles.modalButton}
+                            onPress={handleSaveResult}
+                        >
+                            <Text style={styles.modalButtonText}>Save Result</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.modalButton}
+                            onPress={handleDontSave}
+                        >
+                            <Text style={styles.modalButtonText}>Don't Save</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </Modal>
         </View>
@@ -194,12 +232,18 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         color: "#2E7D32", // Darker green for score in modal
     },
+    modalButtonContainer: {
+        flexDirection: "row",
+        justifyContent: "space-around",
+        width: "100%",
+    },
     modalButton: {
         backgroundColor: "#388E3C", // Dark green for modal button
         padding: 10,
         borderRadius: 8,
-        width: "60%",
+        width: "45%",
         alignItems: "center",
+        marginVertical: 5,
     },
     modalButtonText: {
         color: "#FFFFFF",

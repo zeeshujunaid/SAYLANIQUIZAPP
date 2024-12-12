@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Modal from 'react-native-modal';
 import Header from "../../components/Header"; // Import the Header component
 import { router } from 'expo-router';
 import Toast from 'react-native-toast-message';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Web development-related questions
 const webDevQuestions = [
@@ -40,11 +40,30 @@ const webDevQuestions = [
     },
 ];
 
+const quizName = "Web Development";
+
 export default function WebDevQuiz() {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [selectedAnswer, setSelectedAnswer] = useState(null);
     const [score, setScore] = useState(0);
     const [isModalVisible, setModalVisible] = useState(false);
+
+    useEffect(() => {
+        // Load quiz result from AsyncStorage when component mounts
+        const loadQuizResult = async () => {
+            try {
+                const savedResult = await AsyncStorage.getItem(quizName);
+                if (savedResult !== null) {
+                    const result = JSON.parse(savedResult);
+                    setScore(result.score);
+                    setCurrentQuestionIndex(result.index);
+                }
+            } catch (error) {
+                console.error('Failed to load quiz result', error);
+            }
+        };
+        loadQuizResult();
+    }, []);
 
     const currentQuestion = webDevQuestions[currentQuestionIndex];
 
@@ -52,15 +71,26 @@ export default function WebDevQuiz() {
         setSelectedAnswer(answer);
     };
 
-    const handleNext = () => {
+    const handleNext = async () => {
         Toast.show({
-                    type: 'info',
-                    text1: 'DONT GO BACK!',
-                    text2: 'if you go back you will lose all your progees!',
-                });
+            type: 'info',
+            text1: 'DONT GO BACK!',
+            text2: 'If you go back, you will lose all your progress!',
+        });
+
+        // Update score if answer is correct
         if (selectedAnswer === currentQuestion.correctAnswer) {
-            setScore(score + 1);
+            const newScore = score + 1;
+            setScore(newScore);
+
+            try {
+                // Save the updated score in AsyncStorage
+                await AsyncStorage.setItem('quizScore', newScore.toString());
+            } catch (error) {
+                console.error('Failed to save the score to AsyncStorage', error);
+            }
         }
+
         setSelectedAnswer(null);
         if (currentQuestionIndex < webDevQuestions.length - 1) {
             setCurrentQuestionIndex(currentQuestionIndex + 1);
@@ -69,10 +99,38 @@ export default function WebDevQuiz() {
         }
     };
 
+    const handleSaveResult = async () => {
+        try {
+            // Save quiz name, score, and current question index in AsyncStorage
+            await AsyncStorage.setItem(quizName, JSON.stringify({
+                quizName: quizName,
+                score: score,
+                index: currentQuestionIndex,
+            }));
+            Toast.show({
+                type: 'success',
+                text1: 'Result Saved!',
+                text2: `Your score for ${quizName} has been saved.`,
+            });
+            setModalVisible(false);
+            router.push('/(tabs)'); // Navigate to tabs screen
+        } catch (error) {
+            Toast.show({
+                type: 'error',
+                text1: 'Error saving result!',
+                text2: 'Please try again.',
+            });
+        }
+    };
+
+    const handleDontSave = () => {
+        setModalVisible(false);
+        router.push('/(tabs)'); // Navigate to tabs screen without saving
+    };
+
     const handleCloseModal = () => {
         setModalVisible(false);
-        // Reset the quiz or navigate to another screen
-        router.push('/(tabs)');
+        router.push('/(tabs)'); // Close modal and navigate to tabs screen
     };
 
     return (
@@ -116,12 +174,20 @@ export default function WebDevQuiz() {
                         Your score is <Text style={styles.modalScore}>{score}</Text> out of{" "}
                         {webDevQuestions.length}.
                     </Text>
-                    <TouchableOpacity
-                        style={styles.modalButton}
-                        onPress={handleCloseModal}
-                    >
-                        <Text style={styles.modalButtonText}>Close</Text>
-                    </TouchableOpacity>
+                    <View style={styles.modalButtonContainer}>
+                        <TouchableOpacity
+                            style={styles.modalButton}
+                            onPress={handleSaveResult}
+                        >
+                            <Text style={styles.modalButtonText}>Save Result</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.modalButton}
+                            onPress={handleDontSave}
+                        >
+                            <Text style={styles.modalButtonText}>Don't Save</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </Modal>
         </View>
@@ -195,12 +261,18 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         color: "#2E7D32", // Darker green for score in modal
     },
+    modalButtonContainer: {
+        flexDirection: "row",
+        justifyContent: "space-around",
+        width: "100%",
+    },
     modalButton: {
         backgroundColor: "#388E3C", // Dark green for modal button
         padding: 10,
         borderRadius: 8,
-        width: "60%",
+        width: "45%",
         alignItems: "center",
+        marginVertical: 5,
     },
     modalButtonText: {
         color: "#FFFFFF",
