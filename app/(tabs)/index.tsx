@@ -14,16 +14,6 @@ export default function QuizHomeScreen() {
             text1: 'BEST OF LUCK!',
             text2: 'Get ready for your quiz!',
         });
-    
-        // Delay before showing the second toast
-        setTimeout(() => {
-            Toast.show({
-                type: 'error',
-                text1: 'QUIZ STARTED!',
-                text2: 'Don’t press the back button. You will lose all your progress.',
-            });
-        }, 7000); // Delay of 2 seconds
-    
         // Navigate to the quiz route
         try {
             router.push(quizRoute);

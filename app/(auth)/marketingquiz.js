@@ -3,6 +3,8 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Modal from 'react-native-modal';
 import Header from "../../components/Header"; // Import the Header component
 import { router } from 'expo-router';
+import Toast from 'react-native-toast-message';
+
 
 const marketingQuestions = [
     {
@@ -50,6 +52,14 @@ export default function MarketingQuiz() {
     };
 
     const handleNext = () => {
+        
+        Toast.show({
+            type: 'info',
+            text1: 'DONT GO BACK!',
+            text2: 'if you go back you will lose all your progees!',
+        });
+    
+
         if (selectedAnswer === currentQuestion.correctAnswer) {
             setScore(score + 1);
         }

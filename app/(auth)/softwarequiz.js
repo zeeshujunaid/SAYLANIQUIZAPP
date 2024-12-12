@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Modal from 'react-native-modal';
 import Header from "../../components/Header"; // Import the Header component
+import Toast from 'react-native-toast-message';
 import { router } from 'expo-router';
 
 // Software-related questions
@@ -51,6 +52,11 @@ export default function SoftwareQuiz() {
     };
 
     const handleNext = () => {
+        Toast.show({
+                    type: 'info',
+                    text1: 'DONT GO BACK!',
+                    text2: 'if you go back you will lose all your progees!',
+                });
         if (selectedAnswer === currentQuestion.correctAnswer) {
             setScore(score + 1);
         }
