@@ -12,6 +12,7 @@ import { auth } from "../../utils/firebase"; // Adjust according to your file st
 import { router } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { FontAwesome } from "@expo/vector-icons";
+import Toast from 'react-native-toast-message'; // Import Toast
 
 export default function SignIn() {
     const [email, setEmail] = useState("");
@@ -27,17 +28,34 @@ export default function SignIn() {
                     const user = userCredential.user;
                     setLoading(false);
                     router.push("/(tabs)"); // Redirect to app dashboard
-                    alert("Login Successful!");
+                    
+                    // Show success toast
+                    Toast.show({
+                        type: 'success',
+                        text1: 'Login Successful!',
+                        text2: 'Welcome back to the Quiz App.',
+                    });
+
                     await AsyncStorage.setItem("info", JSON.stringify(user.uid));
                     setEmail("");
                     setPassword("");
                 })
                 .catch((error) => {
                     setLoading(false);
-                    alert("Error logging in. Please check your credentials.");
+                    // Show error toast
+                    Toast.show({
+                        type: 'error',
+                        text1: 'Error logging in',
+                        text2: 'Please check your credentials.',
+                    });
                 });
         } else {
-            alert("Please fill in all the fields");
+            // Show error toast if fields are empty
+            Toast.show({
+                type: 'error',
+                text1: 'Invalid Input',
+                text2: 'Please fill in all the fields.',
+            });
         }
     }
 
@@ -89,6 +107,9 @@ export default function SignIn() {
                     </Text>
                 </Text>
             </View>
+
+            {/* Toast Component */}
+            <Toast />
         </View>
     );
 }

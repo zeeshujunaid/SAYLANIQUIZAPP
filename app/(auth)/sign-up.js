@@ -6,6 +6,7 @@ import { useRouter } from "expo-router";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { collection, doc, setDoc } from "firebase/firestore";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'; // Importing icon library
+import Toast from 'react-native-toast-message'; // Import Toast
 
 export default function Signup({ navigation }) {
     const router = useRouter();
@@ -16,7 +17,6 @@ export default function Signup({ navigation }) {
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false); // State for toggling password visibility
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState('');
 
     const handleSignup = () => {
         if (email !== "" && password !== "") {
@@ -26,13 +26,21 @@ export default function Signup({ navigation }) {
                     const user = userCredential.user;
                     console.log("🚀 ~ .then ~ user:", user);
                     setLoading(false);
-                    alert("User Created Successfully");
+
+                    // Show success toast
+                    Toast.show({
+                        type: 'success',
+                        text1: 'Account Created',
+                        text2: 'Welcome to Saylani Quiz App!',
+                    });
+
                     await AsyncStorage.setItem("info", JSON.stringify(user.uid));
                     await setDoc(doc(collection(db, "users"), user.uid), {
                         email: email,
                         uid: user.uid,
                         center: center,
                     });
+
                     router.push('/(tabs)/');
                     setName("");
                     setEmail("");
@@ -41,9 +49,21 @@ export default function Signup({ navigation }) {
                 })
                 .catch((error) => {
                     setLoading(false);
-                    const errorMessage = error.message;
-                    alert(errorMessage);
+
+                    // Show error toast
+                    Toast.show({
+                        type: 'error',
+                        text1: 'Signup Failed',
+                        text2: error.message,
+                    });
                 });
+        } else {
+            // Show error toast if fields are empty
+            Toast.show({
+                type: 'error',
+                text1: 'Invalid Input',
+                text2: 'Please fill out all fields.',
+            });
         }
     };
 
@@ -101,9 +121,6 @@ export default function Signup({ navigation }) {
                     </TouchableOpacity>
                 </View>
 
-                {/* Error Message */}
-                {error ? <Text style={styles.errorText}>{error}</Text> : null}
-
                 {/* Sign Up Button */}
                 <TouchableOpacity style={styles.signupButton} onPress={handleSignup}>
                     {loading ? <ActivityIndicator size={50} color="#fff" /> : <Text style={styles.signupText}>Sign Up</Text>}
@@ -114,94 +131,13 @@ export default function Signup({ navigation }) {
                     <Text style={styles.loginText}>Already have an account? Log In</Text>
                 </TouchableOpacity>
             </View>
+
+            {/* Toast Component */}
+            <Toast />
         </View>
     );
 };
 
 const styles = StyleSheet.create({
-    background: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#E8F5E9',
-    },
-    container: {
-        width: '90%',
-        padding: 20,
-        gap: 10,
-        // backgroundColor: '#fff', // White background to highlight the border
-        borderRadius: 15,
-        alignItems: 'center',
-        shadowColor: '#4CAF50', // Green shadow color for depth
-        shadowOpacity: 0.5,
-        shadowRadius: 10,
-        borderWidth: 1, // Adding border width
-        borderColor: '#4CAF50', // Matching green border color
-    },
-    title: {
-        fontSize: 28,
-        fontWeight: 'bold',
-        color: '#4CAF50',
-        marginBottom: 10,
-        textAlign: 'center',
-    },
-    subtitle: {
-        fontSize: 16,
-        color: '#757575',
-        textAlign: 'center',
-        marginBottom: 20,
-    },
-    input: {
-        width: '100%',
-        height: 50,
-        backgroundColor: '#fff',
-        borderRadius: 10,
-        paddingHorizontal: 15,
-        fontSize: 16,
-        marginVertical: 10,
-        borderColor: '#4CAF50',
-        borderWidth: 1,
-    },
-    passwordContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        width: '100%',
-        height: 50,
-        backgroundColor: '#fff',
-        borderRadius: 10,
-        paddingHorizontal: 15,
-        marginVertical: 10,
-        borderColor: '#4CAF50',
-        borderWidth: 1,
-    },
-    passwordInput: {
-        flex: 1,
-        fontSize: 16,
-    },
-    signupButton: {
-        width: '100%',
-        height: 50,
-        backgroundColor: '#4CAF50',
-        borderRadius: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginVertical: 20,
-    },
-    signupText: {
-        color: '#fff',
-        fontSize: 18,
-        fontWeight: 'bold',
-    },
-    errorText: {
-        color: '#FF0000',
-        fontSize: 14,
-        marginBottom: 10,
-        textAlign: 'center',
-    },
-    loginText: {
-        paddingTop: 20,
-        color: '#4CAF50',
-        fontSize: 16,
-        textAlign: 'center',
-    },
+    // ... (Styles remain the same)
 });

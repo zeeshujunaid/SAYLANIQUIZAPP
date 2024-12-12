@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
+import Toast from "react-native-toast-message";
 
 export default function LiveQuiz() {
     const [quizCode, setQuizCode] = useState("");
@@ -8,7 +9,11 @@ export default function LiveQuiz() {
 
     const handleSubmit = () => {
         if (quizCode.trim() === "") {
-            Alert.alert("Error", "Please enter a quiz code to proceed.");
+            Toast.show({
+                type: "error",
+                text1: "Error",
+                text2: "Please enter a quiz code to proceed.",
+            });
         } else {
             // Validate or process the quiz code here
             // For now, we'll assume it's valid and navigate to the quiz screen
@@ -32,6 +37,9 @@ export default function LiveQuiz() {
             <TouchableOpacity style={styles.button} onPress={handleSubmit}>
                 <Text style={styles.buttonText}>Start Quiz</Text>
             </TouchableOpacity>
+
+            {/* Toast Container */}
+            <Toast />
         </View>
     );
 }
