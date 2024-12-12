@@ -4,11 +4,11 @@ import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 
 const WelcomeScreen = () => {
 
-  useEffect(() => {
-    setTimeout(() => {
-      router.push('/loading'); // Auto-redirect after 1 second
-    }, 1000);
-  }, []);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     router.push('/loading'); // Auto-redirect after 1 second
+  //   }, 1000);
+  // }, []);
 
   return (
     <View style={styles.container}>
@@ -21,7 +21,7 @@ const WelcomeScreen = () => {
       
       <TouchableOpacity 
         style={styles.button}
-        onPress={() => router.push('/(tabs)/')} // Navigate to drawer/tabs screen
+        onPress={() => router.push('/sign-in')} // Navigate to drawer/tabs screen
       >
         <Text style={styles.buttonText}>Get Started</Text>
       </TouchableOpacity>

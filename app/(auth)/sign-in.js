@@ -98,21 +98,20 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#4caf50", // Light grey background color
+        backgroundColor: "#E8F5E9", // Light green background
     },
     container: {
         width: "85%",
         paddingHorizontal: 20,
         paddingVertical: 30,
         borderRadius: 15,
-        backgroundColor: "rgba(255, 255, 255, 0.85)", // Slightly transparent for a soft feel
+        borderWidth: 2, // Add border width
+        borderColor: "#33CC33", // Slight green border to match your theme
         alignItems: "center",
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.3,
-        shadowRadius: 10,
-        elevation: 5,
+        elevation: 0, // Ensure no shadow is present
+        backgroundColor: "transparent", // Keep the background transparent
     },
+    
     heading: {
         fontSize: 30,
         color: "#33CC33", // Green color to match your theme

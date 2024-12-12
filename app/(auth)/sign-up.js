@@ -123,18 +123,20 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#4caf50',
+        backgroundColor: '#E8F5E9',
     },
     container: {
         width: '90%',
         padding: 20,
         gap: 10,
-        backgroundColor: 'rgba(255, 255, 255, 0.9)',
+        // backgroundColor: '#fff', // White background to highlight the border
         borderRadius: 15,
         alignItems: 'center',
-        shadowColor: '#4CAF50',
+        shadowColor: '#4CAF50', // Green shadow color for depth
         shadowOpacity: 0.5,
         shadowRadius: 10,
+        borderWidth: 1, // Adding border width
+        borderColor: '#4CAF50', // Matching green border color
     },
     title: {
         fontSize: 28,

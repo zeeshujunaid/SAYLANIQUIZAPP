@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         padding: 20,
-        backgroundColor: "#F8F9FA", // Light background color
+        backgroundColor: "#E8F5E9", // Light background color
     },
     heading: {
         fontSize: 28,
