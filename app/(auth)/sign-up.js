@@ -151,6 +151,8 @@ const styles = StyleSheet.create({
   background: {
     flex: 1,
     backgroundColor: "#E8F5E9", // Light green background to match SignIn
+    justifyContent: 'center', // Center content vertically
+    alignItems: 'center', // Center content horizontally
   },
   container: {
     width: "85%",
@@ -160,7 +162,6 @@ const styles = StyleSheet.create({
     borderWidth: 2, // Add border width
     borderColor: "#33CC33", // Slight green border to match SignIn
     alignItems: "center",
-    elevation: 0, // Ensure no shadow is present
     backgroundColor: "transparent", // Keep the background transparent
   },
   title: {
