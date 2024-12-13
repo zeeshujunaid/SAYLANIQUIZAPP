@@ -37,18 +37,27 @@ export default function SignIn() {
                     await AsyncStorage.setItem("info", JSON.stringify(user.uid));
                     setEmail("");
                     setPassword("");
+                    
+                    // Redirect to the dashboard or tabs
+                    router.push("/(tabs)");
                 })
                 .catch((error) => {
                     setLoading(false);
-                    // Show error toast
-                    Toast.show({
-                        type: 'error',
-                        text1: 'Error logging in',
-                        text2: 'Please check your credentials.',
-                        text3: error,
-                    });
-                    router.push("/(tabs)"); // Redirect to app dashboard
-                    setLoading(false);
+                    if (error.code === "auth/user-not-found") {
+                        // Show alert if the email is not registered
+                        Toast.show({
+                            type: 'error',
+                            text1: 'User Not Found',
+                            text2: 'The email you entered is not registered. Please sign up first.',
+                        });
+                    } else {
+                        // Show generic error for other issues
+                        Toast.show({
+                            type: 'error',
+                            text1: 'Error logging in',
+                            text2: 'Please check your credentials.',
+                        });
+                    }
                 });
         } else {
             // Show error toast if fields are empty
