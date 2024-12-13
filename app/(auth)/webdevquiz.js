@@ -90,7 +90,7 @@ export default function WebDevQuiz() {
     
             // Add the current result to the existing results
             const newResult = {
-                quizName: quizname,
+                quizName: quizName, // Use the correct variable name
                 score: score,
             };
             const updatedResults = [...existingResults, newResult];
@@ -101,7 +101,7 @@ export default function WebDevQuiz() {
             Toast.show({
                 type: 'success',
                 text1: 'Result Saved!',
-                text2: `Your score ${score} for ${quizname} quiz has been saved.`,
+                text2: `Your score ${score} for ${quizName} quiz has been saved.`,
             });
     
             setModalVisible(false); // Close the modal
@@ -112,10 +112,10 @@ export default function WebDevQuiz() {
                 text1: 'Error saving result!',
                 text2: 'Please try again.',
             });
+            console.log(error, "error");
         }
     };
     
-
     const handleDontSave = () => {
         setModalVisible(false);
         router.push('/(tabs)'); // Navigate to tabs screen without saving

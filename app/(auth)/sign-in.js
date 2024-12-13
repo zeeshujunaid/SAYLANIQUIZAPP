@@ -26,8 +26,6 @@ export default function SignIn() {
             signInWithEmailAndPassword(auth, email, password)
                 .then(async (userCredential) => {
                     const user = userCredential.user;
-                    setLoading(false);
-                    router.push("/(tabs)"); // Redirect to app dashboard
                     
                     // Show success toast
                     Toast.show({
@@ -35,7 +33,7 @@ export default function SignIn() {
                         text1: 'Login Successful!',
                         text2: 'Welcome back to the Quiz App.',
                     });
-
+                    
                     await AsyncStorage.setItem("info", JSON.stringify(user.uid));
                     setEmail("");
                     setPassword("");
@@ -47,7 +45,10 @@ export default function SignIn() {
                         type: 'error',
                         text1: 'Error logging in',
                         text2: 'Please check your credentials.',
+                        text3: error,
                     });
+                    router.push("/(tabs)"); // Redirect to app dashboard
+                    setLoading(false);
                 });
         } else {
             // Show error toast if fields are empty

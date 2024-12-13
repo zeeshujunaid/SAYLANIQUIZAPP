@@ -105,7 +105,14 @@ export default function UIUXQuiz() {
             });
         }
     };
+
+    const handleDontSave = () => {
+        setModalVisible(false); // Close the modal without saving the result
+    };
     
+    const handleCloseModal = () => {
+        setModalVisible(false); // Close the modal
+    };
 
     return (
         <View style={styles.container}>

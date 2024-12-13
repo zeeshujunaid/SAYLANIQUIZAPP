@@ -84,7 +84,11 @@ export default function Profile() {
       {loading ? (
         <ActivityIndicator size="large" color="#3b82f6" style={styles.loader} />
       ) : (
-        <ScrollView style={styles.scoresContainer} showsVerticalScrollIndicator={false}>
+        <ScrollView
+          style={styles.scoresContainer}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.scrollContentContainer}
+        >
           {/* Profile Info */}
           {profileInfo && (
             <View style={styles.profileCard}>
@@ -124,7 +128,7 @@ export default function Profile() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f3f4f6",
+    backgroundColor: "#E8F5E9",
   },
   profileImage: {
     width: 100,
@@ -136,6 +140,10 @@ const styles = StyleSheet.create({
   scoresContainer: {
     flex: 1,
     padding: 16,
+    paddingBottom: 80, // Add space to the bottom to prevent hiding content behind the tab bar
+  },
+  scrollContentContainer: {
+    paddingBottom: 100, // Ensures enough space is left for the last content
   },
   scoresTitle: {
     fontSize: 18,
@@ -144,14 +152,14 @@ const styles = StyleSheet.create({
     color: "#111827",
   },
   profileCard: {
-    backgroundColor: "#ffffff",
+    // backgroundColor: "#ffffff",
     padding: 16,
     borderRadius: 8,
     marginBottom: 12,
-    shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 4,
+    // shadowColor: "#000",
+    // shadowOpacity: 0.1,
+    // shadowRadius: 4,
+    // elevation: 4,
     alignItems: "center", // Center content
   },
   name: {

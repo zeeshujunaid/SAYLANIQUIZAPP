@@ -31,14 +31,13 @@ export default function Signup({ navigation }) {
       createUserWithEmailAndPassword(auth, email, password)
         .then(async (userCredential) => {
           const user = userCredential.user;
-          setLoading(false);
-
+          
           Toast.show({
             type: "success",
             text1: "Account Created",
             text2: "Welcome to Saylani Quiz App!",
           });
-
+          
           await AsyncStorage.setItem(
             "info",
             JSON.stringify({
@@ -48,19 +47,20 @@ export default function Signup({ navigation }) {
               center: center,
             })
           );
-
+          
           await setDoc(doc(collection(db, "users"), user.uid), {
             email: email,
             name: name,
             uid: user.uid,
             center: center,
           });
-
+          
           router.push("/(tabs)/");
           setName("");
           setEmail("");
           setCenter("");
           setPassword("");
+          setLoading(false);
         })
         .catch((error) => {
           setLoading(false);
@@ -88,7 +88,7 @@ export default function Signup({ navigation }) {
         <TextInput
           style={styles.input}
           placeholder="Name"
-          placeholderTextColor="#4CAF50"
+          placeholderTextColor="#808080"
           value={name}
           onChangeText={setName}
         />
@@ -96,7 +96,7 @@ export default function Signup({ navigation }) {
         <TextInput
           style={styles.input}
           placeholder="Email"
-          placeholderTextColor="#4CAF50"
+          placeholderTextColor="#808080"
           value={email}
           onChangeText={setEmail}
         />
@@ -104,7 +104,7 @@ export default function Signup({ navigation }) {
         <TextInput
           style={styles.input}
           placeholder="Center"
-          placeholderTextColor="#4CAF50"
+          placeholderTextColor="#808080"
           value={center}
           onChangeText={setCenter}
         />
@@ -113,7 +113,7 @@ export default function Signup({ navigation }) {
           <TextInput
             style={styles.passwordInput}
             placeholder="Password"
-            placeholderTextColor="#4CAF50"
+            placeholderTextColor="#808080"
             secureTextEntry={!showPassword}
             value={password}
             onChangeText={setPassword}
@@ -124,7 +124,7 @@ export default function Signup({ navigation }) {
             <Icon
               name={showPassword ? "eye-off" : "eye"}
               size={24}
-              color="#4CAF50"
+              color="#808080"
             />
           </TouchableOpacity>
         </View>
@@ -150,18 +150,23 @@ export default function Signup({ navigation }) {
 const styles = StyleSheet.create({
   background: {
     flex: 1,
-    backgroundColor: "#e8f5e9", // Light green background
+    backgroundColor: "#E8F5E9", // Light green background to match SignIn
   },
   container: {
-    flex: 1,
-    justifyContent: "center",
+    width: "85%",
+    paddingHorizontal: 20,
+    paddingVertical: 30,
+    borderRadius: 15,
+    borderWidth: 2, // Add border width
+    borderColor: "#33CC33", // Slight green border to match SignIn
     alignItems: "center",
-    padding: 16,
+    elevation: 0, // Ensure no shadow is present
+    backgroundColor: "transparent", // Keep the background transparent
   },
   title: {
     fontSize: 24,
     fontWeight: "bold",
-    color: "#4CAF50",
+    color: "#33CC33", // Green color to match the theme
     marginBottom: 8,
   },
   subtitle: {
@@ -170,9 +175,9 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   input: {
-    width: "90%",
+    width: "100%",
     height: 50,
-    borderColor: "#4CAF50",
+    borderColor: "#33CC33", // Green border to match the theme
     borderWidth: 1,
     borderRadius: 8,
     padding: 10,
@@ -180,11 +185,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   passwordContainer: {
-    width: "90%",
+    width: "100%",
     height: 50,
     flexDirection: "row",
     alignItems: "center",
-    borderColor: "#4CAF50",
+    borderColor: "#33CC33", // Green border to match the theme
     borderWidth: 1,
     borderRadius: 8,
     backgroundColor: "#fff",
@@ -196,9 +201,9 @@ const styles = StyleSheet.create({
     color: "#000",
   },
   signupButton: {
-    width: "90%",
+    width: "100%",
     height: 50,
-    backgroundColor: "#4CAF50",
+    backgroundColor: "#33CC33", // Green for the button to match the theme
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 8,
@@ -212,7 +217,7 @@ const styles = StyleSheet.create({
   loginText: {
     marginTop: 12,
     fontSize: 14,
-    color: "#4CAF50",
+    color: "#33CC33", // Green footer text
     textDecorationLine: "underline",
   },
 });
