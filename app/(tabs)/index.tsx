@@ -5,16 +5,14 @@ import { Text, TouchableOpacity, StyleSheet, SafeAreaView, Image, ScrollView } f
 import Toast from 'react-native-toast-message';
 
 export default function QuizHomeScreen() {
-    const handleCategoryPress = (quizRoute) => {
+    const handleCategoryPress = (quizRoute:any) => {
         console.log("Navigating to:", quizRoute); // Debug log
         
-        // Show the first toast
         Toast.show({
             type: 'success',
             text1: 'BEST OF LUCK!',
             text2: 'Get ready for your quiz!',
         });
-        // Navigate to the quiz route
         try {
             router.push(quizRoute);
         } catch (error) {

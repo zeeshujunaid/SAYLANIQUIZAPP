@@ -73,17 +73,27 @@ export default function MarketingQuiz() {
 
     const handleSaveResult = async () => {
         try {
-            // Save quiz name and score in AsyncStorage
-            await AsyncStorage.setItem('quizResult', JSON.stringify({
+            // Retrieve existing results from AsyncStorage
+            const storedResults = await AsyncStorage.getItem("quizResults");
+            const existingResults = storedResults ? JSON.parse(storedResults) : [];
+    
+            // Add the current result to the existing results
+            const newResult = {
                 quizName: quizname,
                 score: score,
-            }));
+            };
+            const updatedResults = [...existingResults, newResult];
+    
+            // Save the updated results array back to AsyncStorage
+            await AsyncStorage.setItem("quizResults", JSON.stringify(updatedResults));
+    
             Toast.show({
                 type: 'success',
                 text1: 'Result Saved!',
                 text2: `Your score ${score} for ${quizname} quiz has been saved.`,
             });
-            setModalVisible(false);
+    
+            setModalVisible(false); // Close the modal
             router.push('/(tabs)'); // Navigate to tabs screen
         } catch (error) {
             Toast.show({
@@ -93,7 +103,7 @@ export default function MarketingQuiz() {
             });
         }
     };
-
+    
     const handleDontSave = () => {
         setModalVisible(false);
         router.push('/(tabs)'); // Navigate to tabs screen without saving

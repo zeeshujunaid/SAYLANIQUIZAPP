@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Modal from 'react-native-modal';
 import Header from "../../components/Header"; // Import the Header component
@@ -48,23 +48,6 @@ export default function WebDevQuiz() {
     const [score, setScore] = useState(0);
     const [isModalVisible, setModalVisible] = useState(false);
 
-    useEffect(() => {
-        // Load quiz result from AsyncStorage when component mounts
-        const loadQuizResult = async () => {
-            try {
-                const savedResult = await AsyncStorage.getItem(quizName);
-                if (savedResult !== null) {
-                    const result = JSON.parse(savedResult);
-                    setScore(result.score);
-                    setCurrentQuestionIndex(result.index);
-                }
-            } catch (error) {
-                console.error('Failed to load quiz result', error);
-            }
-        };
-        loadQuizResult();
-    }, []);
-
     const currentQuestion = webDevQuestions[currentQuestionIndex];
 
     const handleAnswerSelect = (answer) => {
@@ -101,18 +84,27 @@ export default function WebDevQuiz() {
 
     const handleSaveResult = async () => {
         try {
-            // Save quiz name, score, and current question index in AsyncStorage
-            await AsyncStorage.setItem(quizName, JSON.stringify({
-                quizName: quizName,
+            // Retrieve existing results from AsyncStorage
+            const storedResults = await AsyncStorage.getItem("quizResults");
+            const existingResults = storedResults ? JSON.parse(storedResults) : [];
+    
+            // Add the current result to the existing results
+            const newResult = {
+                quizName: quizname,
                 score: score,
-                index: currentQuestionIndex,
-            }));
+            };
+            const updatedResults = [...existingResults, newResult];
+    
+            // Save the updated results array back to AsyncStorage
+            await AsyncStorage.setItem("quizResults", JSON.stringify(updatedResults));
+    
             Toast.show({
                 type: 'success',
                 text1: 'Result Saved!',
-                text2: `Your score for ${quizName} has been saved.`,
+                text2: `Your score ${score} for ${quizname} quiz has been saved.`,
             });
-            setModalVisible(false);
+    
+            setModalVisible(false); // Close the modal
             router.push('/(tabs)'); // Navigate to tabs screen
         } catch (error) {
             Toast.show({
@@ -122,6 +114,7 @@ export default function WebDevQuiz() {
             });
         }
     };
+    
 
     const handleDontSave = () => {
         setModalVisible(false);
