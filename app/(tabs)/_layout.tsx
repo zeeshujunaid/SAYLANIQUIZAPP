@@ -16,7 +16,7 @@ export default function TabLayout() {
           right: 20,
           height: 50, // Increased height for better visibility
           borderRadius: 35,
-          backgroundColor: '#fff',
+          backgroundColor: 'lightgreen',
           shadowColor: '#000',
           shadowOffset: { width: 0, height: 10 },
           shadowOpacity: 0.1,
