@@ -93,7 +93,7 @@ export default function Profile() {
           {profileInfo && (
             <View style={styles.profileCard}>
               <Image
-                source={{ uri: "https://via.placeholder.com/150" }}
+                source={{ uri: "https://avatars.githubusercontent.com/u/155985389?s=400&u=143d628a397176208d57037c896734943265e663&v=4" }}
                 style={styles.profileImage}
               />
               <Text style={styles.name}>{profileInfo.name}</Text>

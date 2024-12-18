@@ -1,111 +1,99 @@
-import { router } from 'expo-router';
-import React from 'react';
-import Header from '../../components/Header';
-import { Text, TouchableOpacity, StyleSheet, SafeAreaView, Image, ScrollView } from 'react-native';
+import React, { useState } from 'react';
+import { Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, ScrollView, View } from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
 import Toast from 'react-native-toast-message';
 
 export default function QuizHomeScreen() {
-    const handleCategoryPress = (quizRoute:any) => {
-        console.log("Navigating to:", quizRoute); // Debug log
-        
+    const [codes, setCodes] = useState({
+        marketing: '',
+        software: '',
+        web: '',
+        app: '',
+        design: '',
+    });
+    const [expanded, setExpanded] = useState({});
+
+    const toggleExpand = (category) => {
+        setExpanded((prev) => ({
+            ...prev,
+            [category]: !prev[category],
+        }));
+    };
+
+    const handleCategoryPress = (categoryKey, code) => {
+        if (!code.trim()) {
+            Toast.show({
+                type: 'error',
+                text1: 'Error',
+                text2: 'Please enter the live quiz code.',
+            });
+            return;
+        }
+
         Toast.show({
             type: 'success',
             text1: 'BEST OF LUCK!',
             text2: 'Get ready for your quiz!',
         });
-        try {
-            router.push(quizRoute);
-        } catch (error) {
-            console.error("Error navigating to route:", error);
-        }
+
+        // Clear the input field for the corresponding category
+        setCodes((prev) => ({
+            ...prev,
+            [categoryKey]: '',
+        }));
     };
-    
-    
+
+    const categories = [
+        { name: 'Digital Marketing', key: 'marketing' },
+        { name: 'Software Engineering', key: 'software' },
+        { name: 'Web Development', key: 'web' },
+        { name: 'App Development', key: 'app' },
+        { name: 'UI/UX Design', key: 'design' },
+    ];
 
     return (
         <SafeAreaView style={styles.container}>
-            {/* Header */}
-            {/* <Header /> */}
-
-            {/* Subheader */}
-            <Text style={styles.subHeaderText}>Select Live Quiz</Text>
-
-            {/* Scrollable Category List */}
+            <Text style={styles.subHeaderText}>Enter Live Quiz Code</Text>
             <ScrollView contentContainerStyle={styles.categoriesContainer} showsVerticalScrollIndicator={false}>
-                {/* Digital Marketing */}
-                <TouchableOpacity
-                    style={styles.categoryCard}
-                    onPress={() => handleCategoryPress('/(auth)/marketingquiz')}
-                >
-                    <Image
-                        source={{ uri: 'https://static.vecteezy.com/system/resources/thumbnails/027/853/733/small_2x/people-standing-behind-desk-with-computer-the-screen-displays-various-charts-and-graphs-ai-generated-png.png' }}
-                        style={styles.categoryImage}
-                    />
-                    <Text style={styles.categoryText}>Digital Marketing Quiz</Text>
-                </TouchableOpacity>
-
-                {/* Software Engineering */}
-                <TouchableOpacity
-                    style={styles.categoryCard}
-                    onPress={() => handleCategoryPress('/(auth)/softwarequiz')}
-                >
-                    <Image
-                        source={{ uri: 'https://media.istockphoto.com/id/1046046242/photo/binary-code-background.jpg?s=612x612&w=0&k=20&c=xrVN5UxMp_-j96Diq9xBeAXW-NuDh0Q5PpH1gyr5Xxc=' }}
-                        style={styles.categoryImage}
-                    />
-                    <Text style={styles.categoryText}>Software Engineering Quiz</Text>
-                </TouchableOpacity>
-
-                {/* Web Development */}
-                <TouchableOpacity
-                    style={styles.categoryCard}
-                    onPress={() => handleCategoryPress('/(auth)/webdevquiz')}
-                >
-                    <Image
-                        source={{ uri: 'https://thumbs.dreamstime.com/b/responsive-web-design-studio-page-displayed-across-laptop-phone-tablet-computer-office-desk-showcasing-cross-device-339247349.jpg' }}
-                        style={styles.categoryImage}
-                    />
-                    <Text style={styles.categoryText}>Web Development Quiz</Text>
-                </TouchableOpacity>
-
-                {/* App Development */}
-                <TouchableOpacity
-                    style={styles.categoryCard}
-                    onPress={() => handleCategoryPress('/(auth)/appdevquiz')}
-                >
-                    <Image
-                        source={{ uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrKN8Czb174E312H9zZ5TeQSsN27z3P0XcHg&s' }}
-                        style={styles.categoryImage}
-                    />
-                    <Text style={styles.categoryText}>App Development Quiz</Text>
-                </TouchableOpacity>
-
-                {/* UI/UX Design */}
-                <TouchableOpacity
-                    style={styles.categoryCard}
-                    onPress={() => handleCategoryPress('/(auth)/designquiz')}
-                >
-                    <Image
-                        source={{ uri: 'https://blog-frontend.envato.com/cdn-cgi/image/width=4800,quality=75,format=auto/uploads/sites/2/2022/05/graphic-design-tools.png' }}
-                        style={styles.categoryImage}
-                    />
-                    <Text style={styles.categoryText}>UI/UX Design Quiz</Text>
-                </TouchableOpacity>
-
-                {/* Live Quiz */}
-                {/* <TouchableOpacity
-                    style={styles.categoryCard}
-                    onPress={() => handleCategoryPress('/LiveQuiz')}
-                >
-                    <Image
-                        source={{ uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSH489-5BUasH1f_QxsyzYVNxkZxKEnie5sog&s' }}
-                        style={styles.categoryImage}
-                    />
-                    <Text style={styles.categoryText}>Enter Live Quiz</Text>
-                </TouchableOpacity> */}
+                {categories.map((category) => (
+                    <View key={category.key} style={styles.quizCard}>
+                        <TouchableOpacity
+                            style={styles.cardHeader}
+                            onPress={() => toggleExpand(category.key)}
+                        >
+                            <Text style={styles.quizTitle}>{category.name}</Text>
+                            <FontAwesome
+                                name={expanded[category.key] ? 'chevron-up' : 'chevron-down'}
+                                size={20}
+                                color="#388E3C"
+                            />
+                        </TouchableOpacity>
+                        {expanded[category.key] && (
+                            <View style={styles.cardContent}>
+                                <Text style={styles.details}>30 quizzes</Text>
+                                <Text style={styles.details}>Solve timing: 30 minutes</Text>
+                                <TextInput
+                                    style={styles.input}
+                                    placeholder="Enter Live Quiz Code"
+                                    placeholderTextColor="#999"
+                                    value={codes[category.key]}
+                                    onChangeText={(text) =>
+                                        setCodes((prev) => ({ ...prev, [category.key]: text }))
+                                    }
+                                />
+                                <TouchableOpacity
+                                    style={styles.button}
+                                    onPress={() =>
+                                        handleCategoryPress(category.key, codes[category.key])
+                                    }
+                                >
+                                    <Text style={styles.buttonText}>Start Quiz</Text>
+                                </TouchableOpacity>
+                            </View>
+                        )}
+                    </View>
+                ))}
             </ScrollView>
-
-            {/* Toast Container */}
             <Toast />
         </SafeAreaView>
     );
@@ -116,21 +104,6 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#E8F5E9',
         padding: 16,
-        paddingBottom: 100, // Ensure enough space for the tabs
-    },
-    headerContainer: {
-        backgroundColor: '#81C784',
-        paddingVertical: 20,
-        borderRadius: 10,
-        marginBottom: 20,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    headerText: {
-        fontSize: 30,
-        fontWeight: 'bold',
-        color: '#fff',
-        textAlign: 'center',
     },
     subHeaderText: {
         fontSize: 22,
@@ -140,35 +113,59 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     categoriesContainer: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        justifyContent: 'space-evenly',
-        marginBottom: 20,
+        flexGrow: 1,
+        paddingBottom: 20,
     },
-    categoryCard: {
+    quizCard: {
+        width: '96%',
         backgroundColor: '#ffffff',
         borderRadius: 10,
-        width: '45%',
-        marginBottom: 16,
-        alignItems: 'center',
-        paddingVertical: 15,
-        marginHorizontal: 8,
+        marginBottom: 20,
+        paddingHorizontal: 10,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 3 },
         shadowOpacity: 0.1,
         shadowRadius: 5,
         elevation: 5,
+        alignSelf: 'center',
     },
-    categoryImage: {
-        width: 120,
-        height: 120,
-        borderRadius: 10,
-        marginBottom: 12,
+    cardHeader: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingVertical: 10,
     },
-    categoryText: {
+    quizTitle: {
         fontSize: 18,
         fontWeight: 'bold',
         color: '#388E3C',
-        textAlign: 'center',
+    },
+    cardContent: {
+        paddingVertical: 10,
+    },
+    details: {
+        fontSize: 14,
+        color: '#555',
+        marginBottom: 5,
+    },
+    input: {
+        height: 40,
+        borderColor: '#ccc',
+        borderWidth: 1,
+        borderRadius: 8,
+        paddingHorizontal: 10,
+        marginBottom: 10,
+        color: '#333',
+    },
+    button: {
+        backgroundColor: '#388E3C',
+        borderRadius: 8,
+        paddingVertical: 10,
+        alignItems: 'center',
+    },
+    buttonText: {
+        color: '#ffffff',
+        fontSize: 16,
+        fontWeight: 'bold',
     },
 });
