@@ -117,7 +117,7 @@ export default function UIUXQuiz() {
     return (
         <View style={styles.container}>
             {/* Fixed Header */}
-            <Header />
+            {/* <Header /> */}
 
             {/* Quiz Content */}
             <View style={styles.content}>
