@@ -10,13 +10,13 @@ export default function TabLayout() {
         tabBarShowLabel: false,
         tabBarStyle: {
           position: 'absolute',
-          alignItems:"center",
+          alignItems: 'center',
           bottom: 10, // Add more bottom spacing for better alignment
           left: 20,
           right: 20,
           height: 50, // Increased height for better visibility
           borderRadius: 35,
-          backgroundColor: 'lightgreen',
+          backgroundColor: 'white',
           shadowColor: '#000',
           shadowOffset: { width: 0, height: 10 },
           shadowOpacity: 0.1,
@@ -24,6 +24,8 @@ export default function TabLayout() {
           elevation: 10,
           paddingBottom: 8, // Add padding for better tab spacing
         },
+        tabBarActiveTintColor: 'green', // Active tab icon color
+        tabBarInactiveTintColor: '#a4d7a6', // Inactive tab icon color
       }}
     >
       {/* Home Tab */}
@@ -38,8 +40,13 @@ export default function TabLayout() {
       <Tabs.Screen
         name="LiveQuiz"
         options={{
-          tabBarIcon: () => (
-            <View style={styles.centerButton}>
+          tabBarIcon: ({ focused }) => (
+            <View
+              style={[
+                styles.centerButton,
+                { backgroundColor: focused ? '#66BB6A' : '#4CAF50' }, // Active/inactive background color
+              ]}
+            >
               <TabBarIcon name="plus" color="white" />
             </View>
           ),
@@ -62,7 +69,6 @@ const styles = StyleSheet.create({
     width: 70, // Increased size for better prominence
     height: 70,
     borderRadius: 35,
-    backgroundColor: '#4CAF50', // Main color for the floating button
     alignItems: 'center',
     justifyContent: 'center',
     position: 'absolute', // Position it absolutely to center above the tab bar
