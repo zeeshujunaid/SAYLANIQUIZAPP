@@ -214,7 +214,9 @@ const styles = StyleSheet.create({
         elevation: 2,
     },
     selectedOption: {
-        backgroundColor: "#81C784", // Medium green for selected option
+        backgroundColor: "#81C784",
+        color:"white"
+        // Medium green for selected option
     },
     optionText: {
         fontSize: 18,

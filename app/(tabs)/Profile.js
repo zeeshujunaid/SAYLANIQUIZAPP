@@ -18,7 +18,7 @@ export default function Profile() {
     try {
       const storedResults = await AsyncStorage.getItem("quizResults");
       const storedInfo = await AsyncStorage.getItem("info");
-
+  
       // Parse and set quiz results
       if (storedResults) {
         const parsedResults = JSON.parse(storedResults);
@@ -26,13 +26,21 @@ export default function Profile() {
       } else {
         setQuizResults([]); // No results found
       }
-
-      // Parse and set profile info
+  
+      // Parse and set profile info with fallback for missing fields
       if (storedInfo) {
         const parsedInfo = JSON.parse(storedInfo);
-        setProfileInfo(parsedInfo); // Should include name, email, and center
+        setProfileInfo({
+          name: parsedInfo.name || "Name Not Available",
+          email: parsedInfo.email || "Email Not Available",
+          center: parsedInfo.center || "Not Available",
+        });
       } else {
-        setProfileInfo({ name: "Unknown", email: "N/A", center: "Not Available" });
+        setProfileInfo({
+          name: "Not Available",
+          email: "Not Available",
+          center: "Not Available",
+        });
       }
     } catch (error) {
       Toast.show({
@@ -45,6 +53,7 @@ export default function Profile() {
       setLoading(false);
     }
   };
+  
 
   // Logout Function
   const handleLogout = async () => {
@@ -152,15 +161,10 @@ const styles = StyleSheet.create({
     color: "#111827",
   },
   profileCard: {
-    // backgroundColor: "#ffffff",
     padding: 16,
     borderRadius: 8,
     marginBottom: 12,
-    // shadowColor: "#000",
-    // shadowOpacity: 0.1,
-    // shadowRadius: 4,
-    // elevation: 4,
-    alignItems: "center", // Center content
+    alignItems: "center",
   },
   name: {
     fontSize: 18,

@@ -100,20 +100,20 @@ export default function QuizHomeScreen() {
         </SafeAreaView>
     );
 }
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#F5F5F5',
+        backgroundColor: '#FFFFFF', // Clean, professional white background
         padding: 16,
         paddingBottom: 100,
     },
     subHeaderText: {
         fontSize: 24,
         fontWeight: 'bold',
-        color: '#388E3C',
+        color: '#2C3E50', // Darker color for a more modern look
         marginBottom: 20,
         textAlign: 'center',
+        textTransform: 'uppercase', // Adds a professional touch
     },
     categoriesContainer: {
         flexDirection: 'row',
@@ -121,28 +121,38 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     categoryCard: {
-        backgroundColor: '#FFFFFF',
+        backgroundColor: '#F8F9FA', // Subtle gray for a soft card appearance
         borderRadius: 15,
         width: '48%',
         marginBottom: 16,
         alignItems: 'center',
         padding: 12,
         shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-        elevation: 3,
+        shadowOffset: { width: 0, height: 4 }, // Slightly more prominent shadow
+        shadowOpacity: 0.15,
+        shadowRadius: 5,
+        elevation: 5, // Elevation for Android devices
     },
     categoryImage: {
         width: '100%',
-        height: 100,
+        height: 120, // Slightly taller for better visibility
         borderRadius: 12,
-        marginBottom: 10,
+        marginBottom: 12,
+        backgroundColor: '#E0E0E0', // Fallback background for images
     },
     categoryText: {
-        fontSize: 16,
-        fontWeight: '600',
-        color: '#333333',
+        fontSize: 18, // Larger font for better readability
+        fontWeight: '700', // Slightly bolder for emphasis
+        paddingVertical: 6, // Vertical padding for better spacing
+        color: '#34495E', // Darker text for contrast
+        backgroundColor: '#ECF0F1', // Light gray background for distinction
         textAlign: 'center',
+        borderRadius: 8, // Rounded corners
+        width: '100%',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+        elevation: 2,
     },
 });

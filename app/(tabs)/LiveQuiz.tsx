@@ -102,70 +102,86 @@ export default function QuizHomeScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#E8F5E9',
+        backgroundColor: '#F1F8E9', // Light greenish background
         padding: 16,
     },
     subHeaderText: {
-        fontSize: 22,
-        fontWeight: 'bold',
-        color: '#388E3C',
-        marginBottom: 20,
+        fontSize: 24,
+        fontWeight: '700',
+        color: '#2E7D32', // Dark green for emphasis
+        marginBottom: 16,
         textAlign: 'center',
+        letterSpacing: 0.5, // Subtle spacing for a clean look
+        textTransform: 'uppercase', // Professional uppercase
     },
     categoriesContainer: {
         flexGrow: 1,
         paddingBottom: 20,
     },
     quizCard: {
-        width: '96%',
-        backgroundColor: '#ffffff',
-        borderRadius: 10,
+        width: '95%',
+        backgroundColor: '#FFFFFF',
+        borderRadius: 12,
         marginBottom: 20,
-        paddingHorizontal: 10,
+        padding: 12,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 3 },
-        shadowOpacity: 0.1,
-        shadowRadius: 5,
-        elevation: 5,
+        shadowOpacity: 0.2,
+        shadowRadius: 6,
+        elevation: 6, // Elevation for depth
         alignSelf: 'center',
+        borderWidth: 1, 
+        borderColor: '#C8E6C9', // Light green border
     },
     cardHeader: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingVertical: 10,
+        paddingBottom: 8,
+        borderBottomWidth: 1,
+        borderBottomColor: '#E0E0E0', // Light grey for a subtle separator
     },
     quizTitle: {
-        fontSize: 18,
+        fontSize: 20,
         fontWeight: 'bold',
-        color: '#388E3C',
+        color: '#2E7D32',
     },
     cardContent: {
-        paddingVertical: 10,
+        paddingVertical: 12,
     },
     details: {
-        fontSize: 14,
-        color: '#555',
-        marginBottom: 5,
+        fontSize: 15,
+        color: '#555555',
+        lineHeight: 22, // Improved readability
     },
     input: {
-        height: 40,
-        borderColor: '#ccc',
+        height: 44,
+        borderColor: '#A5D6A7',
         borderWidth: 1,
-        borderRadius: 8,
-        paddingHorizontal: 10,
-        marginBottom: 10,
-        color: '#333',
+        borderRadius: 10,
+        paddingHorizontal: 12,
+        marginTop: 8,
+        marginBottom: 12,
+        color: '#333333',
+        backgroundColor: '#FAFAFA', // Light grey for input
     },
     button: {
-        backgroundColor: '#388E3C',
-        borderRadius: 8,
-        paddingVertical: 10,
+        backgroundColor: '#2E7D32', // Deep green for consistency
+        borderRadius: 10,
+        paddingVertical: 12,
         alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.25,
+        shadowRadius: 5,
+        elevation: 5,
     },
     buttonText: {
-        color: '#ffffff',
-        fontSize: 16,
-        fontWeight: 'bold',
+        color: '#FFFFFF',
+        fontSize: 18,
+        fontWeight: '600',
+        textTransform: 'uppercase', // Consistent and professional
+        letterSpacing: 0.8, // Spacing for button text
     },
 });
+
