@@ -5,7 +5,8 @@ import { Provider } from '../hooks/useAuth';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 export const unstable_settings = {
-  initialRouteName: '(auth)/loading',
+  initialRouteName: '(auth)/sign-in',
+  // initialRouteName: '(auth)/loading',
 };
 
 export default function RootLayout() {
@@ -15,7 +16,8 @@ export default function RootLayout() {
         {/* Expo Router Stack Navigation */}
         <Stack
           screenOptions={{ headerShown: false }}
-          initialRouteName="(auth)/loading"
+          // initialRouteName="(auth)/loading"
+          initialRouteName="(auth)/sign-in"
         >
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="(auth)/loading" options={{ headerShown: false }} />
@@ -23,10 +25,10 @@ export default function RootLayout() {
           <Stack.Screen name="(auth)/sign-up" options={{ headerShown: false }} />
           <Stack.Screen name="(auth)/sign-in" options={{ headerShown: false }} />
           <Stack.Screen name="LiveQuiz" options={{ headerShown: false }} />
-          <Stack.Screen
-            name="(auth)/marketingquiz"
-            options={{ headerShown: false }}
-          />
+          <Stack.Screen name="(auth)/marketingquiz" options={{ headerShown: false }}/>
+          <Stack.Screen name="(auth)/designquiz" options={{ headerShown: false }}/>
+          <Stack.Screen name="(auth)/appdevquiz" options={{ headerShown: false }}/>
+          <Stack.Screen name="(auth)/softwarequiz" options={{ headerShown: false }}/>
           <Stack.Screen name="(auth)/webdevquiz" options={{ headerShown: false }} />
         </Stack>
 
