@@ -5,7 +5,7 @@ import { Provider } from '../hooks/useAuth';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 export const unstable_settings = {
-  initialRouteName: '(auth)/sign-in',
+  initialRouteName: '(auth)/index',
   // initialRouteName: '(auth)/loading',
 };
 
@@ -17,7 +17,7 @@ export default function RootLayout() {
         <Stack
           screenOptions={{ headerShown: false }}
           // initialRouteName="(auth)/loading"
-          initialRouteName="(auth)/sign-in"
+          initialRouteName="(auth)/index"
         >
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="(auth)/loading" options={{ headerShown: false }} />

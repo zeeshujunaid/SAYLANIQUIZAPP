@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
-import { View, Text, ImageBackground, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, ImageBackground, TouchableOpacity, StyleSheet,StatusBar as RNStatusBar, } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
+import { StatusBar } from "expo-status-bar";
 import Toast from 'react-native-toast-message';
+
 
 const WelcomeScreen = () => {
   const router = useRouter();
@@ -36,19 +38,22 @@ const WelcomeScreen = () => {
 
   return (
     <ImageBackground
-      source={{ uri: 'https://mir-s3-cdn-cf.behance.net/projects/404/fe88a5125363293.Y3JvcCwxODc1LDE0NjYsMTA2Miw1OTg.jpg' }}
+      source={{ uri: 'https://www.esicm.org/wp-content/uploads/2024/05/quiztime.png' }}
       style={styles.background}
       resizeMode="contain"
     >
+      <StatusBar style="light" hidden={true} translucent={true} />
       <View style={styles.overlay}>
-        <Text style={styles.title}>Welcome to</Text>
-        <Text style={styles.subtitle}>Saylani Quiz App</Text>
-        <TouchableOpacity 
-          style={styles.button}
-          onPress={checkUser}
-        >
-          <Text style={styles.buttonText}>Get Started</Text>
-        </TouchableOpacity>
+        <View style={styles.container}>
+          <Text style={styles.title}>Welcome to</Text>
+          <Text style={styles.subtitle}>Saylani Quiz App</Text>
+          <TouchableOpacity 
+            style={styles.button}
+            onPress={checkUser}       
+          >
+            <Text style={styles.buttonText}>Get Started</Text>
+          </TouchableOpacity>
+        </View>
         <Toast />
       </View>
     </ImageBackground>
@@ -65,31 +70,47 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent black overlay
+    backgroundColor: 'rgba(0, 0, 0, 0.6)', // Semi-transparent overlay
+  },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
     padding: 20,
   },
   title: {
-    fontSize: 36,
+    fontSize: 38,
     fontWeight: 'bold',
-    color: '#fff', // White text for contrast
+    color: '#FFD700', // Golden text for a premium feel
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 10,
     marginBottom: 10,
+    textAlign: 'center',
   },
   subtitle: {
     fontSize: 22,
-    color: '#ddd', // Light grey for a subtle subtitle
+    color: '#fff',
     textAlign: 'center',
     marginBottom: 40,
+    opacity: 0.9,
   },
   button: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: '#1E90FF',
     paddingVertical: 15,
     paddingHorizontal: 50,
-    borderRadius: 25,
+    borderRadius: 30,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    elevation: 5,
   },
   buttonText: {
     color: '#fff',
     fontSize: 18,
     fontWeight: 'bold',
+    textTransform: 'uppercase',
   },
 });
 
