@@ -105,13 +105,17 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 5,
     elevation: 5,
+    // ADD HOVER
+    transition: 'background-color 0.3s', // Smooth hover effect
   },
   buttonText: {
-    color: '#fff',
+    color: 'red',
     fontSize: 18,
     fontWeight: 'bold',
     textTransform: 'uppercase',
   },
+
+ 
 });
 
 export default WelcomeScreen;
