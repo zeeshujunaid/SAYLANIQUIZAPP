@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     transition: 'background-color 0.3s', // Smooth hover effect
   },
   buttonText: {
-    color: 'red',
+    color: '#fff',
     fontSize: 18,
     fontWeight: 'bold',
     textTransform: 'uppercase',
