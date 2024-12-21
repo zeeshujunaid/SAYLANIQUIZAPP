@@ -1,7 +1,20 @@
 import React, { useState } from 'react';
-import { Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, ScrollView, View } from 'react-native';
+import {
+    Text,
+    TextInput,
+    TouchableOpacity,
+    StyleSheet,
+    SafeAreaView,
+    ScrollView,
+    View,
+    ActivityIndicator,
+} from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import Toast from 'react-native-toast-message';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getFirestore, collection, doc, getDoc } from 'firebase/firestore';
+
+const firestore = getFirestore();
 
 export default function QuizHomeScreen() {
     const [codes, setCodes] = useState({
@@ -12,6 +25,7 @@ export default function QuizHomeScreen() {
         design: '',
     });
     const [expanded, setExpanded] = useState({});
+    const [loading, setLoading] = useState(false);
 
     const toggleExpand = (category) => {
         setExpanded((prev) => ({
@@ -20,7 +34,7 @@ export default function QuizHomeScreen() {
         }));
     };
 
-    const handleCategoryPress = (categoryKey, code) => {
+    const handleCategoryPress = async (categoryKey, code) => {
         if (!code.trim()) {
             Toast.show({
                 type: 'error',
@@ -29,19 +43,60 @@ export default function QuizHomeScreen() {
             });
             return;
         }
-
-        Toast.show({
-            type: 'success',
-            text1: 'BEST OF LUCK!',
-            text2: 'Get ready for your quiz!',
-        });
-
-        // Clear the input field for the corresponding category
-        setCodes((prev) => ({
-            ...prev,
-            [categoryKey]: '',
-        }));
+    
+        setLoading(true);
+    
+        try {
+            // Dynamically determine the collection name
+            const collectionName = `${categoryKey}quizzes`; // e.g., webdevelopmentquizzes
+    
+            // Log the collection name to debug
+            console.log(`Fetching from collection: ${collectionName}, with code: ${code}`);
+    
+            // Fetch the quiz document for the selected category
+            const categoryRef = doc(collection(firestore, collectionName), code); // Using the code as the document ID
+            const categorySnapshot = await getDoc(categoryRef);
+    
+            if (categorySnapshot.exists()) {
+                const categoryData = categorySnapshot.data();
+    
+                Toast.show({
+                    type: 'success',
+                    text1: 'Code Matched!',
+                    text2: 'Loading your quiz...',
+                });
+    
+                // Save quiz data to AsyncStorage
+                await AsyncStorage.setItem(
+                    `quiz_${categoryKey}`, // e.g., quiz_webdevelopment
+                    JSON.stringify(categoryData)
+                );
+    
+                // Clear the input field for this category
+                setCodes((prev) => ({
+                    ...prev,
+                    [categoryKey]: '',
+                }));
+            } else {
+                Toast.show({
+                    type: 'error',
+                    text1: 'Invalid Code',
+                    text2: `No quiz found in ${collectionName} for the code ${code}.`,
+                });
+            }
+        } catch (error) {
+            Toast.show({
+                type: 'error',
+                text1: 'Error',
+                text2: 'An error occurred. Please try again later.',
+            });
+            console.error('Error fetching quiz data:', error);
+        } finally {
+            setLoading(false);
+        }
     };
+    
+    
 
     const categories = [
         { name: 'Digital Marketing', key: 'marketing' },
@@ -94,6 +149,11 @@ export default function QuizHomeScreen() {
                     </View>
                 ))}
             </ScrollView>
+            {loading && (
+                <View style={styles.loadingOverlay}>
+                    <ActivityIndicator size="large" color="#2E7D32" />
+                </View>
+            )}
             <Toast />
         </SafeAreaView>
     );
@@ -102,17 +162,17 @@ export default function QuizHomeScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#F1F8E9', // Light greenish background
+        backgroundColor: '#F1F8E9',
         padding: 16,
     },
     subHeaderText: {
         fontSize: 24,
         fontWeight: '700',
-        color: '#2E7D32', // Dark green for emphasis
+        color: '#2E7D32',
         marginBottom: 16,
         textAlign: 'center',
-        letterSpacing: 0.5, // Subtle spacing for a clean look
-        textTransform: 'uppercase', // Professional uppercase
+        letterSpacing: 0.5,
+        textTransform: 'uppercase',
     },
     categoriesContainer: {
         flexGrow: 1,
@@ -128,10 +188,10 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 0, height: 3 },
         shadowOpacity: 0.2,
         shadowRadius: 6,
-        elevation: 6, // Elevation for depth
+        elevation: 6,
         alignSelf: 'center',
-        borderWidth: 1, 
-        borderColor: '#C8E6C9', // Light green border
+        borderWidth: 1,
+        borderColor: '#C8E6C9',
     },
     cardHeader: {
         flexDirection: 'row',
@@ -139,7 +199,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingBottom: 8,
         borderBottomWidth: 1,
-        borderBottomColor: '#E0E0E0', // Light grey for a subtle separator
+        borderBottomColor: '#E0E0E0',
     },
     quizTitle: {
         fontSize: 20,
@@ -152,7 +212,7 @@ const styles = StyleSheet.create({
     details: {
         fontSize: 15,
         color: '#555555',
-        lineHeight: 22, // Improved readability
+        lineHeight: 22,
     },
     input: {
         height: 44,
@@ -163,10 +223,10 @@ const styles = StyleSheet.create({
         marginTop: 8,
         marginBottom: 12,
         color: '#333333',
-        backgroundColor: '#FAFAFA', // Light grey for input
+        backgroundColor: '#FAFAFA',
     },
     button: {
-        backgroundColor: '#2E7D32', // Deep green for consistency
+        backgroundColor: '#2E7D32',
         borderRadius: 10,
         paddingVertical: 12,
         alignItems: 'center',
@@ -180,8 +240,17 @@ const styles = StyleSheet.create({
         color: '#FFFFFF',
         fontSize: 18,
         fontWeight: '600',
-        textTransform: 'uppercase', // Consistent and professional
-        letterSpacing: 0.8, // Spacing for button text
+        textTransform: 'uppercase',
+        letterSpacing: 0.8,
+    },
+    loadingOverlay: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 });
-
