@@ -5,8 +5,7 @@ import { Provider } from '../hooks/useAuth';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 export const unstable_settings = {
-  initialRouteName: '(auth)/index',
-  // initialRouteName: '(auth)/loading',
+  initialRouteName: '(auth)/loading',
 };
 
 export default function RootLayout() {
@@ -16,8 +15,7 @@ export default function RootLayout() {
         {/* Expo Router Stack Navigation */}
         <Stack
           screenOptions={{ headerShown: false }}
-          // initialRouteName="(auth)/loading"
-          initialRouteName="(auth)/index"
+          initialRouteName="(auth)/loading"
         >
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="(auth)/loading" options={{ headerShown: false }} />

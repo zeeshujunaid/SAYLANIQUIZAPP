@@ -10,6 +10,7 @@ import {
     ActivityIndicator,
 } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
+import { router } from 'expo-router';
 import Toast from 'react-native-toast-message';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getFirestore, collection, doc, getDoc } from 'firebase/firestore';
@@ -33,7 +34,6 @@ export default function QuizHomeScreen() {
             [category]: !prev[category],
         }));
     };
-
     const handleCategoryPress = async (categoryKey, code) => {
         if (!code.trim()) {
             Toast.show({
@@ -47,14 +47,10 @@ export default function QuizHomeScreen() {
         setLoading(true);
     
         try {
-            // Dynamically determine the collection name
-            const collectionName = `${categoryKey}quizzes`; // e.g., webdevelopmentquizzes
-    
-            // Log the collection name to debug
+            const collectionName = `${categoryKey}developmentQuizzes`;
             console.log(`Fetching from collection: ${collectionName}, with code: ${code}`);
     
-            // Fetch the quiz document for the selected category
-            const categoryRef = doc(collection(firestore, collectionName), code); // Using the code as the document ID
+            const categoryRef = doc(collection(firestore, collectionName), code);
             const categorySnapshot = await getDoc(categoryRef);
     
             if (categorySnapshot.exists()) {
@@ -66,13 +62,14 @@ export default function QuizHomeScreen() {
                     text2: 'Loading your quiz...',
                 });
     
-                // Save quiz data to AsyncStorage
-                await AsyncStorage.setItem(
-                    `quiz_${categoryKey}`, // e.g., quiz_webdevelopment
-                    JSON.stringify(categoryData)
-                );
+                await AsyncStorage.setItem(`quiz_${categoryKey}`, JSON.stringify(categoryData));
     
-                // Clear the input field for this category
+                // Navigate to the second page with categoryKey as a parameter
+                router.push({
+                    pathname: '/(tabs)/LiveQuizNew',
+                    params: { categoryKey },
+                });
+    
                 setCodes((prev) => ({
                     ...prev,
                     [categoryKey]: '',
