@@ -1,5 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Image, StyleSheet, ScrollView, ActivityIndicator, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  ScrollView,
+  ActivityIndicator,
+  TouchableOpacity,
+  TextInput,
+} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Toast from "react-native-toast-message";
 import { signOut } from "firebase/auth";
@@ -18,16 +27,13 @@ export default function Profile() {
     try {
       const storedResults = await AsyncStorage.getItem("quizResults");
       const storedInfo = await AsyncStorage.getItem("info");
-  
-      // Parse and set quiz results
+
       if (storedResults) {
-        const parsedResults = JSON.parse(storedResults);
-        setQuizResults(parsedResults); // Set all saved quiz results
+        setQuizResults(JSON.parse(storedResults));
       } else {
-        setQuizResults([]); // No results found
+        setQuizResults([]);
       }
-  
-      // Parse and set profile info with fallback for missing fields
+
       if (storedInfo) {
         const parsedInfo = JSON.parse(storedInfo);
         setProfileInfo({
@@ -48,30 +54,20 @@ export default function Profile() {
         text1: "Error fetching data",
         text2: "Please try again.",
       });
-      console.error("Error fetching data:", error);
     } finally {
       setLoading(false);
     }
   };
-  
 
-  // Logout Function
   const handleLogout = async () => {
     try {
-      // Firebase logout
       await signOut(auth);
-
-      // Clear AsyncStorage
       await AsyncStorage.clear();
-
-      // Show success toast
       Toast.show({
         type: "success",
         text1: "Logged Out",
         text2: "You have been successfully logged out.",
       });
-
-      // Navigate to login screen
       router.push("/sign-in");
     } catch (error) {
       Toast.show({
@@ -79,11 +75,9 @@ export default function Profile() {
         text1: "Logout Failed",
         text2: "Please try again.",
       });
-      console.error("Logout Error:", error);
     }
   };
 
-  // Fetch data when the component mounts
   useEffect(() => {
     fetchData();
   }, []);
@@ -93,133 +87,114 @@ export default function Profile() {
       {loading ? (
         <ActivityIndicator size="large" color="#3b82f6" style={styles.loader} />
       ) : (
-        <ScrollView
-          style={styles.scoresContainer}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={styles.scrollContentContainer}
-        >
-          {/* Profile Info */}
-          {profileInfo && (
-            <View style={styles.profileCard}>
-              <Image
-                source={{ uri: "https://avatars.githubusercontent.com/u/155985389?s=400&u=143d628a397176208d57037c896734943265e663&v=4" }}
-                style={styles.profileImage}
-              />
-              <Text style={styles.name}>{profileInfo.name}</Text>
-              <Text style={styles.email}>{profileInfo.email}</Text>
-              <Text style={styles.center}>Center: {profileInfo.center}</Text>
-            </View>
-          )}
+        <>
+          <ScrollView
+            style={styles.scoresContainer}
+            showsVerticalScrollIndicator={false}
+          >
+            {profileInfo && (
+              <View style={styles.profileCard}>
+                <Image
+                  source={{
+                    uri: "https://avatars.githubusercontent.com/u/155985389?s=400&u=143d628a397176208d57037c896734943265e663&v=4",
+                  }}
+                  style={styles.profileImage}
+                />
+                <TextInput style={styles.input} value={profileInfo.name} editable={false} />
+                <TextInput style={styles.input} value={profileInfo.email} editable={false} />
+                <TextInput style={styles.input} value={profileInfo.center} editable={false} />
+              </View>
+            )}
 
-          {/* Logout Button */}
+           
+
+            <TouchableOpacity
+              style={styles.navigateButton}
+              onPress={() => router.push("/(auth)/quizResult")}
+            >
+              <Text style={styles.navigateText}>View All Quiz Results</Text>
+            </TouchableOpacity>
+          </ScrollView>
+
           <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
             <Text style={styles.logoutText}>Logout</Text>
           </TouchableOpacity>
-
-          {/* Quiz Results */}
-          <Text style={styles.scoresTitle}>Quiz Results</Text>
-          {quizResults.length > 0 ? (
-            quizResults.map((result, index) => (
-              <View key={index} style={styles.quizCard}>
-                <Text style={styles.quizTitle}>{result.quizName}</Text>
-                <Text style={styles.quizScore}>{result.score}/30</Text>
-              </View>
-            ))
-          ) : (
-            <Text style={styles.noResults}>No quiz results available.</Text>
-          )}
-        </ScrollView>
+        </>
       )}
     </View>
   );
 }
 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#E8F5E9",
+    backgroundColor: "#f0f4f8",
+    padding: 20,
+    paddingTop: 40, // Added top padding
+    paddingBottom: 40, // Added bottom padding
   },
   profileImage: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    marginBottom: 8,
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    marginBottom: 16,
     alignSelf: "center",
+  },
+  input: {
+    width: "100%",
+    padding: 10,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 8,
+    marginBottom: 10,
+    backgroundColor: "#fff",
   },
   scoresContainer: {
     flex: 1,
     padding: 16,
-    paddingBottom: 80, // Add space to the bottom to prevent hiding content behind the tab bar
+    paddingBottom: 80, // Space for tab bar
   },
   scrollContentContainer: {
-    paddingBottom: 100, // Ensures enough space is left for the last content
-  },
-  scoresTitle: {
-    fontSize: 18,
-    fontWeight: "600",
-    marginBottom: 16,
-    color: "#111827",
+    paddingBottom: 100,
   },
   profileCard: {
-    padding: 16,
-    borderRadius: 8,
-    marginBottom: 12,
+    padding: 20,
+    borderRadius: 10,
+    marginBottom: 20,
+    backgroundColor: "#fff",
     alignItems: "center",
-  },
-  name: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#111827",
-    marginBottom: 4,
-  },
-  email: {
-    fontSize: 16,
-    color: "#6b7280",
-  },
-  center: {
-    fontSize: 16,
-    color: "#6b7280",
-    marginTop: 4,
-  },
-  quizCard: {
-    backgroundColor: "#ffffff",
-    padding: 16,
-    borderRadius: 8,
-    marginBottom: 12,
     shadowColor: "#000",
     shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 4,
-  },
-  quizTitle: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: "#111827",
-    marginBottom: 4,
-  },
-  quizScore: {
-    fontSize: 16,
-    color: "#3b82f6",
+    shadowRadius: 10,
+    elevation: 5,
   },
   loader: {
     marginTop: 20,
   },
-  noResults: {
-    fontSize: 16,
-    color: "#6b7280",
-    textAlign: "center",
-    marginTop: 20,
+  navigateButton: {
+    backgroundColor: "#47a84b", // Changed to green
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
+    marginVertical: 20,
+  },
+  navigateText: {
+    color: "#fff",
+    fontSize: 18,
+    fontWeight: "bold",
   },
   logoutButton: {
-    backgroundColor: "#ef4444",
-    padding: 10,
-    borderRadius: 8,
+    backgroundColor: "#47a84b",
+    padding: 15, // Corrected padding
+    borderRadius: 10,
     alignItems: "center",
-    marginVertical: 16,
+    marginVertical: 70,
   },
+  
   logoutText: {
     color: "#fff",
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: "bold",
   },
 });

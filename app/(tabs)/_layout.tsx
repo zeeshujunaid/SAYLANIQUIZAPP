@@ -29,9 +29,12 @@ export default function TabLayout() {
           shadowOpacity: 0.1,
           shadowRadius: 10,
           elevation: 10,
+          
+
         },
-        tabBarActiveTintColor: '#66BB6A', // Active tab icon color
+        tabBarActiveTintColor: '#40cf47', // Active tab icon color
         tabBarInactiveTintColor: '#A4D7A6', // Inactive tab icon color
+        
       }}
     >
       {/* Home Tab */}
@@ -57,7 +60,7 @@ export default function TabLayout() {
               <TabBarIcon name="plus" color="white" />
             </View>
           ),
-          tabBarLabel: 'Donate', // Add label for clarity
+          tabBarLabel: 'Live Quiz', // Add label for clarity
         }}
       />
 
