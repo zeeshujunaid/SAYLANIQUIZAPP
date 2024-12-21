@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
   },
   subtitleText: {
     fontSize: 14,
-    color: "#BDC3C7",
+    color: "green",
     marginTop: 5, // Adjusted margin-top to place it closer to the name
   },
   rightSection: {
