@@ -28,6 +28,7 @@ export default function RootLayout() {
           <Stack.Screen name="(auth)/appdevquiz" options={{ headerShown: false }}/>
           <Stack.Screen name="(auth)/softwarequiz" options={{ headerShown: false }}/>
           <Stack.Screen name="(auth)/webdevquiz" options={{ headerShown: false }} />
+          <Stack.Screen name="(auth)/quizResult" options={{ headerShown: false }} />
         </Stack>
 
         {/* Toast Component */}

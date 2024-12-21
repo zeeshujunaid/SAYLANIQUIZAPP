@@ -50,7 +50,7 @@ export default function Header() {
 
           {/* Right Section */}
           <View style={styles.rightSection}>
-            <TouchableOpacity onPress={() => router.push("../../(tabs)/profile")}>
+            <TouchableOpacity onPress={() => router.push("/(tabs)/Profile")}>
               <Image
                 source={{ uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTN5XaPknTWTxdBcdC3r0_9blSi_8n3rD_2Xg&s" }} // Replace with profile image URI
                 style={styles.profileIcon}
