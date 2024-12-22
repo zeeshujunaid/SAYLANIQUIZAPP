@@ -35,7 +35,6 @@ export default function LiveQuiz() {
         );
     }
 
-    
     return (
         <ScrollView contentContainerStyle={styles.container}>
             <Text style={styles.title}>Quiz for {categoryKey}</Text>

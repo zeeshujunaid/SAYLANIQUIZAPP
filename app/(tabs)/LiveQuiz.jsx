@@ -69,6 +69,7 @@ export default function QuizHomeScreen() {
                     pathname: '/(auth)/liveQuizNew',
                     params: { categoryKey },
                 });
+                    console.log("🚀 ~ handleCategoryPress ~ categoryKey:", categoryKey);
     
                 setCodes((prev) => ({
                     ...prev,
