@@ -66,7 +66,7 @@ export default function QuizHomeScreen() {
     
                 // Navigate to the second page with categoryKey as a parameter
                 router.push({
-                    pathname: '/(tabs)/LiveQuizNew',
+                    pathname: '/(auth)/liveQuizNew',
                     params: { categoryKey },
                 });
     
