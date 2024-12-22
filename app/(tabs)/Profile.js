@@ -12,8 +12,9 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Toast from "react-native-toast-message";
 import { signOut } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
 import { useRouter } from "expo-router";
-import { auth } from "../../utils/firebase";
+import { auth, db } from "../../utils/firebase";
 
 export default function Profile() {
   const [quizResults, setQuizResults] = useState([]);
@@ -21,34 +22,55 @@ export default function Profile() {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
-  // Function to fetch quiz results and profile info from AsyncStorage
   const fetchData = async () => {
     setLoading(true);
     try {
-      const storedResults = await AsyncStorage.getItem("quizResults");
-      const storedInfo = await AsyncStorage.getItem("info");
-
-      if (storedResults) {
-        setQuizResults(JSON.parse(storedResults));
-      } else {
-        setQuizResults([]);
+      let name = "Name Not Available";
+      let email = "Email Not Available";
+      let center = "Not Available";
+  
+      // Check AsyncStorage for profile data
+      const storedProfile = await AsyncStorage.getItem("info");
+      if (storedProfile) {
+        const { name: asyncName, email: asyncEmail, center: asyncCenter } =
+          JSON.parse(storedProfile);
+        name = asyncName || name;
+        email = asyncEmail || email;
+        center = asyncCenter || center;
       }
-
-      if (storedInfo) {
-        const parsedInfo = JSON.parse(storedInfo);
-        setProfileInfo({
-          name: parsedInfo.name || "Name Not Available",
-          email: parsedInfo.email || "Email Not Available",
-          center: parsedInfo.center || "Not Available",
-        });
-      } else {
-        setProfileInfo({
-          name: "Not Available",
-          email: "Not Available",
-          center: "Not Available",
-        });
+  
+      // If name/email/center not found in AsyncStorage, fetch from Firestore
+      if (name === "Name Not Available") {
+        const user = auth.currentUser;
+        if (user) {
+          const userDoc = doc(db, "users", user.uid);
+          const userSnapshot = await getDoc(userDoc);
+  
+          if (userSnapshot.exists()) {
+            const userData = userSnapshot.data();
+            name = userData.name || "Name Not Available";
+            email = userData.email || "Email Not Available";
+            center = userData.center || "Not Available";
+  
+            console.log("Fetched from Firestore:", { name, email, center });
+  
+            // Save fetched data to AsyncStorage
+            await AsyncStorage.setItem(
+              "info",
+              JSON.stringify({ name, email, center })
+            );
+          } else {
+            console.warn("No data found in Firestore for this user.");
+          }
+        } else {
+          console.warn("User not authenticated.");
+        }
       }
+  
+      // Update state with the fetched profile data
+      setProfileInfo({ name, email, center });
     } catch (error) {
+      console.error("Error fetching data:", error);
       Toast.show({
         type: "error",
         text1: "Error fetching data",
@@ -58,6 +80,7 @@ export default function Profile() {
       setLoading(false);
     }
   };
+  
 
   const handleLogout = async () => {
     try {
@@ -100,13 +123,23 @@ export default function Profile() {
                   }}
                   style={styles.profileImage}
                 />
-                <TextInput style={styles.input} value={profileInfo.name} editable={false} />
-                <TextInput style={styles.input} value={profileInfo.email} editable={false} />
-                <TextInput style={styles.input} value={profileInfo.center} editable={false} />
+                <TextInput
+                  style={styles.input}
+                  value={profileInfo.name}
+                  editable={false}
+                />
+                <TextInput
+                  style={styles.input}
+                  value={profileInfo.email}
+                  editable={false}
+                />
+                <TextInput
+                  style={styles.input}
+                  value={profileInfo.center}
+                  editable={false}
+                />
               </View>
             )}
-
-           
 
             <TouchableOpacity
               style={styles.navigateButton}
@@ -125,14 +158,13 @@ export default function Profile() {
   );
 }
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#f0f4f8",
     padding: 20,
-    paddingTop: 40, // Added top padding
-    paddingBottom: 40, // Added bottom padding
+    paddingTop: 40,
+    paddingBottom: 40,
   },
   profileImage: {
     width: 120,
@@ -153,10 +185,7 @@ const styles = StyleSheet.create({
   scoresContainer: {
     flex: 1,
     padding: 16,
-    paddingBottom: 80, // Space for tab bar
-  },
-  scrollContentContainer: {
-    paddingBottom: 100,
+    paddingBottom: 80,
   },
   profileCard: {
     padding: 20,
@@ -173,7 +202,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   navigateButton: {
-    backgroundColor: "#47a84b", // Changed to green
+    backgroundColor: "#47a84b",
     padding: 15,
     borderRadius: 10,
     alignItems: "center",
@@ -186,12 +215,11 @@ const styles = StyleSheet.create({
   },
   logoutButton: {
     backgroundColor: "#47a84b",
-    padding: 15, // Corrected padding
+    padding: 15,
     borderRadius: 10,
     alignItems: "center",
     marginVertical: 70,
   },
-  
   logoutText: {
     color: "#fff",
     fontSize: 18,
