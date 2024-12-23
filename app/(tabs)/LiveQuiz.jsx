@@ -8,11 +8,10 @@ import {
     ScrollView,
     View,
     ActivityIndicator,
+    Modal,
 } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
-import { router } from 'expo-router';
 import Toast from 'react-native-toast-message';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getFirestore, collection, doc, getDoc } from 'firebase/firestore';
 
 const firestore = getFirestore();
@@ -27,6 +26,12 @@ export default function QuizHomeScreen() {
     });
     const [expanded, setExpanded] = useState({});
     const [loading, setLoading] = useState(false);
+    const [quizData, setQuizData] = useState([]);  // Ensure quizData is an empty array initially
+    const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+    const [score, setScore] = useState(0);
+    const [selectedAnswer, setSelectedAnswer] = useState(null);
+    const [quizInProgress, setQuizInProgress] = useState(false);
+    const [showScoreModal, setShowScoreModal] = useState(false);
 
     const toggleExpand = (category) => {
         setExpanded((prev) => ({
@@ -34,6 +39,7 @@ export default function QuizHomeScreen() {
             [category]: !prev[category],
         }));
     };
+
     const handleCategoryPress = async (categoryKey, code) => {
         if (!code.trim()) {
             Toast.show({
@@ -43,43 +49,35 @@ export default function QuizHomeScreen() {
             });
             return;
         }
-    
+
         setLoading(true);
-    
+
         try {
             const collectionName = `${categoryKey}developmentQuizzes`;
-            console.log(`Fetching from collection: ${collectionName}, with code: ${code}`);
-    
             const categoryRef = doc(collection(firestore, collectionName), code);
             const categorySnapshot = await getDoc(categoryRef);
-    
+
             if (categorySnapshot.exists()) {
                 const categoryData = categorySnapshot.data();
-    
-                Toast.show({
-                    type: 'success',
-                    text1: 'Code Matched!',
-                    text2: 'Loading your quiz...',
-                });
-    
-                await AsyncStorage.setItem(`quiz_${categoryKey}`, JSON.stringify(categoryData));
-    
-                // Navigate to the second page with categoryKey as a parameter
-                router.push({
-                    pathname: '/(auth)/liveQuizNew',
-                    params: { categoryKey },
-                });
-                    console.log("🚀 ~ handleCategoryPress ~ categoryKey:", categoryKey);
-    
+                setQuizData(categoryData.questions || []);  // Ensure questions is an array
+                setQuizInProgress(true);
                 setCodes((prev) => ({
                     ...prev,
                     [categoryKey]: '',
                 }));
+                // Delay Toast so UI updates before showing the message
+                setTimeout(() => {
+                    Toast.show({
+                        type: 'success',
+                        text1: 'Code Matched!',
+                        text2: 'Loading your quiz...',
+                    });
+                }, 100);
             } else {
                 Toast.show({
                     type: 'error',
                     text1: 'Invalid Code',
-                    text2: `No quiz found in ${collectionName} for the code ${code}.`,
+                    text2: `No quiz found for the code ${code}.`,
                 });
             }
         } catch (error) {
@@ -93,8 +91,31 @@ export default function QuizHomeScreen() {
             setLoading(false);
         }
     };
-    
-    
+
+    const handleAnswerSelect = (answerKey) => {
+        setSelectedAnswer(answerKey); // Store the answer key (like 'a', 'b', 'c', or 'd')
+    };
+
+    const handleNextQuestion = () => {
+        if (quizData[currentQuestionIndex]?.correctAnswer === selectedAnswer) {
+            setScore((prevScore) => prevScore + 1);
+        }
+
+        if (currentQuestionIndex + 1 < quizData.length) {
+            setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+            setSelectedAnswer(null);
+        } else {
+            setShowScoreModal(true);
+        }
+    };
+
+    const resetQuiz = () => {
+        setQuizInProgress(false);
+        setCurrentQuestionIndex(0);
+        setScore(0);
+        setSelectedAnswer(null);
+        setShowScoreModal(false);
+    };
 
     const categories = [
         { name: 'Digital Marketing', key: 'marketing' },
@@ -106,52 +127,102 @@ export default function QuizHomeScreen() {
 
     return (
         <SafeAreaView style={styles.container}>
-            <Text style={styles.subHeaderText}>Enter Live Quiz Code</Text>
-            <ScrollView contentContainerStyle={styles.categoriesContainer} showsVerticalScrollIndicator={false}>
-                {categories.map((category) => (
-                    <View key={category.key} style={styles.quizCard}>
-                        <TouchableOpacity
-                            style={styles.cardHeader}
-                            onPress={() => toggleExpand(category.key)}
-                        >
-                            <Text style={styles.quizTitle}>{category.name}</Text>
-                            <FontAwesome
-                                name={expanded[category.key] ? 'chevron-up' : 'chevron-down'}
-                                size={20}
-                                color="#388E3C"
-                            />
-                        </TouchableOpacity>
-                        {expanded[category.key] && (
-                            <View style={styles.cardContent}>
-                                <Text style={styles.details}>30 quizzes</Text>
-                                <Text style={styles.details}>Solve timing: 30 minutes</Text>
-                                <TextInput
-                                    style={styles.input}
-                                    placeholder="Enter Live Quiz Code"
-                                    placeholderTextColor="#999"
-                                    value={codes[category.key]}
-                                    onChangeText={(text) =>
-                                        setCodes((prev) => ({ ...prev, [category.key]: text }))
-                                    }
-                                />
+            {!quizInProgress ? (
+                <>
+                    <Text style={styles.subHeaderText}>Enter Live Quiz Code</Text>
+                    <ScrollView
+                        contentContainerStyle={styles.categoriesContainer}
+                        showsVerticalScrollIndicator={false}
+                    >
+                        {categories.map((category) => (
+                            <View key={category.key} style={styles.quizCard}>
                                 <TouchableOpacity
-                                    style={styles.button}
-                                    onPress={() =>
-                                        handleCategoryPress(category.key, codes[category.key])
-                                    }
+                                    style={styles.cardHeader}
+                                    onPress={() => toggleExpand(category.key)}
                                 >
-                                    <Text style={styles.buttonText}>Start Quiz</Text>
+                                    <Text style={styles.quizTitle}>{category.name}</Text>
+                                    <FontAwesome
+                                        name={expanded[category.key] ? 'chevron-up' : 'chevron-down'}
+                                        size={20}
+                                        color="#388E3C"
+                                    />
                                 </TouchableOpacity>
+                                {expanded[category.key] && (
+                                    <View style={styles.cardContent}>
+                                        <Text style={styles.details}>30 quizzes</Text>
+                                        <Text style={styles.details}>Solve timing: 30 minutes</Text>
+                                        <TextInput
+                                            style={styles.input}
+                                            placeholder="Enter Live Quiz Code"
+                                            placeholderTextColor="#999"
+                                            value={codes[category.key]}
+                                            onChangeText={(text) =>
+                                                setCodes((prev) => ({ ...prev, [category.key]: text }))
+                                            }
+                                        />
+                                        <TouchableOpacity
+                                            style={styles.button}
+                                            onPress={() =>
+                                                handleCategoryPress(category.key, codes[category.key])
+                                            }
+                                        >
+                                            <Text style={styles.buttonText}>Start Quiz</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                )}
                             </View>
-                        )}
-                    </View>
-                ))}
-            </ScrollView>
+                        ))}
+                    </ScrollView>
+                </>
+            ) : (
+                <View style={styles.quizContainer}>
+                    <Text style={styles.quizQuestion}>
+                        {quizData[currentQuestionIndex]?.question}
+                    </Text>
+                    {quizData[currentQuestionIndex]?.answers && Object.keys(quizData[currentQuestionIndex]?.answers).map((key) => (
+                        <TouchableOpacity
+                            key={key}
+                            style={[styles.option, selectedAnswer === key && styles.selectedOption]}
+                            onPress={() => handleAnswerSelect(key)}
+                        >
+                            <Text style={styles.optionText}>{quizData[currentQuestionIndex].answers[key]}</Text>
+                        </TouchableOpacity>
+                    ))}
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={handleNextQuestion}
+                        disabled={!selectedAnswer}
+                    >
+                        <Text style={styles.buttonText}>
+                            {currentQuestionIndex + 1 === quizData.length ? 'Finish' : 'Next'}
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+            )}
+
             {loading && (
                 <View style={styles.loadingOverlay}>
                     <ActivityIndicator size="large" color="#2E7D32" />
                 </View>
             )}
+
+            <Modal
+                visible={showScoreModal}
+                transparent
+                animationType="slide"
+                onRequestClose={resetQuiz}
+            >
+                <View style={styles.modalContainer}>
+                    <View style={styles.modalContent}>
+                        <Text style={styles.modalTitle}>Quiz Completed!</Text>
+                        <Text style={styles.modalScore}>Your Score: {score}/{quizData.length}</Text>
+                        <TouchableOpacity style={styles.button} onPress={resetQuiz}>
+                            <Text style={styles.buttonText}>Close</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </Modal>
+
             <Toast />
         </SafeAreaView>
     );
@@ -235,11 +306,40 @@ const styles = StyleSheet.create({
         elevation: 5,
     },
     buttonText: {
-        color: '#FFFFFF',
         fontSize: 18,
         fontWeight: '600',
-        textTransform: 'uppercase',
-        letterSpacing: 0.8,
+        color: '#FFFFFF',
+    },
+    quizContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    quizQuestion: {
+        fontSize: 24,
+        fontWeight: '700',
+        color: '#388E3C',
+        marginBottom: 20,
+        textAlign: 'center',
+    },
+    option: {
+        backgroundColor: '#FFFFFF',
+        paddingVertical: 12,
+        paddingHorizontal: 20,
+        marginBottom: 10,
+        borderRadius: 8,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 3 },
+        shadowOpacity: 0.2,
+        shadowRadius: 6,
+        elevation: 6,
+    },
+    selectedOption: {
+        backgroundColor: '#A5D6A7',
+    },
+    optionText: {
+        fontSize: 18,
+        color: '#388E3C',
     },
     loadingOverlay: {
         position: 'absolute',
@@ -247,8 +347,32 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
         justifyContent: 'center',
         alignItems: 'center',
+        backgroundColor: 'rgba(0,0,0,0.4)',
+    },
+    modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    },
+    modalContent: {
+        backgroundColor: '#FFFFFF',
+        padding: 24,
+        borderRadius: 12,
+        alignItems: 'center',
+        width: '80%',
+    },
+    modalTitle: {
+        fontSize: 24,
+        fontWeight: '700',
+        color: '#388E3C',
+        marginBottom: 10,
+    },
+    modalScore: {
+        fontSize: 20,
+        color: '#388E3C',
+        marginBottom: 20,
     },
 });
