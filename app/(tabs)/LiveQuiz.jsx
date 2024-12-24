@@ -22,8 +22,15 @@ export default function QuizHomeScreen() {
         software: '',
         web: '',
         app: '',
-        design: '',
+        uiux: '',
     });
+    const categories = [
+        { name: 'Digital Marketing', key: 'marketing' },
+        { name: 'Software Engineering', key: 'software' },
+        { name: 'Web Development', key: 'web' },
+        { name: 'App Development', key: 'app' },
+        { name: 'UI/UX Design', key: 'uiux' },
+    ];
     const [expanded, setExpanded] = useState({});
     const [loading, setLoading] = useState(false);
     const [quizData, setQuizData] = useState([]);  // Ensure quizData is an empty array initially
@@ -117,13 +124,6 @@ export default function QuizHomeScreen() {
         setShowScoreModal(false);
     };
 
-    const categories = [
-        { name: 'Digital Marketing', key: 'marketing' },
-        { name: 'Software Engineering', key: 'software' },
-        { name: 'Web Development', key: 'web' },
-        { name: 'App Development', key: 'app' },
-        { name: 'UI/UX Design', key: 'design' },
-    ];
 
     return (
         <SafeAreaView style={styles.container}>
