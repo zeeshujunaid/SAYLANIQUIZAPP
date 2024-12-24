@@ -18,14 +18,14 @@ const firestore = getFirestore();
 
 export default function QuizHomeScreen() {
     const [codes, setCodes] = useState({
-        marketing: '',
+        digital: '',
         software: '',
         web: '',
         app: '',
         uiux: '',
     });
     const categories = [
-        { name: 'Digital Marketing', key: 'marketing' },
+        { name: 'Digital Marketing', key: 'digital' },
         { name: 'Software Engineering', key: 'software' },
         { name: 'Web Development', key: 'web' },
         { name: 'App Development', key: 'app' },
