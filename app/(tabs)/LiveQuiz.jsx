@@ -23,6 +23,7 @@ export default function QuizHomeScreen() {
         web: '',
         app: '',
         uiux: '',
+        flutter: '',
     });
     const categories = [
         { name: 'Digital Marketing', key: 'digital' },
@@ -30,6 +31,8 @@ export default function QuizHomeScreen() {
         { name: 'Web Development', key: 'web' },
         { name: 'App Development', key: 'app' },
         { name: 'UI/UX Design', key: 'uiux' },
+        { name: 'flutter development', key: 'flutter' },
+        
     ];
     const [expanded, setExpanded] = useState({});
     const [loading, setLoading] = useState(false);
