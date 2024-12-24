@@ -38,7 +38,198 @@ const marketingQuestions = [
         ],
         correctAnswer: "Pay Per Click",
     },
+    {
+        question: "What is the purpose of a call-to-action (CTA)?",
+        options: [
+            "To guide users to take a specific action",
+            "To track user behavior",
+            "To improve website speed",
+            "To analyze competitors",
+        ],
+        correctAnswer: "To guide users to take a specific action",
+    },
+    {
+        question: "Which platform is best for B2B marketing?",
+        options: [
+            "Instagram",
+            "LinkedIn",
+            "Snapchat",
+            "TikTok",
+        ],
+        correctAnswer: "LinkedIn",
+    },
+    {
+        question: "What is content marketing?",
+        options: [
+            "Creating valuable and relevant content to attract an audience",
+            "Posting random updates on social media",
+            "Using paid advertising for promotions",
+            "Tracking customer data",
+        ],
+        correctAnswer: "Creating valuable and relevant content to attract an audience",
+    },
+    {
+        question: "What does SEO stand for?",
+        options: [
+            "Search Engine Optimization",
+            "Social Engagement Online",
+            "Strategic Email Outreach",
+            "Search Engine Output",
+        ],
+        correctAnswer: "Search Engine Optimization",
+    },
+    {
+        question: "Which of the following is NOT a type of marketing?",
+        options: [
+            "Influencer Marketing",
+            "Guerrilla Marketing",
+            "Traditional Marketing",
+            "Artificial Marketing",
+        ],
+        correctAnswer: "Artificial Marketing",
+    },
+    {
+        question: "What is the purpose of A/B testing in marketing?",
+        options: [
+            "To compare two versions of a campaign",
+            "To track email open rates",
+            "To improve server response time",
+            "To design promotional banners",
+        ],
+        correctAnswer: "To compare two versions of a campaign",
+    },
+    {
+        question: "What does ROI stand for in marketing?",
+        options: [
+            "Return on Investment",
+            "Rate of Interaction",
+            "Revenue on Input",
+            "Results of Implementation",
+        ],
+        correctAnswer: "Return on Investment",
+    },
+    {
+        question: "Which tool is commonly used for email marketing?",
+        options: [
+            "Mailchimp",
+            "Figma",
+            "Photoshop",
+            "HubSpot",
+        ],
+        correctAnswer: "Mailchimp",
+    },
+    {
+        question: "What is influencer marketing?",
+        options: [
+            "Using influential individuals to promote products",
+            "Running paid ads on websites",
+            "Creating search engine campaigns",
+            "Buying social media followers",
+        ],
+        correctAnswer: "Using influential individuals to promote products",
+    },
+    {
+        question: "Which metric is crucial for social media marketing?",
+        options: [
+            "Engagement rate",
+            "Bounce rate",
+            "Load time",
+            "Code quality",
+        ],
+        correctAnswer: "Engagement rate",
+    },
+    {
+        question: "What does CPC stand for in digital marketing?",
+        options: [
+            "Cost Per Click",
+            "Content Per Campaign",
+            "Click Per Campaign",
+            "Cost Per Conversion",
+        ],
+        correctAnswer: "Cost Per Click",
+    },
+    {
+        question: "Which of these is a type of traditional marketing?",
+        options: [
+            "Billboards",
+            "SEO",
+            "Email campaigns",
+            "Social media ads",
+        ],
+        correctAnswer: "Billboards",
+    },
+    {
+        question: "What is a marketing funnel?",
+        options: [
+            "A model to track customer journey stages",
+            "A tool for analyzing sales reports",
+            "A software for creating ads",
+            "A way to categorize products",
+        ],
+        correctAnswer: "A model to track customer journey stages",
+    },
+    {
+        question: "What is the role of branding in marketing?",
+        options: [
+            "To create a unique identity for a business",
+            "To increase website speed",
+            "To optimize SEO performance",
+            "To track customer data",
+        ],
+        correctAnswer: "To create a unique identity for a business",
+    },
+    {
+        question: "What does CRM stand for?",
+        options: [
+            "Customer Relationship Management",
+            "Campaign Results Monitoring",
+            "Client Revenue Model",
+            "Consumer Retention Metrics",
+        ],
+        correctAnswer: "Customer Relationship Management",
+    },
+    {
+        question: "What is the key benefit of remarketing?",
+        options: [
+            "Re-engaging users who interacted with the brand",
+            "Improving server response time",
+            "Reducing website errors",
+            "Analyzing competitor strategies",
+        ],
+        correctAnswer: "Re-engaging users who interacted with the brand",
+    },
+    {
+        question: "What is a landing page?",
+        options: [
+            "A standalone page created for a marketing campaign",
+            "The homepage of a website",
+            "The checkout page of an e-commerce site",
+            "A contact form for users",
+        ],
+        correctAnswer: "A standalone page created for a marketing campaign",
+    },
+    {
+        question: "What is the importance of a target audience in marketing?",
+        options: [
+            "To focus efforts on a specific group of potential customers",
+            "To reduce campaign costs",
+            "To test product features",
+            "To create website content",
+        ],
+        correctAnswer: "To focus efforts on a specific group of potential customers",
+    },
+    {
+        question: "Which is an example of outbound marketing?",
+        options: [
+            "Cold calling",
+            "SEO",
+            "Content blogging",
+            "Social media engagement",
+        ],
+        correctAnswer: "Cold calling",
+    },
 ];
+
 const quizname = "Digital Marketing"
 
 export default function MarketingQuiz() {
@@ -121,7 +312,7 @@ export default function MarketingQuiz() {
 
             {/* Quiz Content */}
             <View style={styles.content}>
-                <Text style={styles.questionText}>{currentQuestion.question}</Text>
+                <Text style={styles.questionText}>Q:{currentQuestion.question}</Text>
                 <View style={styles.optionsContainer}>
                     {currentQuestion.options.map((option, index) => (
                         <TouchableOpacity

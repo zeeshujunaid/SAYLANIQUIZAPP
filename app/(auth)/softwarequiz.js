@@ -6,7 +6,6 @@ import Toast from 'react-native-toast-message';
 import { router } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage'; // Import AsyncStorage
 
-// Software-related questions
 const softwareQuestions = [
     {
         question: "What is the primary programming language for Android development?",
@@ -38,7 +37,198 @@ const softwareQuestions = [
         ],
         correctAnswer: "Git",
     },
+    {
+        question: "What does SQL stand for?",
+        options: [
+            "Structured Query Language",
+            "Standard Query Language",
+            "Sequential Query Language",
+            "Simplified Query Language",
+        ],
+        correctAnswer: "Structured Query Language",
+    },
+    {
+        question: "What is the purpose of an IDE?",
+        options: [
+            "To provide a complete environment for software development",
+            "To execute machine code",
+            "To enhance graphic designs",
+            "To create marketing content",
+        ],
+        correctAnswer: "To provide a complete environment for software development",
+    },
+    {
+        question: "Which of the following is NOT a programming language?",
+        options: [
+            "Python",
+            "Java",
+            "HTML",
+            "C#",
+        ],
+        correctAnswer: "HTML",
+    },
+    {
+        question: "What is Agile methodology?",
+        options: [
+            "A software development approach focusing on iterative progress",
+            "A debugging tool",
+            "A database management system",
+            "A type of programming language",
+        ],
+        correctAnswer: "A software development approach focusing on iterative progress",
+    },
+    {
+        question: "What does CSS stand for?",
+        options: [
+            "Cascading Style Sheets",
+            "Creative Style Sheets",
+            "Computer Style System",
+            "Color Style Selector",
+        ],
+        correctAnswer: "Cascading Style Sheets",
+    },
+    {
+        question: "Which of these is a frontend framework?",
+        options: [
+            "React",
+            "Django",
+            "Node.js",
+            "Flask",
+        ],
+        correctAnswer: "React",
+    },
+    {
+        question: "What is an API?",
+        options: [
+            "Application Programming Interface",
+            "Advanced Programming Integration",
+            "Automated Process Integration",
+            "Application Process Indicator",
+        ],
+        correctAnswer: "Application Programming Interface",
+    },
+    {
+        question: "What is the purpose of unit testing?",
+        options: [
+            "To test individual parts of an application",
+            "To check the overall system performance",
+            "To analyze database integrity",
+            "To enhance user experience",
+        ],
+        correctAnswer: "To test individual parts of an application",
+    },
+    {
+        question: "What does OOP stand for?",
+        options: [
+            "Object-Oriented Programming",
+            "Optimal Operational Process",
+            "Open Online Platform",
+            "Ordered Output Programming",
+        ],
+        correctAnswer: "Object-Oriented Programming",
+    },
+    {
+        question: "Which database is a NoSQL database?",
+        options: [
+            "MongoDB",
+            "MySQL",
+            "PostgreSQL",
+            "OracleDB",
+        ],
+        correctAnswer: "MongoDB",
+    },
+    {
+        question: "What is the main function of a compiler?",
+        options: [
+            "To convert code into machine language",
+            "To debug code",
+            "To execute code",
+            "To provide code suggestions",
+        ],
+        correctAnswer: "To convert code into machine language",
+    },
+    {
+        question: "What is version control used for?",
+        options: [
+            "Tracking changes in code",
+            "Optimizing software speed",
+            "Designing user interfaces",
+            "Analyzing performance metrics",
+        ],
+        correctAnswer: "Tracking changes in code",
+    },
+    {
+        question: "Which of these is a backend programming language?",
+        options: [
+            "Node.js",
+            "CSS",
+            "React",
+            "Bootstrap",
+        ],
+        correctAnswer: "Node.js",
+    },
+    {
+        question: "What is the main advantage of open-source software?",
+        options: [
+            "It is freely available for use and modification",
+            "It is highly secure",
+            "It always includes technical support",
+            "It has no bugs",
+        ],
+        correctAnswer: "It is freely available for use and modification",
+    },
+    {
+        question: "What does JSON stand for?",
+        options: [
+            "JavaScript Object Notation",
+            "JavaScript Online Network",
+            "Java System Object Node",
+            "JavaScript Organized Node",
+        ],
+        correctAnswer: "JavaScript Object Notation",
+    },
+    {
+        question: "Which of these is an operating system?",
+        options: [
+            "Linux",
+            "Java",
+            "HTML",
+            "Bootstrap",
+        ],
+        correctAnswer: "Linux",
+    },
+    {
+        question: "Which of the following is a cloud computing platform?",
+        options: [
+            "AWS",
+            "Python",
+            "MongoDB",
+            "Node.js",
+        ],
+        correctAnswer: "AWS",
+    },
+    {
+        question: "What is the main purpose of Docker?",
+        options: [
+            "To containerize applications for consistent deployment",
+            "To manage database queries",
+            "To track application logs",
+            "To monitor network traffic",
+        ],
+        correctAnswer: "To containerize applications for consistent deployment",
+    },
+    {
+        question: "What is the primary use of GitHub?",
+        options: [
+            "Hosting and collaborating on code repositories",
+            "Managing databases",
+            "Creating UI designs",
+            "Deploying web applications",
+        ],
+        correctAnswer: "Hosting and collaborating on code repositories",
+    },
 ];
+
 
 const quizname = "Software Development"
 
@@ -122,7 +312,7 @@ export default function SoftwareQuiz() {
 
             {/* Quiz Content */}
             <View style={styles.content}>
-                <Text style={styles.questionText}>{currentQuestion.question}</Text>
+                <Text style={styles.questionText}>Q:{currentQuestion.question}</Text>
                 <View style={styles.optionsContainer}>
                     {currentQuestion.options.map((option, index) => (
                         <TouchableOpacity

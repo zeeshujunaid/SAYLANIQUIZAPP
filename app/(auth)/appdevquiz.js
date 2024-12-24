@@ -38,7 +38,208 @@ const appDevQuestions = [
         ],
         correctAnswer: "useState",
     },
+    {
+        question: "What does JSX stand for in React?",
+        options: [
+            "JavaScript XML",
+            "Java Syntax Extension",
+            "JavaScript Extension",
+            "Java Simple XML",
+        ],
+        correctAnswer: "JavaScript XML",
+    },
+    {
+        question: "What is the default state management library in React Native?",
+        options: [
+            "Redux",
+            "MobX",
+            "Context API",
+            "React Native doesn't have a default state management library",
+        ],
+        correctAnswer: "React Native doesn't have a default state management library",
+    },
+    {
+        question: "Which of the following is not a lifecycle method in React?",
+        options: [
+            "componentDidMount",
+            "componentWillUnmount",
+            "componentDidUpdate",
+            "componentWillUpdateAsync",
+        ],
+        correctAnswer: "componentWillUpdateAsync",
+    },
+    {
+        question: "What is the purpose of the `useEffect` hook in React?",
+        options: [
+            "To manage state",
+            "To run side effects",
+            "To handle routing",
+            "To bind event handlers",
+        ],
+        correctAnswer: "To run side effects",
+    },
+    {
+        question: "Which command is used to create a new React app?",
+        options: [
+            "npx create-react-app my-app",
+            "npm start",
+            "npm install react",
+            "react-init my-app",
+        ],
+        correctAnswer: "npx create-react-app my-app",
+    },
+    {
+        question: "Which company developed React Native?",
+        options: [
+            "Google",
+            "Facebook",
+            "Microsoft",
+            "Apple",
+        ],
+        correctAnswer: "Facebook",
+    },
+    {
+        question: "What does the `FlatList` component in React Native do?",
+        options: [
+            "Displays a list of data efficiently",
+            "Creates a button",
+            "Handles animations",
+            "Manages navigation",
+        ],
+        correctAnswer: "Displays a list of data efficiently",
+    },
+    {
+        question: "What is the purpose of the `key` prop in React?",
+        options: [
+            "To uniquely identify elements in a list",
+            "To manage event handlers",
+            "To style components",
+            "To pass state between components",
+        ],
+        correctAnswer: "To uniquely identify elements in a list",
+    },
+    {
+        question: "What is the default port for running a React app locally?",
+        options: [
+            "3000",
+            "8080",
+            "8000",
+            "5000",
+        ],
+        correctAnswer: "3000",
+    },
+    {
+        question: "Which of the following is used for navigation in React Native?",
+        options: [
+            "React Navigation",
+            "React Router",
+            "Redux Navigator",
+            "MobX",
+        ],
+        correctAnswer: "React Navigation",
+    },
+    {
+        question: "What does the `setState` function do in React?",
+        options: [
+            "Updates the component's state",
+            "Renders the component",
+            "Binds an event handler",
+            "Unmounts the component",
+        ],
+        correctAnswer: "Updates the component's state",
+    },
+    {
+        question: "What is the primary programming language for React Native?",
+        options: [
+            "JavaScript",
+            "Java",
+            "Swift",
+            "C#",
+        ],
+        correctAnswer: "JavaScript",
+    },
+    {
+        question: "Which command is used to start a React Native project?",
+        options: [
+            "npx react-native run-android",
+            "npm start",
+            "expo start",
+            "react-native-init",
+        ],
+        correctAnswer: "expo start",
+    },
+    {
+        question: "What is the purpose of the `useContext` hook?",
+        options: [
+            "To consume context values",
+            "To manage state",
+            "To handle side effects",
+            "To fetch data",
+        ],
+        correctAnswer: "To consume context values",
+    },
+    {
+        question: "Which tool is commonly used for debugging React Native apps?",
+        options: [
+            "React Developer Tools",
+            "Visual Studio Code",
+            "Expo Go",
+            "Chrome Developer Tools",
+        ],
+        correctAnswer: "React Developer Tools",
+    },
+    {
+        question: "What is the purpose of the `StyleSheet` API in React Native?",
+        options: [
+            "To define and manage component styles",
+            "To create custom animations",
+            "To handle state",
+            "To manage routing",
+        ],
+        correctAnswer: "To define and manage component styles",
+    },
+    {
+        question: "What is the purpose of the `Virtual DOM` in React?",
+        options: [
+            "To improve app performance by minimizing real DOM updates",
+            "To render components to the browser",
+            "To manage routing",
+            "To handle animations",
+        ],
+        correctAnswer: "To improve app performance by minimizing real DOM updates",
+    },
+    {
+        question: "Which library is commonly used for managing global state in React?",
+        options: [
+            "Redux",
+            "React Router",
+            "Axios",
+            "MobX",
+        ],
+        correctAnswer: "Redux",
+    },
+    {
+        question: "What is the purpose of `Props` in React?",
+        options: [
+            "To pass data from parent to child components",
+            "To manage state",
+            "To define lifecycle methods",
+            "To handle errors",
+        ],
+        correctAnswer: "To pass data from parent to child components",
+    },
+    {
+        question: "Which component is used for user input in React Native?",
+        options: [
+            "TextInput",
+            "InputField",
+            "UserInput",
+            "EditText",
+        ],
+        correctAnswer: "TextInput",
+    },
 ];
+
 
 const quizname = "App Development"; // Set the quiz name
 
@@ -117,9 +318,9 @@ export default function AppDevQuiz() {
 
             {/* Quiz Content */}
             <View style={styles.content}>
-                <Text style={styles.questionText}>{currentQuestion.question}</Text>
+                <Text style={styles.questionText}>Q:{currentQuestion.question}</Text>
                 <View style={styles.optionsContainer}>
-                    {currentQuestion.options.map((option, index) => (
+                   {currentQuestion.options.map((option, index) => (
                         <TouchableOpacity
                             key={index}
                             style={[styles.optionButton, selectedAnswer === option && styles.selectedOption]}

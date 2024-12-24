@@ -45,8 +45,9 @@ export default function QuizHomeScreen() {
     const [quizInProgress, setQuizInProgress] = useState(false);
     const [showScoreModal, setShowScoreModal] = useState(false);
     const [name, setName] = useState('');
-    const [surname, setSurname] = useState('');
+    const [sirname, setSirname] = useState('');
     const [city, setCity] = useState('');
+    const [course, setCourse] = useState('');
 
     const toggleExpand = (category) => {
         setExpanded((prev) => ({
@@ -81,13 +82,11 @@ export default function QuizHomeScreen() {
                     [categoryKey]: '',
                 }));
                 // Delay Toast so UI updates before showing the message
-                setTimeout(() => {
-                    Toast.show({
-                        type: 'success',
-                        text1: 'Code Matched!',
-                        text2: 'Loading your quiz...',
-                    });
-                }, 100);
+                Toast.show({
+                    type: 'success',
+                    text1: 'Code Matched!',
+                    text2: 'Loading your quiz...',
+                });
             } else {
                 Toast.show({
                     type: 'error',
@@ -123,37 +122,48 @@ export default function QuizHomeScreen() {
             setShowScoreModal(true);
         }
     };
-
     const handleSave = async () => {
-        if (!name || !surname || !city) {
-            alert("Please fill out all fields.");
+        if (!name || !sirname || !city || !course) {
+            Toast.show({
+                type: 'error',
+                text1: 'Error',
+                text2: 'Plz fill all input to proceed.',
+            });
             return;
         }
 
+        setLoading(true);
         try {
             const db = getFirestore();
             const categoryCollection = collection(db, city); // Save to selected city's collection
             await addDoc(categoryCollection, {
                 name: name,
-                surname: surname,
+                sirname: sirname,
                 score: score,
+                course: course,
                 date: new Date().toISOString(),
+                cityName: city, // Include city name in the document
             });
 
-            alert("Details saved successfully!");
-            resetQuiz(); // Reset quiz after saving
+            Toast.show({
+                type: 'success',
+                text1: 'Result Save',
+                text2: 'Result have been saved sucesfully.',
+            });
+            setQuizInProgress(false);
+            setCurrentQuestionIndex(0);
+            setScore(0);
+            setSelectedAnswer(null);
+            setShowScoreModal(false);
         } catch (error) {
             console.error("Error saving details:", error);
-            alert("Error saving details. Please try again.");
+            Toast.show({
+                type: 'error',
+                text1: 'Error plz fixed',
+                text2: error,
+            });
         }
-    };
-
-    const resetQuiz = () => {
-        setQuizInProgress(false);
-        setCurrentQuestionIndex(0);
-        setScore(0);
-        setSelectedAnswer(null);
-        setShowScoreModal(false);
+        setLoading(false);
     };
     return (
         <SafeAreaView style={styles.container}>
@@ -240,7 +250,7 @@ export default function QuizHomeScreen() {
                 visible={showScoreModal}
                 transparent
                 animationType="slide"
-                onRequestClose={resetQuiz}
+            // onRequestClose={resetQuiz}
             >
                 <View style={styles.modalContainer}>
                     <View style={styles.modalContent}>
@@ -255,13 +265,28 @@ export default function QuizHomeScreen() {
                             onChangeText={(text) => setName(text)}
                         />
 
-                        {/* Input for Surname */}
+                        {/* Input for Sirname */}
                         <TextInput
                             style={styles.input}
-                            placeholder="Enter your surname"
-                            value={surname}
-                            onChangeText={(text) => setSurname(text)}
+                            placeholder="Enter your sirname"
+                            value={sirname}
+                            onChangeText={(text) => setSirname(text)}
                         />
+                        
+                        <Picker
+                            selectedValue={course}
+                            style={styles.picker}
+                            onValueChange={(itemValue) => setCourse(itemValue)}
+                        >
+                            <Picker.Item label="Select your Course" value="" />
+                            <Picker.Item label="Web development" value="Web development" />
+                            <Picker.Item label="App development" value="App development" />
+                            <Picker.Item label="Software engineering" value="Software engineering" />
+                            <Picker.Item label="Digital marketing" value="Digital marketing" />
+                            <Picker.Item label="Flutter" value="Flutter" />
+                            <Picker.Item label="ui/ux designing" value="Ui/UX Designing" />
+                        </Picker>
+
 
                         {/* City Dropdown */}
                         <Picker
@@ -270,16 +295,16 @@ export default function QuizHomeScreen() {
                             onValueChange={(itemValue) => setCity(itemValue)}
                         >
                             <Picker.Item label="Select a city" value="" />
-                            <Picker.Item label="Islamabad" value="Islamabad" />
-                            <Picker.Item label="Karachi" value="Karachi" />
-                            <Picker.Item label="Quetta" value="Quetta" />
-                            <Picker.Item label="Lahore" value="Lahore" />
-                            <Picker.Item label="Peshawar" value="Peshawar" />
+                            <Picker.Item label="Islamabad" value="islamabad" />
+                            <Picker.Item label="Karachi" value="karachi" />
+                            <Picker.Item label="Quetta" value="quetta" />
+                            <Picker.Item label="Lahore" value="lahore" />
+                            <Picker.Item label="Peshawar" value="peshawar" />
                         </Picker>
 
                         {/* Save Button */}
                         <TouchableOpacity style={styles.button} onPress={handleSave}>
-                            <Text style={styles.buttonClose}>Save</Text>
+                            {loading ? <ActivityIndicator size={50} color="#fff" /> : <Text style={styles.buttonText}>Save</Text>}
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -475,6 +500,9 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     picker: {
+        borderWidth: 1,
+        borderColor: '#ccc',
+        borderRadius: 5,
         height: 50,
         width: '100%',
         marginVertical: 10,

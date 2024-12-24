@@ -5,7 +5,6 @@ import { router } from 'expo-router';
 import Toast from 'react-native-toast-message';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// Web development-related questions
 const webDevQuestions = [
     {
         question: "What does CSS stand for?",
@@ -36,6 +35,206 @@ const webDevQuestions = [
             "To define the navigation bar",
         ],
         correctAnswer: "To contain metadata about the document",
+    },
+    {
+        question: "What does the 'alt' attribute in the <img> tag specify?",
+        options: [
+            "Alternative text for an image",
+            "The alignment of the image",
+            "The size of the image",
+            "The source URL of the image",
+        ],
+        correctAnswer: "Alternative text for an image",
+    },
+    {
+        question: "Which property is used to change the background color in CSS?",
+        options: [
+            "background-color",
+            "color",
+            "bgcolor",
+            "background-image",
+        ],
+        correctAnswer: "background-color",
+    },
+    {
+        question: "What does DOM stand for?",
+        options: [
+            "Document Object Model",
+            "Data Object Model",
+            "Document Order Management",
+            "Display Object Model",
+        ],
+        correctAnswer: "Document Object Model",
+    },
+    {
+        question: "Which JavaScript method is used to select an element by its ID?",
+        options: [
+            "getElementById",
+            "querySelector",
+            "getElementByClass",
+            "getElementByTagName",
+        ],
+        correctAnswer: "getElementById",
+    },
+    {
+        question: "What does HTTP stand for?",
+        options: [
+            "Hypertext Transfer Protocol",
+            "Hyperlink Text Protocol",
+            "Hypertext Transmission Protocol",
+            "Hypertext Transfer Page",
+        ],
+        correctAnswer: "Hypertext Transfer Protocol",
+    },
+    {
+        question: "Which CSS property controls the text size?",
+        options: [
+            "font-size",
+            "text-size",
+            "font-style",
+            "text-style",
+        ],
+        correctAnswer: "font-size",
+    },
+    {
+        question: "What is the default position value in CSS?",
+        options: [
+            "static",
+            "relative",
+            "absolute",
+            "fixed",
+        ],
+        correctAnswer: "static",
+    },
+    {
+        question: "Which tag is used to create a hyperlink in HTML?",
+        options: [
+            "<a>",
+            "<link>",
+            "<href>",
+            "<hyperlink>",
+        ],
+        correctAnswer: "<a>",
+    },
+    {
+        question: "Which CSS framework is known for its grid system?",
+        options: [
+            "Bootstrap",
+            "Foundation",
+            "Materialize",
+            "Tailwind",
+        ],
+        correctAnswer: "Bootstrap",
+    },
+    {
+        question: "What is the correct way to include JavaScript in an HTML file?",
+        options: [
+            "<script>",
+            "<javascript>",
+            "<js>",
+            "<code>",
+        ],
+        correctAnswer: "<script>",
+    },
+    {
+        question: "What is the purpose of media queries in CSS?",
+        options: [
+            "To make a website responsive",
+            "To add animations",
+            "To optimize loading speed",
+            "To define a color scheme",
+        ],
+        correctAnswer: "To make a website responsive",
+    },
+    {
+        question: "Which attribute is used to define inline CSS styles?",
+        options: [
+            "style",
+            "css",
+            "inline",
+            "styles",
+        ],
+        correctAnswer: "style",
+    },
+    {
+        question: "What is the primary purpose of the <footer> tag in HTML?",
+        options: [
+            "To define the footer section of a document",
+            "To create a header",
+            "To link external CSS files",
+            "To embed images",
+        ],
+        correctAnswer: "To define the footer section of a document",
+    },
+    {
+        question: "What does the <canvas> tag in HTML do?",
+        options: [
+            "Creates a space for dynamic graphics",
+            "Defines a navigation bar",
+            "Displays multimedia content",
+            "Creates a form",
+        ],
+        correctAnswer: "Creates a space for dynamic graphics",
+    },
+    {
+        question: "Which JavaScript function is used to parse a JSON string?",
+        options: [
+            "JSON.parse()",
+            "JSON.stringify()",
+            "JSON.convert()",
+            "JSON.decode()",
+        ],
+        correctAnswer: "JSON.parse()",
+    },
+    {
+        question: "What does the z-index property in CSS control?",
+        options: [
+            "Stacking order of elements",
+            "Zoom level",
+            "Z-axis rotation",
+            "Width of an element",
+        ],
+        correctAnswer: "Stacking order of elements",
+    },
+    {
+        question: "Which HTML tag is used to embed a video?",
+        options: [
+            "<video>",
+            "<embed>",
+            "<media>",
+            "<movie>",
+        ],
+        correctAnswer: "<video>",
+    },
+    {
+        question: "Which protocol is secure for transmitting data over the web?",
+        options: [
+            "HTTPS",
+            "HTTP",
+            "FTP",
+            "SMTP",
+        ],
+        correctAnswer: "HTTPS",
+    },
+    {
+        question: "Which CSS property is used to create space inside an element?",
+        options: [
+            "padding",
+            "margin",
+            "border",
+            "spacing",
+        ],
+        correctAnswer: "padding",
+    },
+    {
+        question: "What is the purpose of the <meta> tag in HTML?",
+        options: [
+            "To specify metadata about the document",
+            "To define a table",
+            "To create a heading",
+            "To display multimedia content",
+        ],
+        correctAnswer: "To specify metadata about the document",
     },
 ];
 
@@ -132,7 +331,7 @@ export default function WebDevQuiz() {
 
             {/* Quiz Content */}
             <View style={styles.content}>
-                <Text style={styles.questionText}>{currentQuestion.question}</Text>
+                <Text style={styles.questionText}>Q:{currentQuestion.question}</Text>
                 <View style={styles.optionsContainer}>
                     {currentQuestion.options.map((option, index) => (
                         <TouchableOpacity

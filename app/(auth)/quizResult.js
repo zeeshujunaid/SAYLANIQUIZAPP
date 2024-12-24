@@ -29,7 +29,7 @@ const QuizResult = () => {
         quizResults.map((result, index) => (
           <View key={index} style={styles.quizCard}>
             <Text style={styles.quizTitle}>{result.quizName}</Text>
-            <Text style={styles.quizScore}>{result.score}/30</Text>
+            <Text style={styles.quizScore}>{result.score}/23</Text>
           </View>
         ))
       ) : (

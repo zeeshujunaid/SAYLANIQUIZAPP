@@ -6,7 +6,6 @@ import Toast from 'react-native-toast-message';
 import { router } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage'; // Import AsyncStorage
 
-// UI/UX-related questions
 const uiuxQuestions = [
     {
         question: "What does UX stand for?",
@@ -38,7 +37,208 @@ const uiuxQuestions = [
         ],
         correctAnswer: "To outline the structure of a page",
     },
+    {
+        question: "What does UI stand for?",
+        options: [
+            "User Interface",
+            "Universal Interaction",
+            "User Interaction",
+            "Unified Interface",
+        ],
+        correctAnswer: "User Interface",
+    },
+    {
+        question: "What is the primary focus of UX design?",
+        options: [
+            "Aesthetics",
+            "User satisfaction",
+            "Color schemes",
+            "Coding standards",
+        ],
+        correctAnswer: "User satisfaction",
+    },
+    {
+        question: "What is a persona in UX design?",
+        options: [
+            "A fictional representation of a user",
+            "A software tool for design",
+            "A type of color scheme",
+            "An analytics report",
+        ],
+        correctAnswer: "A fictional representation of a user",
+    },
+    {
+        question: "What is the purpose of a usability test?",
+        options: [
+            "To test the functionality of code",
+            "To assess how easily users can navigate a design",
+            "To select the best color scheme",
+            "To ensure responsiveness on mobile devices",
+        ],
+        correctAnswer: "To assess how easily users can navigate a design",
+    },
+    {
+        question: "What is a design system?",
+        options: [
+            "A set of guidelines for consistent design",
+            "A coding framework for developers",
+            "A file format for sharing designs",
+            "An algorithm for user testing",
+        ],
+        correctAnswer: "A set of guidelines for consistent design",
+    },
+    {
+        question: "Which tool is commonly used for prototyping in UI/UX design?",
+        options: [
+            "Sketch",
+            "Excel",
+            "Visual Studio Code",
+            "Git",
+        ],
+        correctAnswer: "Sketch",
+    },
+    {
+        question: "Which of these is an example of a low-fidelity prototype?",
+        options: [
+            "A paper sketch",
+            "A fully functional app",
+            "A colorized webpage",
+            "An animated logo",
+        ],
+        correctAnswer: "A paper sketch",
+    },
+    {
+        question: "What is the purpose of a heatmap in UX research?",
+        options: [
+            "To track user interactions",
+            "To select color schemes",
+            "To analyze network performance",
+            "To evaluate code quality",
+        ],
+        correctAnswer: "To track user interactions",
+    },
+    {
+        question: "What is the main goal of accessibility in design?",
+        options: [
+            "To make the product usable for everyone",
+            "To improve speed",
+            "To reduce development cost",
+            "To increase visual appeal",
+        ],
+        correctAnswer: "To make the product usable for everyone",
+    },
+    {
+        question: "What does a sitemap represent in UX design?",
+        options: [
+            "The structure of a website",
+            "The visual design of pages",
+            "The user demographics",
+            "The navigation patterns",
+        ],
+        correctAnswer: "The structure of a website",
+    },
+    {
+        question: "Which term refers to the spacing between characters in typography?",
+        options: [
+            "Kerning",
+            "Leading",
+            "Tracking",
+            "Baseline",
+        ],
+        correctAnswer: "Kerning",
+    },
+    {
+        question: "What is the Z-pattern in design?",
+        options: [
+            "A visual path for users in layouts",
+            "A type of navigation style",
+            "A method for selecting colors",
+            "An algorithm for user testing",
+        ],
+        correctAnswer: "A visual path for users in layouts",
+    },
+    {
+        question: "Which color model is commonly used in digital design?",
+        options: [
+            "RGB",
+            "CMYK",
+            "PMS",
+            "HSB",
+        ],
+        correctAnswer: "RGB",
+    },
+    {
+        question: "What is the main purpose of a call-to-action (CTA)?",
+        options: [
+            "To encourage users to take a specific action",
+            "To decorate the webpage",
+            "To test user behavior",
+            "To align text elements",
+        ],
+        correctAnswer: "To encourage users to take a specific action",
+    },
+    {
+        question: "What is the primary use of Figma in UI/UX design?",
+        options: [
+            "Prototyping and collaboration",
+            "Code testing",
+            "SEO optimization",
+            "Database management",
+        ],
+        correctAnswer: "Prototyping and collaboration",
+    },
+    {
+        question: "Which principle is part of Gestalt design theory?",
+        options: [
+            "Proximity",
+            "Functionality",
+            "Speed",
+            "Hierarchy",
+        ],
+        correctAnswer: "Proximity",
+    },
+    {
+        question: "Which UX method involves observing users in their environment?",
+        options: [
+            "Contextual inquiry",
+            "A/B testing",
+            "Usability testing",
+            "Card sorting",
+        ],
+        correctAnswer: "Contextual inquiry",
+    },
+    {
+        question: "What does a responsive design adapt to?",
+        options: [
+            "Different screen sizes and devices",
+            "Network speeds",
+            "User input methods",
+            "Programming languages",
+        ],
+        correctAnswer: "Different screen sizes and devices",
+    },
+    {
+        question: "Which of the following is a UX research method?",
+        options: [
+            "User interviews",
+            "Typography selection",
+            "Color theory",
+            "Algorithm design",
+        ],
+        correctAnswer: "User interviews",
+    },
+    {
+        question: "What is the purpose of user onboarding?",
+        options: [
+            "To help new users understand the product",
+            "To debug the app",
+            "To track user data",
+            "To test server performance",
+        ],
+        correctAnswer: "To help new users understand the product",
+    },
 ];
+
 
 const quizname = "UI/UX Design"; // Set the quiz name
 
@@ -121,7 +321,7 @@ export default function UIUXQuiz() {
 
             {/* Quiz Content */}
             <View style={styles.content}>
-                <Text style={styles.questionText}>{currentQuestion.question}</Text>
+                <Text style={styles.questionText}>Q:{currentQuestion.question}</Text>
                 <View style={styles.optionsContainer}>
                     {currentQuestion.options.map((option, index) => (
                         <TouchableOpacity
