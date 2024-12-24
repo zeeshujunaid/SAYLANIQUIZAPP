@@ -180,7 +180,7 @@ export default function QuizHomeScreen() {
             ) : (
                 <View style={styles.quizContainer}>
                     <Text style={styles.quizQuestion}>
-                        {quizData[currentQuestionIndex]?.question}
+                        Q:{quizData[currentQuestionIndex]?.question}
                     </Text>
                     {quizData[currentQuestionIndex]?.answers && Object.keys(quizData[currentQuestionIndex]?.answers).map((key) => (
                         <TouchableOpacity
@@ -188,7 +188,7 @@ export default function QuizHomeScreen() {
                             style={[styles.option, selectedAnswer === key && styles.selectedOption]}
                             onPress={() => handleAnswerSelect(key)}
                         >
-                            <Text style={styles.optionText}>{quizData[currentQuestionIndex].answers[key]}</Text>
+                            <Text style={styles.optionText}>Ans:{quizData[currentQuestionIndex].answers[key]}</Text>
                         </TouchableOpacity>
                     ))}
                     <TouchableOpacity
@@ -196,7 +196,7 @@ export default function QuizHomeScreen() {
                         onPress={handleNextQuestion}
                         disabled={!selectedAnswer}
                     >
-                        <Text style={styles.buttonText}>
+                        <Text style={styles.buttonTest}>
                             {currentQuestionIndex + 1 === quizData.length ? 'Finish' : 'Next'}
                         </Text>
                     </TouchableOpacity>
@@ -220,7 +220,7 @@ export default function QuizHomeScreen() {
                         <Text style={styles.modalTitle}>Quiz Completed!</Text>
                         <Text style={styles.modalScore}>Your Score: {score}/{quizData.length}</Text>
                         <TouchableOpacity style={styles.button} onPress={resetQuiz}>
-                            <Text style={styles.buttonText}>Close</Text>
+                            <Text style={styles.buttonClose}>Close</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -230,20 +230,19 @@ export default function QuizHomeScreen() {
         </SafeAreaView>
     );
 }
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#F1F8E9',
+        backgroundColor: '#E8F5E9', // Soft green background
         padding: 16,
     },
     subHeaderText: {
-        fontSize: 24,
+        fontSize: 26,
         fontWeight: '700',
-        color: '#2E7D32',
+        color: '#1B5E20', // Darker green
         marginBottom: 16,
         textAlign: 'center',
-        letterSpacing: 0.5,
+        letterSpacing: 1,
         textTransform: 'uppercase',
     },
     categoriesContainer: {
@@ -253,60 +252,74 @@ const styles = StyleSheet.create({
     quizCard: {
         width: '95%',
         backgroundColor: '#FFFFFF',
-        borderRadius: 12,
+        borderRadius: 16,
         marginBottom: 20,
-        padding: 12,
+        padding: 16,
         shadowColor: '#000',
-        shadowOffset: { width: 0, height: 3 },
-        shadowOpacity: 0.2,
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.1,
         shadowRadius: 6,
         elevation: 6,
         alignSelf: 'center',
         borderWidth: 1,
-        borderColor: '#C8E6C9',
+        borderColor: '#C5E1A5', // Softer green border
     },
     cardHeader: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingBottom: 8,
+        paddingBottom: 12,
         borderBottomWidth: 1,
         borderBottomColor: '#E0E0E0',
     },
     quizTitle: {
         fontSize: 20,
         fontWeight: 'bold',
-        color: '#2E7D32',
+        color: '#1B5E20',
     },
     cardContent: {
         paddingVertical: 12,
     },
     details: {
-        fontSize: 15,
-        color: '#555555',
-        lineHeight: 22,
+        fontSize: 16,
+        color: '#666666',
+        lineHeight: 24,
+        marginBottom: 6,
     },
     input: {
-        height: 44,
-        borderColor: '#A5D6A7',
-        borderWidth: 1,
-        borderRadius: 10,
-        paddingHorizontal: 12,
-        marginTop: 8,
-        marginBottom: 12,
+        height: 50,
+        borderColor: '#81C784', // Slightly darker green
+        borderWidth: 1.5,
+        borderRadius: 12,
+        paddingHorizontal: 14,
+        marginTop: 10,
+        marginBottom: 16,
         color: '#333333',
-        backgroundColor: '#FAFAFA',
+        backgroundColor: '#F9FBE7', // Light green background
+        fontSize: 16,
     },
     button: {
-        backgroundColor: '#2E7D32',
-        borderRadius: 10,
-        paddingVertical: 12,
+        backgroundColor: '#1B5E20',
+        width: '100%',
+        borderRadius: 12,
+        paddingVertical: 14,
         alignItems: 'center',
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.25,
-        shadowRadius: 5,
+        shadowRadius: 6,
         elevation: 5,
+    },
+    buttonTest:{
+        fontSize: 18,
+        fontWeight: '600',
+        color: '#FFFFFF',
+        width:"20%"
+    },
+    buttonClose:{
+        fontSize: 18,
+        fontWeight: '600',
+        color: '#FFFFFF',
     },
     buttonText: {
         fontSize: 18,
@@ -317,28 +330,36 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        gap:20,
     },
     quizQuestion: {
-        fontSize: 24,
+        fontSize: 34,
         fontWeight: '700',
-        color: '#388E3C',
+        color: '#2E7D32',
         marginBottom: 20,
+        width: '100%',
         textAlign: 'center',
+        paddingHorizontal: 20,
+        lineHeight: 32,
     },
     option: {
         backgroundColor: '#FFFFFF',
-        paddingVertical: 12,
+        width: '100%',
+        paddingVertical: 14,
         paddingHorizontal: 20,
-        marginBottom: 10,
-        borderRadius: 8,
+        marginBottom: 12,
+        borderRadius: 10,
         shadowColor: '#000',
-        shadowOffset: { width: 0, height: 3 },
-        shadowOpacity: 0.2,
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.1,
         shadowRadius: 6,
-        elevation: 6,
+        elevation: 4,
+        borderWidth: 1,
+        borderColor: '#AED581', // Subtle green border
     },
     selectedOption: {
-        backgroundColor: '#A5D6A7',
+        backgroundColor: '#C8E6C9', // Highlight selected option
+        borderColor: '#2E7D32', // Dark green border for selected
     },
     optionText: {
         fontSize: 18,
@@ -352,7 +373,7 @@ const styles = StyleSheet.create({
         bottom: 0,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'rgba(0,0,0,0.4)',
+        backgroundColor: 'rgba(0, 0, 0, 0.4)',
     },
     modalContainer: {
         flex: 1,
@@ -363,19 +384,26 @@ const styles = StyleSheet.create({
     modalContent: {
         backgroundColor: '#FFFFFF',
         padding: 24,
-        borderRadius: 12,
+        borderRadius: 16,
         alignItems: 'center',
-        width: '80%',
+        width: '85%',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 6 },
+        shadowOpacity: 0.2,
+        shadowRadius: 8,
+        elevation: 6,
     },
     modalTitle: {
-        fontSize: 24,
+        fontSize: 26,
         fontWeight: '700',
         color: '#388E3C',
-        marginBottom: 10,
+        marginBottom: 12,
     },
     modalScore: {
         fontSize: 20,
-        color: '#388E3C',
+        fontWeight: '500',
+        color: '#666666',
         marginBottom: 20,
+        textAlign: 'center',
     },
 });
