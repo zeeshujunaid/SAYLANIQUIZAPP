@@ -12,7 +12,9 @@ import {
 } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import Toast from 'react-native-toast-message';
-import { getFirestore, collection, doc, getDoc } from 'firebase/firestore';
+import { getFirestore, collection, doc, getDoc, addDoc } from 'firebase/firestore';
+import { Picker } from '@react-native-picker/picker';
+
 
 const firestore = getFirestore();
 
@@ -32,7 +34,7 @@ export default function QuizHomeScreen() {
         { name: 'App Development', key: 'app' },
         { name: 'UI/UX Design', key: 'uiux' },
         { name: 'flutter development', key: 'flutter' },
-        
+
     ];
     const [expanded, setExpanded] = useState({});
     const [loading, setLoading] = useState(false);
@@ -42,6 +44,9 @@ export default function QuizHomeScreen() {
     const [selectedAnswer, setSelectedAnswer] = useState(null);
     const [quizInProgress, setQuizInProgress] = useState(false);
     const [showScoreModal, setShowScoreModal] = useState(false);
+    const [name, setName] = useState('');
+    const [surname, setSurname] = useState('');
+    const [city, setCity] = useState('');
 
     const toggleExpand = (category) => {
         setExpanded((prev) => ({
@@ -119,6 +124,30 @@ export default function QuizHomeScreen() {
         }
     };
 
+    const handleSave = async () => {
+        if (!name || !surname || !city) {
+            alert("Please fill out all fields.");
+            return;
+        }
+
+        try {
+            const db = getFirestore();
+            const categoryCollection = collection(db, city); // Save to selected city's collection
+            await addDoc(categoryCollection, {
+                name: name,
+                surname: surname,
+                score: score,
+                date: new Date().toISOString(),
+            });
+
+            alert("Details saved successfully!");
+            resetQuiz(); // Reset quiz after saving
+        } catch (error) {
+            console.error("Error saving details:", error);
+            alert("Error saving details. Please try again.");
+        }
+    };
+
     const resetQuiz = () => {
         setQuizInProgress(false);
         setCurrentQuestionIndex(0);
@@ -126,8 +155,6 @@ export default function QuizHomeScreen() {
         setSelectedAnswer(null);
         setShowScoreModal(false);
     };
-
-
     return (
         <SafeAreaView style={styles.container}>
             {!quizInProgress ? (
@@ -219,12 +246,45 @@ export default function QuizHomeScreen() {
                     <View style={styles.modalContent}>
                         <Text style={styles.modalTitle}>Quiz Completed!</Text>
                         <Text style={styles.modalScore}>Your Score: {score}/{quizData.length}</Text>
-                        <TouchableOpacity style={styles.button} onPress={resetQuiz}>
-                            <Text style={styles.buttonClose}>Close</Text>
+
+                        {/* Input for Name */}
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Enter your name"
+                            value={name}
+                            onChangeText={(text) => setName(text)}
+                        />
+
+                        {/* Input for Surname */}
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Enter your surname"
+                            value={surname}
+                            onChangeText={(text) => setSurname(text)}
+                        />
+
+                        {/* City Dropdown */}
+                        <Picker
+                            selectedValue={city}
+                            style={styles.picker}
+                            onValueChange={(itemValue) => setCity(itemValue)}
+                        >
+                            <Picker.Item label="Select a city" value="" />
+                            <Picker.Item label="Islamabad" value="Islamabad" />
+                            <Picker.Item label="Karachi" value="Karachi" />
+                            <Picker.Item label="Quetta" value="Quetta" />
+                            <Picker.Item label="Lahore" value="Lahore" />
+                            <Picker.Item label="Peshawar" value="Peshawar" />
+                        </Picker>
+
+                        {/* Save Button */}
+                        <TouchableOpacity style={styles.button} onPress={handleSave}>
+                            <Text style={styles.buttonClose}>Save</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
             </Modal>
+
 
             <Toast />
         </SafeAreaView>
@@ -310,13 +370,13 @@ const styles = StyleSheet.create({
         shadowRadius: 6,
         elevation: 5,
     },
-    buttonTest:{
+    buttonTest: {
         fontSize: 18,
         fontWeight: '600',
         color: '#FFFFFF',
-        width:"20%"
+        width: "20%"
     },
-    buttonClose:{
+    buttonClose: {
         fontSize: 18,
         fontWeight: '600',
         color: '#FFFFFF',
@@ -330,7 +390,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        gap:20,
+        gap: 20,
     },
     quizQuestion: {
         fontSize: 34,
@@ -405,5 +465,18 @@ const styles = StyleSheet.create({
         color: '#666666',
         marginBottom: 20,
         textAlign: 'center',
+    },
+    input: {
+        borderWidth: 1,
+        borderColor: '#ccc',
+        borderRadius: 5,
+        padding: 10,
+        marginVertical: 10,
+        width: '100%',
+    },
+    picker: {
+        height: 50,
+        width: '100%',
+        marginVertical: 10,
     },
 });
