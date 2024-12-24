@@ -4,7 +4,7 @@
     "slug": "SAYLANIQUIZ",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "https://quiz.saylaniwelfare.com/images/smit.png",
+    "icon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTN5XaPknTWTxdBcdC3r0_9blSi_8n3rD_2Xg&s",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -20,7 +20,7 @@
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "https://quiz.saylaniwelfare.com/images/smit.png"
+      "favicon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTN5XaPknTWTxdBcdC3r0_9blSi_8n3rD_2Xg&s"
     },
     "plugins": [
       "expo-router",
