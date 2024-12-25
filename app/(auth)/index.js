@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#E8F5E9',
   },
   topSection: {
-    flex: 5, 
+    flex: 7, 
     overflow: 'hidden',
   },
   bottomSection: {
