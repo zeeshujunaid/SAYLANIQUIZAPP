@@ -111,10 +111,12 @@ export default function QuizHomeScreen() {
         }
     };
 
+// Store the answer key (like 'a', 'b', 'c', or 'd')
     const handleAnswerSelect = (answerKey) => {
-        setSelectedAnswer(answerKey); // Store the answer key (like 'a', 'b', 'c', or 'd')
+        setSelectedAnswer(answerKey); 
     };
 
+//  next question naviagating
     const handleNextQuestion = () => {
         if (quizData[currentQuestionIndex]?.correctAnswer === selectedAnswer) {
             setScore((prevScore) => prevScore + 1);
@@ -127,6 +129,8 @@ export default function QuizHomeScreen() {
             setShowScoreModal(true);
         }
     };
+
+    // save data/result of quiz to firebase
     const handleSave = async () => {
         if (!name || !sirname || !city || !course) {
             Toast.show({
@@ -149,6 +153,8 @@ export default function QuizHomeScreen() {
                 date: new Date().toISOString(),
                 cityName: city, // Include city name in the document
             });
+
+            // Reset inputs after successful save
             setName('');
             setSirname('');
             setCity('');
@@ -160,14 +166,14 @@ export default function QuizHomeScreen() {
                 text2: 'Result has been saved successfully.',
             });
     
-            // Reset inputs after successful save
-    
             // Reset quiz state
             setQuizInProgress(false);
             setCurrentQuestionIndex(0);
             setScore(0);
             setSelectedAnswer(null);
             setShowScoreModal(false);
+
+
         } catch (error) {
             console.error("Error saving details:", error);
             Toast.show({
@@ -184,6 +190,7 @@ export default function QuizHomeScreen() {
         <SafeAreaView style={styles.container}>
             {!quizInProgress ? (
                 <>
+                {/* main area to enter code and check for quiz */}
                     <Text style={styles.subHeaderText}>Enter Live Quiz Code</Text>
                     <ScrollView
                         contentContainerStyle={styles.categoriesContainer}
@@ -202,6 +209,8 @@ export default function QuizHomeScreen() {
                                         color="#388E3C"
                                     />
                                 </TouchableOpacity>
+
+                                {/* categroeis view to check quiz in same categry */}
                                 {expanded[category.key] && (
                                     <View style={styles.cardContent}>
                                         <Text style={styles.details}>30 quizzes</Text>
@@ -230,6 +239,8 @@ export default function QuizHomeScreen() {
                     </ScrollView>
                 </>
             ) : (
+
+                // quiz data from firebase rendering 
                 <View style={styles.quizContainer}>
                     <Text style={styles.quizQuestion}>
                         Q:{quizData[currentQuestionIndex]?.question}
@@ -255,12 +266,14 @@ export default function QuizHomeScreen() {
                 </View>
             )}
 
+            {/* loading to render model */}
             {loading && (
                 <View style={styles.loadingOverlay}>
                     <ActivityIndicator size="large" color="#2E7D32" />
                 </View>
             )}
 
+            {/* modal to save result */}
             <Modal
                 visible={showScoreModal}
                 transparent
@@ -324,8 +337,6 @@ export default function QuizHomeScreen() {
                     </View>
                 </View>
             </Modal>
-
-
             <Toast />
         </SafeAreaView>
     );
@@ -333,14 +344,14 @@ export default function QuizHomeScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#E8F5E9', // Soft green background
+        backgroundColor: '#E8F5E9', 
         padding: 16,
     },
     subHeaderText: {
         fontSize: 26,
         paddingTop:20,
         fontWeight: '700',
-        color: '#1B5E20', // Darker green
+        color: '#1B5E20', 
         marginBottom: 40,
         textAlign: 'center',
         letterSpacing: 1,
@@ -363,7 +374,7 @@ const styles = StyleSheet.create({
         elevation: 6,
         alignSelf: 'center',
         borderWidth: 1,
-        borderColor: '#C5E1A5', // Softer green border
+        borderColor: '#C5E1A5', 
     },
     cardHeader: {
         flexDirection: 'row',
@@ -389,14 +400,14 @@ const styles = StyleSheet.create({
     },
     input: {
         height: 50,
-        borderColor: '#81C784', // Slightly darker green
+        borderColor: '#81C784', 
         borderWidth: 1.5,
         borderRadius: 12,
         paddingHorizontal: 14,
         marginTop: 10,
         marginBottom: 16,
         color: '#333333',
-        backgroundColor: '#F9FBE7', // Light green background
+        backgroundColor: '#F9FBE7', 
         fontSize: 16,
     },
     button: {
@@ -456,11 +467,11 @@ const styles = StyleSheet.create({
         shadowRadius: 6,
         elevation: 4,
         borderWidth: 1,
-        borderColor: '#AED581', // Subtle green border
+        borderColor: '#AED581', 
     },
     selectedOption: {
-        backgroundColor: '#C8E6C9', // Highlight selected option
-        borderColor: '#2E7D32', // Dark green border for selected
+        backgroundColor: '#C8E6C9',
+        borderColor: '#2E7D32', 
     },
     optionText: {
         fontSize: 18,
@@ -476,24 +487,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: 'rgba(0, 0, 0, 0.4)',
     },
-    // modalContainer: {
-    //     flex: 1,
-    //     justifyContent: 'center',
-    //     alignItems: 'center',
-    //     backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    // },
-    // modalContent: {
-    //     backgroundColor: '#FFFFFF',
-    //     padding: 24,
-    //     borderRadius: 16,
-    //     alignItems: 'center',
-    //     width: '85%',
-    //     shadowColor: '#000',
-    //     shadowOffset: { width: 0, height: 6 },
-    //     shadowOpacity: 0.2,
-    //     shadowRadius: 8,
-    //     elevation: 6,
-    // },
     modalTitle: {
         fontSize: 26,
         fontWeight: '700',
@@ -501,33 +494,33 @@ const styles = StyleSheet.create({
         marginBottom: 12,
     },
     modalScore: {
-        fontSize: 22, // Slightly larger for better visibility
-        fontWeight: 'bold', // Make it bold for emphasis
-        color: '#333333', // A darker shade for better contrast
+        fontSize: 22, 
+        fontWeight: 'bold', 
+        color: '#333333',
         marginBottom: 20,
         textAlign: 'center',
-        textTransform: 'uppercase', // Add a modern look
+        textTransform: 'uppercase', 
     },
     input: {
         borderWidth: 1,
         borderColor: '#ccc',
-        borderRadius: 8, // Softer corners
+        borderRadius: 8, 
         padding: 12,
         marginVertical: 12,
         width: '100%',
-        backgroundColor: '#f9f9f9', // Light gray for modern look
+        backgroundColor: '#f9f9f9', 
     },
     picker: {
         borderWidth: 1,
-        borderColor: '#ddd', // Lighter border
-        borderRadius: 8, // Softer corners
+        borderColor: '#ddd',
+        borderRadius: 8, 
         height: 50,
         width: '100%',
         marginVertical: 12,
-        padding: 10, // Padding for text inside the picker
-        backgroundColor: '#ffffff', // White background
-        elevation: 2, // Subtle shadow for Android
-        shadowColor: '#000', // Shadow for iOS
+        padding: 10, 
+        backgroundColor: '#ffffff', 
+        elevation: 2, 
+        shadowColor: '#000', 
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.2,
         shadowRadius: 4,
@@ -536,17 +529,17 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)', // Dim background for focus
+        backgroundColor: 'rgba(0, 0, 0, 0.5)', 
     },
     modalContent: {
         backgroundColor: '#fff',
         padding: 20,
         borderRadius: 12,
         width: '90%',
-        elevation: 5, // Shadow for Android
+        elevation: 5, 
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.3,
-        shadowRadius: 6, // Shadow for iOS
+        shadowRadius: 6, 
     },
 });
