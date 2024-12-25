@@ -90,7 +90,7 @@ export default function QuizHomeScreen() {
                 Toast.show({
                     type: 'success',
                     text1: 'Code Matched!',
-                    text2: 'Loading your quiz...',
+                    text2: 'Best of luck for yur quiz',
                 });
             } else {
                 Toast.show({
@@ -153,6 +153,7 @@ export default function QuizHomeScreen() {
                 date: new Date().toISOString(),
                 cityName: city, // Include city name in the document
             });
+
 
             // Reset inputs after successful save
             setName('');
@@ -242,6 +243,7 @@ export default function QuizHomeScreen() {
 
                 // quiz data from firebase rendering 
                 <View style={styles.quizContainer}>
+                    <Text style={styles.caution}>Caution:Dont go back you will loose your progrees</Text>
                     <Text style={styles.quizQuestion}>
                         Q:{quizData[currentQuestionIndex]?.question}
                     </Text>
@@ -443,6 +445,14 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         gap: 20,
+    },
+    caution:{
+        fontSize: 10,
+        marginBottom:25,
+        fontWeight: '700',
+        color: '#ff0133',
+        width: '100%',
+        textAlign: 'center',
     },
     quizQuestion: {
         fontSize: 34,

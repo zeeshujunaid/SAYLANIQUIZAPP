@@ -46,7 +46,7 @@ export default function TabLayout() {
         }}
       />
 
-      {/* Donate Tab (Custom Center Button) */}
+      {/* quiz Tab (Custom Center Button) */}
       <Tabs.Screen
         name="LiveQuiz"
         options={{

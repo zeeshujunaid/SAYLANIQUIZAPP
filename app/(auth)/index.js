@@ -10,7 +10,7 @@ const WelcomeScreen = () => {
   const router = useRouter();
   const videoRef = useRef(null);
 
-  const checkUser = async () => {
+  const checkUser = async () => { 
     try {
       // Pause video playback before navigating
       if (videoRef.current) {
@@ -24,14 +24,18 @@ const WelcomeScreen = () => {
           text1: 'Welcome Back!',
           text2: 'Hope you like the app',
         });
-        router.push('(tabs)'); // Replace '(tabs)' with your dashboard route
+
+        // navigate to main page if user found
+        router.push('(tabs)'); 
       } else {
         Toast.show({
           type: 'info',
           text1: 'No User Found',
           text2: 'Please sign-up to continue',
         });
-        router.push('/sign-in'); // Replace '/sign-in' with your login route
+
+        // navigate to signup if user not found
+        router.push('/sign-in'); 
       }
     } catch (error) {
       Toast.show({
@@ -80,11 +84,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#E8F5E9',
   },
   topSection: {
-    flex: 5, // 50% of the height
+    flex: 5, 
     overflow: 'hidden',
   },
   bottomSection: {
-    flex: 4, // 40% of the height
+    flex: 4,
     justifyContent: 'center',
     alignItems: 'center',
     gap: 8,
