@@ -1,16 +1,22 @@
-import React, { useEffect } from 'react';
-import { View, Text, ImageBackground, TouchableOpacity, StyleSheet,StatusBar as RNStatusBar, } from 'react-native';
+import React, { useRef } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
 import { StatusBar } from "expo-status-bar";
 import Toast from 'react-native-toast-message';
-
+import { Video } from 'expo-av';
 
 const WelcomeScreen = () => {
   const router = useRouter();
+  const videoRef = useRef(null);
 
   const checkUser = async () => {
     try {
+      // Pause video playback before navigating
+      if (videoRef.current) {
+        await videoRef.current.pauseAsync();
+      }
+
       const user = await AsyncStorage.getItem('info');
       if (user !== null) {
         Toast.show({
@@ -23,7 +29,7 @@ const WelcomeScreen = () => {
         Toast.show({
           type: 'info',
           text1: 'No User Found',
-          text2: 'Plz sign-up to continue',
+          text2: 'Please sign-up to continue',
         });
         router.push('/sign-in'); // Replace '/sign-in' with your login route
       }
@@ -31,91 +37,105 @@ const WelcomeScreen = () => {
       Toast.show({
         type: 'error',
         text1: 'Error',
-        text2: 'No user found plz ry again',
+        text2: 'No user found, please try again',
       });
     }
   };
 
   return (
-    <ImageBackground
-      source={{ uri: 'https://www.esicm.org/wp-content/uploads/2024/05/quiztime.png' }}
-      style={styles.background}
-      resizeMode="contain"
-    >
-      <StatusBar style="light" hidden={true} translucent={true} />
-      <View style={styles.overlay}>
-        <View style={styles.container}>
-          <Text style={styles.title}>Welcome to</Text>
-          <Text style={styles.subtitle}>Saylani Quiz App</Text>
-          <TouchableOpacity 
-            style={styles.button}
-            onPress={checkUser}       
-          >
-            <Text style={styles.buttonText}>Get Started</Text>
-          </TouchableOpacity>
-        </View>
-        <Toast />
+    <View style={styles.container}>
+      {/* Top Section */}
+      <View style={styles.topSection}>
+        <Video
+          ref={videoRef}
+          source={require('../../assets/video/A glimpse of the grand event held at National Stadium Karachi..mp4')}
+          style={styles.videoBackground}
+          rate={1.0}
+          volume={1.0}
+          isMuted={false}
+          resizeMode="cover"
+          shouldPlay
+          isLooping
+        />
       </View>
-    </ImageBackground>
+
+      {/* Bottom Section */}
+      <View style={styles.bottomSection}>
+        <Text style={styles.title}>Welcome to</Text>
+        <Text style={styles.subtitle}>Saylani Quiz App</Text>
+        <TouchableOpacity style={styles.button} onPress={checkUser}>
+          <Text style={styles.buttonText}>Get Started</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* Status Bar */}
+      <StatusBar style="light" translucent />
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  background: {
+  container: {
+    flex: 1,
+    backgroundColor: '#E8F5E9',
+  },
+  topSection: {
+    flex: 5, // 50% of the height
+    overflow: 'hidden',
+  },
+  bottomSection: {
+    flex: 4, // 40% of the height
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 8,
+    width: "100%",
+    borderTopLeftRadius: 90,
+    borderTopRightRadius: 90,
+  },
+  videoBackground: {
     flex: 1,
     width: '100%',
     height: '100%',
-  },
-  overlay: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.6)', // Semi-transparent overlay
-  },
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
+    borderBottomLeftRadius: 90,
+    borderBottomRightRadius: 90,
+    overflow: 'hidden',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
   },
   title: {
-    fontSize: 38,
+    fontSize: 48,
     fontWeight: 'bold',
-    color: '#FFD700', // Golden text for a premium feel
-    textShadowColor: 'rgba(0, 0, 0, 0.75)',
-    textShadowOffset: { width: -1, height: 1 },
-    textShadowRadius: 10,
+    color: '#333',
     marginBottom: 10,
-    textAlign: 'center',
   },
   subtitle: {
-    fontSize: 22,
-    color: '#fff',
+    fontSize: 24,
+    color: '#555',
     textAlign: 'center',
-    marginBottom: 40,
-    opacity: 0.9,
+    marginBottom: 20,
   },
   button: {
-    backgroundColor: '#1E90FF',
-    paddingVertical: 15,
-    paddingHorizontal: 50,
-    borderRadius: 30,
+    backgroundColor: '#E8F5E9',
+    paddingVertical: 12,
+    paddingHorizontal: 30,
+    borderColor: "#000",
+    borderWidth: 2,
+    borderRadius: 25,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 5,
     elevation: 5,
-    // ADD HOVER
-    transition: 'background-color 0.3s', // Smooth hover effect
   },
   buttonText: {
-    color: '#fff',
-    fontSize: 18,
+    color: '#000',
+    fontSize: 20,
     fontWeight: 'bold',
     textTransform: 'uppercase',
   },
-
- 
 });
 
 export default WelcomeScreen;
