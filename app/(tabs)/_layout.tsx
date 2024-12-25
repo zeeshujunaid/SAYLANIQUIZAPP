@@ -78,14 +78,14 @@ export default function TabLayout() {
 
 const styles = StyleSheet.create({
   centerButton: {
-    width: 70, // Slightly increased size for prominence
-    height: 70,
+    width: 60, // Slightly increased size for prominence
+    height: 60,
     borderRadius: 35,
     alignItems: 'center',
     justifyContent: 'center',
     position: 'absolute', // Position above the tab bar
     bottom: 0, // Position the button at the very bottom
-    left: '50%',
+    left: '70%',
     transform: [{ translateX: -35 }], // Center the button horizontally
     shadowColor: '#4CAF50',
     shadowOffset: { width: 0, height: 5 },

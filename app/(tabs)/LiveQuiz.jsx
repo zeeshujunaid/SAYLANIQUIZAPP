@@ -19,6 +19,7 @@ import { Picker } from '@react-native-picker/picker';
 const firestore = getFirestore();
 
 export default function QuizHomeScreen() {
+    // codes to save in firebase
     const [codes, setCodes] = useState({
         digital: '',
         software: '',
@@ -27,6 +28,7 @@ export default function QuizHomeScreen() {
         uiux: '',
         flutter: '',
     });
+    // categroies collection
     const categories = [
         { name: 'Digital Marketing', key: 'digital' },
         { name: 'Software Engineering', key: 'software' },
@@ -36,6 +38,7 @@ export default function QuizHomeScreen() {
         { name: 'flutter development', key: 'flutter' },
 
     ];
+    // use state
     const [expanded, setExpanded] = useState({});
     const [loading, setLoading] = useState(false);
     const [quizData, setQuizData] = useState([]);  // Ensure quizData is an empty array initially
@@ -49,6 +52,7 @@ export default function QuizHomeScreen() {
     const [city, setCity] = useState('');
     const [course, setCourse] = useState('');
 
+    //  toggle views
     const toggleExpand = (category) => {
         setExpanded((prev) => ({
             ...prev,
@@ -56,6 +60,7 @@ export default function QuizHomeScreen() {
         }));
     };
 
+    // get data from firebase 
     const handleCategoryPress = async (categoryKey, code) => {
         if (!code.trim()) {
             Toast.show({
@@ -127,15 +132,15 @@ export default function QuizHomeScreen() {
             Toast.show({
                 type: 'error',
                 text1: 'Error',
-                text2: 'Plz fill all input to proceed.',
+                text2: 'Please fill all inputs to proceed.',
             });
             return;
         }
-
+    
         setLoading(true);
         try {
             const db = getFirestore();
-            const categoryCollection = collection(db, city); // Save to selected city's collection
+            const categoryCollection = collection(db, city); // Save to the selected city's collection
             await addDoc(categoryCollection, {
                 name: name,
                 sirname: sirname,
@@ -144,12 +149,20 @@ export default function QuizHomeScreen() {
                 date: new Date().toISOString(),
                 cityName: city, // Include city name in the document
             });
-
+            setName('');
+            setSirname('');
+            setCity('');
+            setCourse('');
+    
             Toast.show({
                 type: 'success',
-                text1: 'Result Save',
-                text2: 'Result have been saved sucesfully.',
+                text1: 'Result Saved',
+                text2: 'Result has been saved successfully.',
             });
+    
+            // Reset inputs after successful save
+    
+            // Reset quiz state
             setQuizInProgress(false);
             setCurrentQuestionIndex(0);
             setScore(0);
@@ -159,12 +172,14 @@ export default function QuizHomeScreen() {
             console.error("Error saving details:", error);
             Toast.show({
                 type: 'error',
-                text1: 'Error plz fixed',
-                text2: error,
+                text1: 'Error',
+                text2: 'Please fix the error and try again.',
             });
+        } finally {
+            setLoading(false);
         }
-        setLoading(false);
     };
+    
     return (
         <SafeAreaView style={styles.container}>
             {!quizInProgress ? (
@@ -323,16 +338,17 @@ const styles = StyleSheet.create({
     },
     subHeaderText: {
         fontSize: 26,
+        paddingTop:20,
         fontWeight: '700',
         color: '#1B5E20', // Darker green
-        marginBottom: 16,
+        marginBottom: 40,
         textAlign: 'center',
         letterSpacing: 1,
         textTransform: 'uppercase',
     },
     categoriesContainer: {
         flexGrow: 1,
-        paddingBottom: 20,
+        paddingBottom: 80,
     },
     quizCard: {
         width: '95%',
@@ -460,24 +476,24 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: 'rgba(0, 0, 0, 0.4)',
     },
-    modalContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    },
-    modalContent: {
-        backgroundColor: '#FFFFFF',
-        padding: 24,
-        borderRadius: 16,
-        alignItems: 'center',
-        width: '85%',
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 6 },
-        shadowOpacity: 0.2,
-        shadowRadius: 8,
-        elevation: 6,
-    },
+    // modalContainer: {
+    //     flex: 1,
+    //     justifyContent: 'center',
+    //     alignItems: 'center',
+    //     backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    // },
+    // modalContent: {
+    //     backgroundColor: '#FFFFFF',
+    //     padding: 24,
+    //     borderRadius: 16,
+    //     alignItems: 'center',
+    //     width: '85%',
+    //     shadowColor: '#000',
+    //     shadowOffset: { width: 0, height: 6 },
+    //     shadowOpacity: 0.2,
+    //     shadowRadius: 8,
+    //     elevation: 6,
+    // },
     modalTitle: {
         fontSize: 26,
         fontWeight: '700',
@@ -485,26 +501,52 @@ const styles = StyleSheet.create({
         marginBottom: 12,
     },
     modalScore: {
-        fontSize: 20,
-        fontWeight: '500',
-        color: '#666666',
+        fontSize: 22, // Slightly larger for better visibility
+        fontWeight: 'bold', // Make it bold for emphasis
+        color: '#333333', // A darker shade for better contrast
         marginBottom: 20,
         textAlign: 'center',
+        textTransform: 'uppercase', // Add a modern look
     },
     input: {
         borderWidth: 1,
         borderColor: '#ccc',
-        borderRadius: 5,
-        padding: 10,
-        marginVertical: 10,
+        borderRadius: 8, // Softer corners
+        padding: 12,
+        marginVertical: 12,
         width: '100%',
+        backgroundColor: '#f9f9f9', // Light gray for modern look
     },
     picker: {
         borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 5,
+        borderColor: '#ddd', // Lighter border
+        borderRadius: 8, // Softer corners
         height: 50,
         width: '100%',
-        marginVertical: 10,
+        marginVertical: 12,
+        padding: 10, // Padding for text inside the picker
+        backgroundColor: '#ffffff', // White background
+        elevation: 2, // Subtle shadow for Android
+        shadowColor: '#000', // Shadow for iOS
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 4,
+    },
+    modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)', // Dim background for focus
+    },
+    modalContent: {
+        backgroundColor: '#fff',
+        padding: 20,
+        borderRadius: 12,
+        width: '90%',
+        elevation: 5, // Shadow for Android
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.3,
+        shadowRadius: 6, // Shadow for iOS
     },
 });
