@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
 import { StatusBar } from "expo-status-bar";
@@ -50,18 +50,13 @@ const WelcomeScreen = () => {
     <View style={styles.container}>
       {/* Top Section */}
       <View style={styles.topSection}>
-        <Video
-          ref={videoRef}
-          source={require('../../assets/video/A glimpse of the grand event held at National Stadium Karachi..mp4')}
-          style={styles.videoBackground}
-          rate={1.0}
-          volume={1.0}
-          isMuted={false}
-          resizeMode="cover"
-          shouldPlay
-          isLooping
-        />
-      </View>
+  <Image
+    source={{
+      uri: 'https://mir-s3-cdn-cf.behance.net/projects/404/fe88a5125363293.Y3JvcCwxODc1LDE0NjYsMTA2Miw1OTg.jpg',
+    }}
+    style={styles.image}
+  />
+</View>
 
       {/* Bottom Section */}
       <View style={styles.bottomSection}>
@@ -83,8 +78,19 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#E8F5E9',
   },
+  image: {
+    width: '100 %', // Full width of the container
+    height: '100%', // Full height of the container
+    resizeMode: 'cover',
+    borderleftBottomRadius: 90,
+    borderBottomLeftRadius: 90,
+    borderBottomRightRadius: 90,
+    overflow: 'hidden', // Ensures the entire image is visible
+  },
   topSection: {
-    flex: 7, 
+    flex: 7,
+    justifyContent: 'center',
+    alignItems: 'center',
     overflow: 'hidden',
   },
   bottomSection: {

@@ -51,6 +51,7 @@ export default function QuizHomeScreen() {
     const [sirname, setSirname] = useState('');
     const [city, setCity] = useState('');
     const [course, setCourse] = useState('');
+    const [cardnum, setCardnum] = useState('');
 
     //  toggle views
     const toggleExpand = (category) => {
@@ -151,7 +152,8 @@ export default function QuizHomeScreen() {
                 score: score,
                 course: course,
                 date: new Date().toISOString(),
-                cityName: city, // Include city name in the document
+                cityName: city, 
+                cardnum : cardnum
             });
 
 
@@ -301,6 +303,13 @@ export default function QuizHomeScreen() {
                             placeholder="Enter your sirname"
                             value={sirname}
                             onChangeText={(text) => setSirname(text)}
+                        />
+                        
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Enter your id card number"
+                            value={cardnum}
+                            onChangeText={(number) => setCardnum(number)}
                         />
                         
                         <Picker
