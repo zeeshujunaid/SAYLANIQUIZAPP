@@ -15,11 +15,9 @@ import { FontAwesome } from '@expo/vector-icons';
 import Toast from 'react-native-toast-message';
 import { getFirestore, collection, doc, getDoc, addDoc } from 'firebase/firestore';
 import { Picker } from '@react-native-picker/picker';
-import { useNavigation } from '@react-navigation/native'; 
 
 const firestore = getFirestore();
 
-const navigation = useNavigation();
 export default function QuizHomeScreen() {
     // codes to save in firebase
     const [codes, setCodes] = useState({
