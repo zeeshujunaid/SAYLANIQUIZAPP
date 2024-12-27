@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import {
     Text,
     TextInput,
@@ -9,15 +9,17 @@ import {
     View,
     ActivityIndicator,
     Modal,
+    BackHandler,
 } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import Toast from 'react-native-toast-message';
 import { getFirestore, collection, doc, getDoc, addDoc } from 'firebase/firestore';
 import { Picker } from '@react-native-picker/picker';
-
+import { useNavigation } from '@react-navigation/native'; 
 
 const firestore = getFirestore();
 
+const navigation = useNavigation();
 export default function QuizHomeScreen() {
     // codes to save in firebase
     const [codes, setCodes] = useState({
@@ -61,6 +63,19 @@ export default function QuizHomeScreen() {
         }));
     };
 
+
+    useEffect(() => {
+        const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+            Toast.show({
+                type: 'error',
+                text1: 'Warning',
+                text2: "You can't go back during the quiz.",
+            });
+            return true; // Block back navigation
+        });
+
+        return () => backHandler.remove();
+    }, []);
     // get data from firebase 
     const handleCategoryPress = async (categoryKey, code) => {
         if (!code.trim()) {
@@ -245,7 +260,7 @@ export default function QuizHomeScreen() {
 
                 // quiz data from firebase rendering 
                 <View style={styles.quizContainer}>
-                    <Text style={styles.caution}>Caution:Dont go back you will loose your progrees</Text>
+                    {/* <Text style={styles.caution}>Caution:Dont go back you will loose your progrees</Text> */}
                     <Text style={styles.quizQuestion}>
                         Q:{quizData[currentQuestionIndex]?.question}
                     </Text>
