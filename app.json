@@ -4,7 +4,7 @@
     "slug": "SAYLANIQUIZ",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/saylanicon.png",
+    "icon": "./assets/images/quizicon.jpg",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -13,21 +13,21 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/saylanicon.png",
+        "foregroundImage": "./assets/images/quizicon.jpg",
         "backgroundColor": "#E8F5E9"
       }
     },
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/saylanicon.png"
+      "favicon": "./assets/images/quizicon.jpg"
     },
     "plugins": [
       "expo-router",
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/saylanicon.png",
+          "image": "./assets/images/quizicon.jpg",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#E8F5E9"
