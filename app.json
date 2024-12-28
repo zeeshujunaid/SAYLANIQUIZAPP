@@ -4,7 +4,7 @@
     "slug": "SAYLANIQUIZ",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTN5XaPknTWTxdBcdC3r0_9blSi_8n3rD_2Xg&s",
+    "icon": "./assets/images/saylanicon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -13,24 +13,24 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "https://quiz.saylaniwelfare.com/images/smit.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./assets/images/saylanicon.png",
+        "backgroundColor": "#E8F5E9"
       }
     },
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTN5XaPknTWTxdBcdC3r0_9blSi_8n3rD_2Xg&s"
+      "favicon": "./assets/images/saylanicon.png"
     },
     "plugins": [
       "expo-router",
       [
         "expo-splash-screen",
         {
-          "image": "https://quiz.saylaniwelfare.com/images/smit.png",
+          "image": "./assets/images/saylanicon.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
+          "backgroundColor": "#E8F5E9"
         }
       ]
     ],
