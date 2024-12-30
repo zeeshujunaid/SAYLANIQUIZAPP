@@ -15,7 +15,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/quizicon.jpg",
         "backgroundColor": "#E8F5E9"
-      }
+      },
+      "package": "com.zeeshan.junaid.SAYLANIQUIZ"
     },
     "web": {
       "bundler": "metro",
@@ -36,6 +37,14 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "abfac7dc-6844-4312-97c5-16028e391451"
+      }
     }
   }
 }
