@@ -2,21 +2,23 @@
   "expo": {
     "name": "SAYLANIQUIZ",
     "slug": "SAYLANIQUIZ",
-    "version": "1.0.0",
+    "version": "1.1.0",  
     "orientation": "portrait",
     "icon": "./assets/images/quizicon.jpg",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "buildNumber": "2"  
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/quizicon.jpg",
         "backgroundColor": "#E8F5E9"
       },
-      "package": "com.zeeshan.junaid.SAYLANIQUIZ"
+      "package": "com.zeeshan.junaid.SAYLANIQUIZ",
+      "versionCode": 2  
     },
     "web": {
       "bundler": "metro",

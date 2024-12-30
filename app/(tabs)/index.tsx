@@ -21,7 +21,7 @@ export default function QuizHomeScreen() {
               onPress={() => router.push('./(auth)/marketingquiz')} // Use router.push here
             >
               <Image
-                source={{ uri: "https://www.pngitem.com/pimgs/m/551-5512749_digital-marketing-png-icon-png-download-digital-marketing.png" }}
+              source={require('../../assets/images/digitalmarketing.png')} // Use local image
                 style={styles.cardImage}
               />
               <Text style={styles.cardText}>Digital Marketing Quiz</Text>
@@ -32,7 +32,7 @@ export default function QuizHomeScreen() {
               onPress={() => router.push('./(auth)/softwarequiz')} // Navigate using router.push
             >
               <Image
-                source={{ uri: "https://mir-s3-cdn-cf.behance.net/projects/404/fc5eb5190607873.Y3JvcCwxMDgwLDg0NCwwLDExNw.jpg" }}
+               source={require('../../assets/images/softwareEngeneering.jpg')} // Use local image
                 style={styles.cardImage}
               />
               <Text style={styles.cardText}>Software Engeneering Quiz</Text>
@@ -46,7 +46,7 @@ export default function QuizHomeScreen() {
               onPress={() => router.push('./(auth)/webdevquiz')} // Navigate using router.push
             >
               <Image
-                source={{ uri: "https://img.lovepik.com/free-template/bg/20200805/bg/cc809b07a0bf2_400300.png_list.jpg!/fw/431" }}
+              source={require('../../assets/images/webdevelopment.png')} // Use local image
                 style={styles.cardImage}
               />
               <Text style={styles.cardText}>Web Development Quiz</Text>
@@ -57,7 +57,7 @@ export default function QuizHomeScreen() {
               onPress={() => router.push('./(auth)/appdevquiz')} // Navigate using router.push
             >
               <Image
-                source={{ uri: "https://img.freepik.com/free-vector/user-interface-development-isometric-concept-with-young-woman-creating-custom-design-mobile-application-vector-illustration_1284-72341.jpg" }}
+            source={require('../../assets/images/appdevelopment.avif')} // Use local image
                 style={styles.cardImage}
               />
               <Text style={styles.cardText}>App Development Quiz</Text>
@@ -71,7 +71,7 @@ export default function QuizHomeScreen() {
               onPress={() => router.push('./(auth)/designquiz')} // Navigate using router.push
             >
               <Image
-                source={{ uri: "https://5.imimg.com/data5/PC/FS/PG/SELLER-6917958/ux-ui-design-services-500x500.png" }}
+                source={require('../../assets/images/uiuxdesign.webp')} // Use local image
                 style={styles.cardImage}
               />
               <Text style={styles.cardText}>UI-UX Quiz</Text>
@@ -82,7 +82,7 @@ export default function QuizHomeScreen() {
               onPress={() => router.push('/LiveQuiz')} // Navigate using router.push
             >
               <Image
-                source={{ uri: "https://cdn6.aptoide.com/imgs/9/4/5/9453024a5f55e2debb92330907272221_icon.png" }}
+               source={require('../../assets/images/livequiz.png')} // Use local image
                 style={styles.cardImage}
               />
               <Text style={styles.cardText}>Enter Live Quiz</Text>

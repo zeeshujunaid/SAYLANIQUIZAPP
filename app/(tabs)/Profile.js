@@ -95,7 +95,7 @@ export default function Profile() {
                   <View style={styles.header}>
                     <Image
                       source={{
-                        uri: "https://avatars.githubusercontent.com/u/155985389?s=400&u=143d628a397176208d57037c896734943265e663&v=4",
+                        uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTN5XaPknTWTxdBcdC3r0_9blSi_8n3rD_2Xg&s",
                       }}
                       style={styles.profileImage}
                     />
