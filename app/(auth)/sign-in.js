@@ -103,7 +103,7 @@ export default function SignIn() {
                     {loading ? <ActivityIndicator size={50} color="#fff" /> : <Text style={styles.buttonText}>Sign In</Text>}
                 </TouchableOpacity>
 
-                {/* Social Login */}
+                {/* Social Login
                 <View style={styles.socialLoginContainer}>
                     <Text style={styles.socialText}>Or sign in with</Text>
                     <View style={styles.socialIcons}>
@@ -120,7 +120,7 @@ export default function SignIn() {
                             />
                         </TouchableOpacity>
                     </View>
-                </View>
+                </View> */}
 
                 {/* Footer Text */}
                 <Text style={styles.footerText}>
@@ -223,25 +223,25 @@ const styles = StyleSheet.create({
         color: "#fff",
         fontWeight: "bold",
     },
-    socialLoginContainer: {
-        alignItems: "center",
-        marginBottom: 20,
-    },
-    socialText: {
-        fontSize: 14,
-        color: "#555",
-        marginBottom: 10,
-    },
-    socialIcons: {
-        flexDirection: "row",
-        justifyContent: "center",
-    },
-    socialIcon: {
-        width: 50,
-        height: 50,
-        margin: 10,
-        resizeMode: "contain",
-    },
+    // socialLoginContainer: {
+    //     alignItems: "center",
+    //     marginBottom: 20,
+    // },
+    // socialText: {
+    //     fontSize: 14,
+    //     color: "#555",
+    //     marginBottom: 10,
+    // },
+    // socialIcons: {
+    //     flexDirection: "row",
+    //     justifyContent: "center",
+    // },
+    // socialIcon: {
+    //     width: 50,
+    //     height: 50,
+    //     margin: 10,
+    //     resizeMode: "contain",
+    // },
     footerText: {
         fontSize: 14,
         color: "#000",

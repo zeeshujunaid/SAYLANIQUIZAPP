@@ -80,37 +80,37 @@ export default function Signup() {
     }
   };
 
-  const handleGoogleSignup = () => {
-    signInWithPopup(auth, googleProvider)
-      .then(async (userCredential) => {
-        const user = userCredential.user;
-        await AsyncStorage.setItem("info", JSON.stringify({ email: user.email, name: user.displayName, uid: user.uid }));
-        router.push("/(tabs)/");
-      })
-      .catch((error) => {
-        Toast.show({
-          type: "error",
-          text1: "Google Signup Failed",
-          text2: error.message,
-        });
-      });
-  };
+  // const handleGoogleSignup = () => {
+  //   signInWithPopup(auth, googleProvider)
+  //     .then(async (userCredential) => {
+  //       const user = userCredential.user;
+  //       await AsyncStorage.setItem("info", JSON.stringify({ email: user.email, name: user.displayName, uid: user.uid }));
+  //       router.push("/(tabs)/");
+  //     })
+  //     .catch((error) => {
+  //       Toast.show({
+  //         type: "error",
+  //         text1: "Google Signup Failed",
+  //         text2: error.message,
+  //       });
+  //     });
+  // };
 
-  const handleFacebookSignup = () => {
-    signInWithPopup(auth, facebookProvider)
-      .then(async (userCredential) => {
-        const user = userCredential.user;
-        await AsyncStorage.setItem("info", JSON.stringify({ email: user.email, name: user.displayName, uid: user.uid }));
-        router.push("/(tabs)/");
-      })
-      .catch((error) => {
-        Toast.show({
-          type: "error",
-          text1: "Facebook Signup Failed",
-          text2: error.message,
-        });
-      });
-  };
+  // const handleFacebookSignup = () => {
+  //   signInWithPopup(auth, facebookProvider)
+  //     .then(async (userCredential) => {
+  //       const user = userCredential.user;
+  //       await AsyncStorage.setItem("info", JSON.stringify({ email: user.email, name: user.displayName, uid: user.uid }));
+  //       router.push("/(tabs)/");
+  //     })
+  //     .catch((error) => {
+  //       Toast.show({
+  //         type: "error",
+  //         text1: "Facebook Signup Failed",
+  //         text2: error.message,
+  //       });
+  //     });
+  // };
 
   return (
     <View style={styles.background}>
@@ -164,7 +164,7 @@ export default function Signup() {
           {loading ? <ActivityIndicator size={50} color="#fff" /> : <Text style={styles.buttonText}>Sign Up</Text>}
         </TouchableOpacity>
   
-        {/* Social Sign Up Section */}
+        {/* Social Sign Up Section
         <View style={styles.socialLoginContainer}>
     <Text style={styles.socialText}>Or sign in with</Text>
     <View style={styles.socialIcons}>
@@ -181,7 +181,7 @@ export default function Signup() {
             />
         </TouchableOpacity>
     </View>
-</View>
+</View> */}
         <Text style={styles.footerText}>
           Already have an account?{" "}
           <Text style={styles.linkText} onPress={() => router.push("/sign-in")}>
@@ -283,33 +283,33 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
  
-  socialLoginContainer: {
-    alignItems: "center",
-    // marginVertical: 30,
-},
-socialText: {
-  fontSize: 14,
-  color: "#555",
-    marginBottom: 10,
-    marginTop:10,
-    textAlign: "center",
-},
-socialIcons: {
-  flexDirection: "row",
-  justifyContent: "center",  // Center icons horizontally
-  alignItems: "center",      // Center icons vertically
-  width: "100%",             // Ensure the container takes the full width
-  paddingHorizontal: 70,     // Add padding to ensure proper spacing within the container
-},
+//   socialLoginContainer: {
+//     alignItems: "center",
+//     // marginVertical: 30,
+// },
+// socialText: {
+//   fontSize: 14,
+//   color: "#555",
+//     marginBottom: 10,
+//     marginTop:10,
+//     textAlign: "center",
+// },
+// socialIcons: {
+//   flexDirection: "row",
+//   justifyContent: "center",  // Center icons horizontally
+//   alignItems: "center",      // Center icons vertically
+//   width: "100%",             // Ensure the container takes the full width
+//   paddingHorizontal: 70,     // Add padding to ensure proper spacing within the container
+// },
 
-socialIconButton: {
-  marginHorizontal: 10,      // Reduced margin for better spacing between icons
-  borderRadius: 10,          // Rounded corners for the buttons
-  overflow: "hidden",        // Ensures the image fits properly within the rounded button
-},
-socialIcon: {
-    width: 60,
-    height: 60,
-    resizeMode: "contain",
-},
+// socialIconButton: {
+//   marginHorizontal: 10,      // Reduced margin for better spacing between icons
+//   borderRadius: 10,          // Rounded corners for the buttons
+//   overflow: "hidden",        // Ensures the image fits properly within the rounded button
+// },
+// socialIcon: {
+//     width: 60,
+//     height: 60,
+//     resizeMode: "contain",
+// },
 });
