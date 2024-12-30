@@ -125,13 +125,14 @@ const styles = StyleSheet.create({
   rightSection: {
     justifyContent: "center",
     alignItems: "center",
-    paddingTop: 55,
+    paddingTop: 59.9,
   },
   profileIcon: {
-    width: 70,
-    height: 70,
+    width: 60,
+    height: 60,
     borderRadius: 35,
     borderWidth: 2,
+    
     borderColor: "#fff",
   },
 });
