@@ -78,7 +78,13 @@ export default function Profile() {
   return (
     <View style={styles.container}>
       {loading ? (
-        <ActivityIndicator size="large" color="#3b82f6" style={styles.loader} />
+              <View style={styles.Loadingcontainer}>
+              <Image
+                source={{ uri: 'https://quiz.saylaniwelfare.com/images/smit.png' }}
+                style={styles.loaderImage}
+              />
+              <Text style={styles.loadingText}>Loading...</Text>
+            </View>
       ) : (
         <>
           <ScrollView style={styles.scoresContainer} showsVerticalScrollIndicator={false}>
@@ -138,6 +144,25 @@ const styles = StyleSheet.create({
     paddingTop: 40,
     paddingBottom: 40,
   },
+  Loadingcontainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    padding: 20,
+    borderRadius: 15,
+  },
+  loaderImage: {
+    width: 100,
+    height: 100,
+    resizeMode: 'contain',
+  },
+  loadingText: {
+    marginTop: 10,
+    fontSize: 18,
+    color: '#1E90FF',
+    fontWeight: 'bold',
+  },
   profileImage: {
     width: 120,
     height: 120,
@@ -193,9 +218,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "500",
     color: "#374151",
-  },
-  loader: {
-    marginTop: 20,
   },
   navigateButton: {
     backgroundColor: "#28A745",

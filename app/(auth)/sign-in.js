@@ -39,6 +39,7 @@ export default function SignIn() {
                 })
                 .catch((error) => {
                     setLoading(false);
+                    console.log(error);
                     Toast.show({
                         type: 'error',
                         text1: 'Error logging in',

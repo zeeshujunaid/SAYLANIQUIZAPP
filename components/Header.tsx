@@ -14,6 +14,8 @@ import { StatusBar } from "expo-status-bar";
 import { useRouter } from "expo-router";
 import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../utils/firebase"; // Firebase configuration
+import Toast from 'react-native-toast-message';
+
 
 export default function Header() {
   const [userName, setUserName] = useState("");
@@ -26,6 +28,11 @@ export default function Header() {
       if (storedUserInfo) {
         const { name } = JSON.parse(storedUserInfo);
         setUserName(name);
+        Toast.show({
+          type: 'success',
+          text1: 'Hi ' + name || 'plz restart the app to see the changes',
+          text2: 'Welcome back to the Quiz App.',
+      });
       } else {
         const user = auth.currentUser;
         if (user) {
@@ -38,16 +45,29 @@ export default function Header() {
               "info",
               JSON.stringify({ name: userData.name })
             );
+            Toast.show({
+              type: 'success',
+              text1: 'Hi ' + userData.name || 'plz restart the app to see the changes',
+              text2: 'Welcome back to the Quiz App.',
+          });
           } else {
             setUserName("Name Not Available");
+            Toast.show({
+              type: 'error',
+              text1: 'Hi user',
+              text2: ' plz restart the app to see the changes',
+          });
           }
-        } else {
-          setUserName("Name Not Available");
         }
       }
     } catch (error) {
       console.error("Error fetching user info:", error);
       setUserName("Error Loading Name");
+      Toast.show({
+        type: 'error',
+        text1: 'Hi user',
+        text2: ' plz signup to the app',
+    });
     }
   };
 
