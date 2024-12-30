@@ -276,7 +276,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#000",
     textAlign: "center",
-    paddingTop:30,
+    // paddingTop:0,
   },
   linkText: {
     color: "#33CC33",
