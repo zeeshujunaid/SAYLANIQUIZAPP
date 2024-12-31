@@ -30,8 +30,8 @@ export default function Header() {
         setUserName(name);
         Toast.show({
           type: 'success',
-          text1: 'Hi ' + setUserName || 'plz restart the app to see the changes',
-          text2: 'Welcome back to the Quiz App.',
+          text1: 'Hi ',
+          text2: 'plz restart the app to see the changes',
       });
       } else {
         const user = auth.currentUser;
@@ -47,7 +47,7 @@ export default function Header() {
             );
             Toast.show({
               type: 'success',
-              text1: 'Hi ' + userData.name || 'plz restart the app to see the changes',
+              text1: 'Hi plz restart the app to see the changes',
               text2: 'Welcome back to the Quiz App.',
           });
           } else {

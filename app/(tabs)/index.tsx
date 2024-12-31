@@ -57,7 +57,7 @@ export default function QuizHomeScreen() {
               onPress={() => router.push('./(auth)/appdevquiz')} // Navigate using router.push
             >
               <Image
-            source={require('../../assets/images/appdevelopment.avif')} // Use local image
+            source={require('../../assets/images/app.png')} // Use local image
                 style={styles.cardImage}
               />
               <Text style={styles.cardText}>App Development Quiz</Text>
