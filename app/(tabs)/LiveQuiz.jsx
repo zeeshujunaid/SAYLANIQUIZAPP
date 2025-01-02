@@ -524,6 +524,11 @@ const styles = StyleSheet.create({
         fontWeight: '700',
         color: '#388E3C',
         marginBottom: 12,
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        textAlign: 'center',
+        textTransform: 'uppercase', 
     },
     modalScore: {
         fontSize: 22, 
@@ -565,6 +570,8 @@ const styles = StyleSheet.create({
     },
     modalContent: {
         backgroundColor: '#fff',
+        justifyContent: 'center',
+        alignItems: 'center',
         padding: 20,
         borderRadius: 12,
         width: '90%',

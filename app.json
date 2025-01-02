@@ -14,8 +14,8 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/saylanicon.png",
-        "backgroundColor": "#fff"
+        "foregroundImage": "./assets/images/quizicon.jpg",
+        "backgroundColor": "#ffffff"
       },
       "package": "com.zeeshan.junaid.SAYLANIQUIZ",
       "versionCode": 2  
@@ -30,10 +30,10 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/saylanicon.png",
+          "image": "./assets/images/quizicon.jpg",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#fff"
+          "backgroundColor": "#ffffff"
         }
       ]
     ],
