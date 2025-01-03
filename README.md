@@ -1,3 +1,6 @@
+download the apk
+https://drive.google.com/file/d/1msa7fR1sbsmwZNysUnGGkndQXzFkRJVq/view?usp=sharing
+
 # Welcome to your Expo app 👋
 
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
